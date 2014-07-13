@@ -7,6 +7,18 @@
     <Filter Include="MainGame">
       <UniqueIdentifier>{db8e1571-48a1-4d29-b79c-38820dd7eee1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Config">
+      <UniqueIdentifier>{7f884ffc-a572-4cdc-a803-fa31f10828c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{f94c6fc1-c4b7-4da2-989a-df421819aa45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX\Texture">
+      <UniqueIdentifier>{069935ad-7d28-4759-a3e0-f674b5ab9d10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Simon">
+      <UniqueIdentifier>{f6822935-53a1-44e9-a42a-6f60c361b773}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -21,6 +33,33 @@
     <ClCompile Include="ManageGame.cpp">
       <Filter>MainGame</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageSprite.cpp">
+      <Filter>DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectGame.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>DirectX\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageTexture.cpp">
+      <Filter>DirectX\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonFactory.cpp">
+      <Filter>Config</Filter>
+    </ClCompile>
+    <ClCompile Include="Simon.cpp">
+      <Filter>GameObject\Simon</Filter>
+    </ClCompile>
+    <ClCompile Include="FileUtils.cpp">
+      <Filter>Config</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -34,6 +73,36 @@
     </ClInclude>
     <ClInclude Include="ManageGame.h">
       <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="ManageSprite.h">
+      <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactoty.h">
+      <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGame.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>DirectX\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="ManageTexture.h">
+      <Filter>DirectX\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonFactory.h">
+      <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Simon.h">
+      <Filter>GameObject\Simon</Filter>
+    </ClInclude>
+    <ClInclude Include="FileUtils.h">
+      <Filter>Config</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
