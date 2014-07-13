@@ -1,0 +1,11 @@
+ID,ID_Image,Name,Width,Height,Vx,Vy,ColumnFrame,TotalFrame
+201,1002,Zombie,34,64,50,50,1,2
+202,1003,BlackLeopard,64,32,80,80,1,4
+203,1004,VampireBat,32,32,80,80,1,4
+204,1005,Medusa,32,32,50,50,1,2
+205,1006,FishMan,33,64,50,80,1,3
+206,1007,AxeMan,44,60,50,50,1,2
+207,1008,DragonSkullCannon,32,64,0,0,1,1
+208,1009,BlackKnight,32,64,50,50,1,4
+209,1010,WhiteSkeleton,34,64,50,50,1,4
+210,1011,Ghost,28,28,50,50,1,2

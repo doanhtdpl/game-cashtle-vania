@@ -81,15 +81,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="FileUtils.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ManageGame.cpp" />
+    <ClCompile Include="ManageSprite.cpp" />
+    <ClCompile Include="ManageTexture.cpp" />
+    <ClCompile Include="ObjectGame.cpp" />
+    <ClCompile Include="Simon.cpp" />
+    <ClCompile Include="SimonFactory.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="FileUtils.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="ManageGame.h" />
+    <ClInclude Include="ManageSprite.h" />
+    <ClInclude Include="ManageTexture.h" />
+    <ClInclude Include="ObjectFactoty.h" />
+    <ClInclude Include="ObjectGame.h" />
+    <ClInclude Include="Simon.h" />
+    <ClInclude Include="SimonFactory.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
