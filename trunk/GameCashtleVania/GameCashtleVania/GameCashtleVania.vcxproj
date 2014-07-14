@@ -82,13 +82,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DynamicObject.cpp" />
     <ClCompile Include="FileUtils.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="IAnimatedSprite.cpp" />
+    <ClCompile Include="IMove.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ManageGame.cpp" />
     <ClCompile Include="ManageSprite.cpp" />
     <ClCompile Include="ManageTexture.cpp" />
+    <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjectGame.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="SimonFactory.cpp" />
@@ -97,8 +101,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="FileUtils.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="IAnimatedSprite.h" />
+    <ClInclude Include="IMove.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="ManageGame.h" />
     <ClInclude Include="ManageSprite.h" />

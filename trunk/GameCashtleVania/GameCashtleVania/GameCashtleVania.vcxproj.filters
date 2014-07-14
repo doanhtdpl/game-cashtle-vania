@@ -60,6 +60,18 @@
     <ClCompile Include="FileUtils.cpp">
       <Filter>Config</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectFactory.cpp">
+      <Filter>Config</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicObject.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="IAnimatedSprite.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="IMove.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -103,6 +115,15 @@
     </ClInclude>
     <ClInclude Include="FileUtils.h">
       <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="IAnimatedSprite.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="IMove.h">
+      <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

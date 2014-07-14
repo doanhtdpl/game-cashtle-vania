@@ -25,6 +25,11 @@ ObjectGame::ObjectGame(int Kind, int Width, int Height, D3DXVECTOR3 pos)
 	this->_isAnimatedSprite = false;
 }
 
+ObjectGame::ObjectGame(std::vector<std::string> arr) 
+{
+
+}
+
 void ObjectGame::UpdateRect()
 {
 	this->_rect.top = _pos.y + this->_height / 2;
