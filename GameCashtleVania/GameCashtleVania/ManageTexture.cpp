@@ -4,7 +4,7 @@ ManageTexture* ManageTexture::_instance = NULL;
 
 ManageTexture* ManageTexture::getInstance()
 {
-	if (_instance)
+	if (_instance == NULL)
 	{
 		_instance = new ManageTexture();
 	}
@@ -13,7 +13,7 @@ ManageTexture* ManageTexture::getInstance()
 
 ManageTexture* ManageTexture::createInstance(LPDIRECT3DDEVICE9 _d3ddv) 
 {
-	if (_instance)
+	if (_instance == NULL)
 	{
 		_instance = new ManageTexture(_d3ddv);
 	}
@@ -23,6 +23,7 @@ ManageTexture* ManageTexture::createInstance(LPDIRECT3DDEVICE9 _d3ddv)
 
 ManageTexture::ManageTexture()
 {
+	//this->list_Texture = new std::hash_map<int, Texture*>();
 }
 
 ManageTexture::ManageTexture(LPDIRECT3DDEVICE9 d3ddv)
@@ -37,8 +38,10 @@ bool ManageTexture::createTextureByFileName(int key, std::string filename)
 	if (texture->Load_Image(filename, color)) 
 	{
 		this->addTexture(key, texture);
+		return true;
 	}else
 	{
+		return false;
 		//Show Message
 		//MessageBox();
 	}
@@ -47,11 +50,12 @@ bool ManageTexture::createTextureByFileName(int key, std::string filename)
 //add texture vao hashmap theo key
 void ManageTexture::addTexture(int key, Texture* texture)
 {
-	this->list_Texture->insert(std::pair<int, Texture*> (key, texture));
+	//this->list_Texture->insert(std::pair<int, Texture*>(key, texture));
+	this->list_Texture[key] = texture;
 }
 
 //lay texture by key
 Texture* ManageTexture::getTetureByKey(int key) 
 {
-	return this->list_Texture->find(key)->second;
+	return this->list_Texture.find(key)->second;
 }

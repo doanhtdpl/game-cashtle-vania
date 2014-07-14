@@ -19,7 +19,7 @@ public:
 protected:
 private:
 	static ManageTexture* _instance;
-	std::hash_map<int, Texture*> *list_Texture;
+	std::hash_map<int, Texture*> list_Texture;
 	LPDIRECT3DDEVICE9 _d3ddv;
 };
 

@@ -1,7 +1,23 @@
 #include "SimonFactory.h"
 #include "Simon.h"
 
-ObjectGame* SimonFactory::CreateObj() 
+SimonFactory* SimonFactory::_instance = NULL;
+
+SimonFactory* SimonFactory::getInstance()
 {
-	//return new Simon(info);
+	if (_instance == NULL)
+	{
+		_instance = new SimonFactory();
+	}
+	return _instance;
+}
+
+SimonFactory::SimonFactory() 
+{
+
+}
+
+Simon* SimonFactory::CreateObj() 
+{
+	return new Simon(info);
 }
