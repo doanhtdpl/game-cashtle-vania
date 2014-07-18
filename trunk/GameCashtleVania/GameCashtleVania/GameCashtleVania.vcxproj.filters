@@ -19,6 +19,9 @@
     <Filter Include="GameObject\Simon">
       <UniqueIdentifier>{f6822935-53a1-44e9-a42a-6f60c361b773}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Interface">
+      <UniqueIdentifier>{830a5d61-f021-431e-8c39-eeb243b17169}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -66,11 +69,14 @@
     <ClCompile Include="DynamicObject.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="IAnimatedSprite.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="IMove.cpp">
-      <Filter>GameObject</Filter>
+      <Filter>GameObject\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IAnimatedSprite.cpp">
+      <Filter>GameObject\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="ICollision.cpp">
+      <Filter>GameObject\Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,11 +125,14 @@
     <ClInclude Include="DynamicObject.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="IAnimatedSprite.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="IMove.h">
-      <Filter>GameObject</Filter>
+      <Filter>GameObject\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IAnimatedSprite.h">
+      <Filter>GameObject\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ICollision.h">
+      <Filter>GameObject\Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

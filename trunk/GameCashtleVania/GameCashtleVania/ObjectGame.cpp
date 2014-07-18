@@ -11,20 +11,6 @@ ObjectGame::ObjectGame(void)
 	this->_width = 0;
 }
 
-ObjectGame::ObjectGame(int Kind, int Width, int Height, D3DXVECTOR3 pos)
-{
-	//_ID = ID;
-	this->_kind = Kind;
-	this->_height = Height;
-	this->_width = Width;
-	_pos = pos;
-	_isALive = true;
-
-	this->UpdateRect();
-
-	this->_isAnimatedSprite = false;
-}
-
 ObjectGame::ObjectGame(std::vector<std::string> arr) 
 {
 

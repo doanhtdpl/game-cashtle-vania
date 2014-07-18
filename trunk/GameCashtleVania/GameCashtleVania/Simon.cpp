@@ -1,4 +1,28 @@
 #include "Simon.h"
+#include "utils.h"
+#include "Input.h"
+
+Simon* Simon::_instance = NULL;
+
+Simon* Simon::GetInstance()
+{
+	if (_instance == NULL)
+	{
+		_instance = new Simon();
+	}
+
+	return _instance;
+}
+
+Simon* Simon::CreateInstance(std::vector<std::string> arr)
+{
+	if (_instance == NULL)
+	{
+		_instance = new Simon(arr);
+	}
+
+	return _instance;
+}
 
 Simon::Simon() : DynamicObject()
 {
@@ -27,21 +51,139 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_curFrame = 12;
 	this->_coloumn = atoi(arr.at(8).c_str());
 	this->_totalFrames = atoi(arr.at(9).c_str());
+	this->_elapseTimeSwitchFrame = EslapseTimeSwitchFrame;
+	this->_beforeTimeOld = 0.0f;
+
+	this->_rectRS = this->UpdateRectRS(this->_width, this->_height);
+
+	_moveMent = SimonMove::Stand;
+	this->_CanJum = true;
+	this->_CanMoveL = true;
+	this->_CanMoveR = true;
+	this->_vx = this->_Vx_default;
+	this->_vy = this->_Vy_default;
+}
+
+void Simon::Move(float Delta_Time)
+{
+	switch (_moveMent)
+	{
+	case None:
+		break;
+	case Moves:
+		if (this->_Left)//dang di chuyen qua ben trai
+		{
+			if (this->_CanMoveL)
+			{
+				this->_pos.x -= this->_vx * Delta_Time;
+			}else
+			{
+				_moveMent = SimonMove::Stand;
+			}
+		}else
+		{
+			if (this->_CanMoveR)
+			{
+				this->_pos.x += this->_vx * Delta_Time;
+			}else
+			{
+				_moveMent = SimonMove::Stand;
+			}
+		}
+		break;
+	case Stand:
+		break;
+	case PrepareUpTheStair:
+		break;
+	case OnStair:
+		break;
+	case UpTheStair:
+		break;
+	case Jum:
+		this->_pos.y += this->_vy * Delta_Time;
+		break;
+	case Free:
+		this->_pos.y += this->_vy * Delta_Time * 2;//chi can cho roi nhanh hon thoi. Khong can dung gia toc
+		break;
+	default:
+		break;
+	}
+}
+
+void Simon::Update(float deltatime)
+{
+	Move(deltatime);
+	Animated(deltatime);
+
+	if (this->_moveMent == SimonMove::Moves)
+	{
+		this->_moveMent = SimonMove::Stand;
+	}
+}
+
+void Simon::Animated(float deltatime)
+{
+	this->_beforeTimeOld += deltatime;
+	if (_beforeTimeOld > _elapseTimeSwitchFrame)
+	{
+		_beforeTimeOld -= _elapseTimeSwitchFrame;
+		switch (_moveMent)
+		{
+		case None:
+			break;
+		case Moves:
+			this->_curFrame --;
+			if (_curFrame < 0 )
+			{
+				_curFrame = 3;
+			}
+			break;
+		case Stand:
+			this->_curFrame = 3;
+			break;
+		case PrepareUpTheStair:
+			break;
+		case OnStair:
+			break;
+		case UpTheStair:
+			break;
+		case Jum:
+			break;
+		case Free:
+			break;
+		default:
+			break;
+		}
+	}
 
 	this->_rectRS = this->UpdateRectRS(this->_width, this->_height);
 }
 
-void Simon::Move(DWORD Delta_Time)
+void Simon::ProcessInput()
 {
+	Input::CreateInstance()->ProcessKeyboard();
 
-}
+	Input::CreateInstance()->Update();
 
-void Simon::Update(DWORD deltatime)
-{
+	int key = Input::CreateInstance()->GetKeyDown();
+	int key_up = Input::CreateInstance()->GetKeyUp();
 
-}
+	//de phim
+	if (Input::CreateInstance()->IsKeyDown(DIK_RIGHT))
+	{
+		this->_moveMent = SimonMove::Moves;
+		this->_Left = false;
+	}else
+	{
+		if (Input::CreateInstance()->IsKeyDown(DIK_LEFT))
+		{
+			this->_moveMent = SimonMove::Moves;
+			this->_Left = true;
+		}
+	}
 
-void Simon::Animated()
-{
-
+	if (key == DIK_Z)
+	{
+		this->_moveMent = SimonMove::Jum;
+	}
 }

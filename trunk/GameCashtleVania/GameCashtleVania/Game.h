@@ -21,7 +21,7 @@ protected:
 
 	bool Init_Window(HINSTANCE );
 	bool Init_Direct3D();
-	virtual void GameUpdate(DWORD DeltaTime) = 0;
+	virtual void GameUpdate(float DeltaTime) = 0;
 	virtual void GameDraw() = 0;
 	virtual void GameInit() = 0;
 	virtual void Clear_Screen() = 0;

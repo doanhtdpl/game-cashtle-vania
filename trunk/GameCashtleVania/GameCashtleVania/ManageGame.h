@@ -3,7 +3,6 @@
 
 #include "Game.h"
 #include "Input.h"
-#include "Simon.h"
 
 #pragma once
 class ManageGame : public Game
@@ -13,9 +12,7 @@ public:
 	static int _count_LifeMario;
 	static int _score;
 
-	Simon* simon;
-
-	void GameUpdate(DWORD DeltaTime);
+	void GameUpdate(float DeltaTime);
 	void GameDraw();
 	void GameInit();
 	void Clear_Screen();

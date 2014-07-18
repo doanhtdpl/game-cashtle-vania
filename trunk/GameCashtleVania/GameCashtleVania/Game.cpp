@@ -138,7 +138,6 @@ bool Game::Init(HINSTANCE hInstance)
 		return false;
 	}
 
-
 	GameInit();
 	return true;
 }
@@ -167,7 +166,8 @@ void Game::GameRun()
 		{
 			frame_start = now;
 			ProcessInput();
-			GameUpdate(_DeltaTime);
+			float delta_time = (float)_DeltaTime / 1000;
+			GameUpdate(delta_time);
 			Render();
 		}
 	}
@@ -204,7 +204,7 @@ void Game::GameDraw()
 
 }
 
-void Game::GameUpdate(DWORD deltatime)
+void Game::GameUpdate(float deltatime)
 {
 
 }
