@@ -36,8 +36,16 @@ void ManageSprite::DrawObject(ObjectGame *Object)
 
 	pos_Draw = _camera->GetPointTransform(Object->_pos.x, Object->_pos.y);
 
-	_Sprite->DrawFlipX(texture, rectRS, pos_Draw);
-	//_Sprite->Draw(texture, rectRS, pos_Draw);
+	//khong quay ve ben trai
+	if (Object->_Left)
+	{
+		_Sprite->Draw(texture, rectRS, pos_Draw);
+	}else
+	{
+		_Sprite->DrawFlipX(texture, rectRS, pos_Draw);
+	}
+	
+	//
 }
 
 void ManageSprite::Update_Camera(float posx_mario)
