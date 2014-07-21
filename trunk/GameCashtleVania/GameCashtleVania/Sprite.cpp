@@ -14,11 +14,19 @@ void Sprite::Draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transc
 {
 	if (isCenter)
 	{
-		D3DXVECTOR3 center = D3DXVECTOR3(
-			( RectRS->right - RectRS->left) / 2.0f,
-			( RectRS->bottom - RectRS->top) / 2.0f,
-			0 );
-		this->_SpriteHandel->Draw(image->Get_Texture(), RectRS, &center, &pos, transcolor);
+		D3DXVECTOR3* center;
+		if (RectRS == NULL)
+		{
+			center = NULL;
+		}else
+		{
+			center = new D3DXVECTOR3(
+				( RectRS->right - RectRS->left) / 2.0f,
+				( RectRS->bottom - RectRS->top) / 2.0f,
+				0 );
+		}
+		
+		this->_SpriteHandel->Draw(image->Get_Texture(), RectRS, center, &pos, transcolor);
 	}else {
 		this->_SpriteHandel->Draw(image->Get_Texture(), RectRS, NULL, &pos, transcolor);
 

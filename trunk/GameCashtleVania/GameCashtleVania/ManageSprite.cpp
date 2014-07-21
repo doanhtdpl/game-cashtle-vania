@@ -25,8 +25,12 @@ void ManageSprite::Init_Sprite(LPD3DXSPRITE spriteHandle)
 void ManageSprite::DrawObject(ObjectGame *Object)
 {
 	RECT *rectRS;
+	bool isCenter = true;
 	if (Object->_isAnimatedSprite == false)
+	{
 		rectRS = NULL;
+		isCenter = false;
+	}
 	else
 		rectRS = Object->_rectRS;
 
@@ -35,7 +39,8 @@ void ManageSprite::DrawObject(ObjectGame *Object)
 	D3DXVECTOR3 pos_Draw;
 
 	pos_Draw = _camera->GetPointTransform(Object->_pos.x, Object->_pos.y);
-
+	//pos_Draw.x -= Object->_width / 2;
+	//pos_Draw.y -= Object->_height / 2;
 	//khong quay ve ben trai
 	if (Object->_Left)
 	{

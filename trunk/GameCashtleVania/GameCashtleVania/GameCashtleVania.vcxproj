@@ -81,6 +81,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DynamicObject.cpp" />
     <ClCompile Include="FileUtils.cpp" />
@@ -98,9 +99,11 @@
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="SimonFactory.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="StaticObject.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Brick.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="FileUtils.h" />
@@ -117,6 +120,7 @@
     <ClInclude Include="Simon.h" />
     <ClInclude Include="SimonFactory.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="StaticObject.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>

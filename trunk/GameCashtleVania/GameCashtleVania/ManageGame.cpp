@@ -23,6 +23,8 @@ ManageGame::~ManageGame(void)
 void ManageGame::GameDraw()
 {
 	ManageSprite::CreateInstance()->DrawObject( Simon::GetInstance() );
+
+	ManageSprite::CreateInstance()->DrawObject(brick);
 }
 
 void ManageGame::Clear_Screen()
@@ -37,7 +39,11 @@ void ManageGame::ProcessInput()
 
 void ManageGame::GameUpdate(float DeltaTime)
 {
+	ManageSprite::CreateInstance()->Update_Camera(Simon::GetInstance()->_pos.x);
 	Simon::GetInstance()->Update(DeltaTime);
+	float normalX = 0;
+	float normalY = 0;
+	Simon::GetInstance()->Collision((StaticObject*)brick, normalX, normalY, DeltaTime);
 }
 
 void ManageGame::GameInit()
@@ -47,6 +53,8 @@ void ManageGame::GameInit()
 	FileUtils::getInstance()->ReadFileImage();
 	FileUtils::getInstance()->LoadCSV();
 	SimonFactory::getInstance()->CreateObj();
+
+	brick = new Brick();
 }
 
 void ManageGame::Delete_Memory_Game()

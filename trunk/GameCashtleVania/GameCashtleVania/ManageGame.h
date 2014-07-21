@@ -4,13 +4,16 @@
 #include "Game.h"
 #include "Input.h"
 
-#pragma once
+#include "Brick.h"
+
 class ManageGame : public Game
 {
 public:
 	static int _Word_Map;
 	static int _count_LifeMario;
 	static int _score;
+
+	Brick* brick;
 
 	void GameUpdate(float DeltaTime);
 	void GameDraw();

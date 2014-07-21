@@ -48,6 +48,12 @@ char* DynamicObject::className()
 	return "Dynamic Object";
 }
 
+Box DynamicObject::GetBox()
+{
+	this->_box = Box(this->_pos.x, this->_pos.y, this->_width, this->_height, this->_vx, this->_vy);
+	return _box;
+}
+
 void DynamicObject::Update(float deltatime)
 {
 
@@ -57,4 +63,37 @@ void DynamicObject::Update(float Delta_Time, std::list<ObjectGame*> *_ListObject
 {
 	this->UpdatePostureMove(Delta_Time);
 	this->Move(Delta_Time);
+}
+
+float DynamicObject::Collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime)
+{
+	return 0.0f;
+}
+
+float DynamicObject::Collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime)
+{
+	Box box = this->GetBox();
+	Box staticBox = staticObject->GetBox();
+
+	Box broadphaseBox = ICollision::GetInstance()->GetSweptBroadphaseBox(box, deltaTime);
+
+	float moveX = 0;
+	float moveY = 0;
+
+	//kiem tra 2 box hien tai da va cham chua
+	if (ICollision::GetInstance()->AABB(box, staticBox, moveX, moveY))
+	{
+		//dich chuyen object
+		return 0.0f;
+	}else
+	{
+		//kiem tra 2 object co the va cham ko?
+		if (ICollision::GetInstance()->AABBCheck(broadphaseBox, staticBox))
+		{
+			return ICollision::GetInstance()->SweptAABB(box, staticBox, normalx, normaly, deltaTime);
+		}else
+		{
+			return 1.0;//khong co va cham
+		}
+	}
 }

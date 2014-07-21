@@ -9,9 +9,10 @@ ObjectGame::ObjectGame(void)
 	_isAnimatedSprite = false;
 	this->_height = 0;
 	this->_width = 0;
+
 }
 
-ObjectGame::ObjectGame(std::vector<std::string> arr) 
+ObjectGame::ObjectGame(std::vector<std::string> arr)
 {
 
 }
@@ -33,11 +34,9 @@ char* ObjectGame::className()
 {
 	return "Object Game";
 }
-//
-//void ObjectGame::Update(DWORD deltatime)
-//{
-//}
-//
-//void ObjectGame::Update(DWORD deltatime, list<ObjectGame*> *_ListObjectCollision)
-//{
-//}
+
+Box ObjectGame::GetBox()
+{
+	this->_box = Box(_pos.x, _pos.y, _width, _height);
+	return _box;
+}
