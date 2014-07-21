@@ -187,3 +187,43 @@ void Simon::ProcessInput()
 		this->_moveMent = SimonMove::Jum;
 	}
 }
+
+//implement method collision
+
+float Simon::Collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime)
+{
+	return 0.0f;
+}
+
+float Simon::Collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime)
+{
+	Box box = this->GetBox();
+	Box staticBox = staticObject->GetBox();
+
+	Box broadphaseBox = ICollision::GetInstance()->GetSweptBroadphaseBox(box, deltaTime);
+
+	float moveX = 0;
+	float moveY = 0;
+
+	//kiem tra 2 box hien tai da va cham chua
+	if (ICollision::GetInstance()->AABBCheck(box, staticBox))
+	{
+		if (ICollision::GetInstance()->AABB(box, staticBox, moveX, moveY))
+		{
+			this->_pos.x += moveX;
+			this->_pos.y += moveY;
+		}
+		return 0.0f;
+	}else
+	{
+		//kiem tra 2 object co the va cham ko?
+		if (ICollision::GetInstance()->AABB(broadphaseBox, staticBox, moveX, moveY))
+		{
+			float timeCol = ICollision::GetInstance()->SweptAABB(box, staticBox, normalx, normaly, deltaTime);
+			return timeCol;
+		}else
+		{
+			return 1.0;//khong co va cham
+		}
+	}
+}

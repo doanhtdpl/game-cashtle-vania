@@ -81,16 +81,17 @@ float DynamicObject::Collision(StaticObject* staticObject, float &normalx, float
 	float moveY = 0;
 
 	//kiem tra 2 box hien tai da va cham chua
-	if (ICollision::GetInstance()->AABB(box, staticBox, moveX, moveY))
+	if (ICollision::GetInstance()->AABBCheck(box, staticBox))
 	{
 		//dich chuyen object
 		return 0.0f;
 	}else
 	{
 		//kiem tra 2 object co the va cham ko?
-		if (ICollision::GetInstance()->AABBCheck(broadphaseBox, staticBox))
+		if (ICollision::GetInstance()->AABB(broadphaseBox, staticBox, moveX, moveY))
 		{
-			return ICollision::GetInstance()->SweptAABB(box, staticBox, normalx, normaly, deltaTime);
+			float timeCol = ICollision::GetInstance()->SweptAABB(box, staticBox, normalx, normaly, deltaTime);
+			return timeCol;
 		}else
 		{
 			return 1.0;//khong co va cham

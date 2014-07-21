@@ -18,6 +18,9 @@ public:
 	void Update(float deltatime);
 	void Animated(float deltatime);
 	void ProcessInput();
+
+	float Collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime);
+	float Collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime);
 protected:
 private:
 	static Simon* _instance;
@@ -33,6 +36,7 @@ enum SimonMove
 	None,//khong gi ca
 	Moves,//dang di
 	Stand,//dung yen
+	Sit,//dang ngoi
 	PrepareUpTheStair,//chuan bi len cau thang
 	OnStair,//dang dung tren cau thang
 	UpTheStair,//len cau thang

@@ -84,24 +84,40 @@ float ICollision::SweptAABB(Box b1, Box b2, float& normalx, float& normaly, floa
 	// find the distance between the objects on the near and far sides for both x and y
 	if (b1.vx > 0.0f)
 	{
-		xInvEntry = b2.x - (b1.x + b1.w / 2);
-		xInvExit = (b2.x + b2.w / 2) - b1.x;
+		// box 1 moving from left to right
+		// left of box 2 - right of box 1
+		xInvEntry = (b2.x - b2.w / 2) - (b1.x + b1.w / 2);
+
+		// right of box 2 - left of box 1
+		xInvExit = (b2.x + b2.w / 2) - (b1.x - b1.w / 2);
 	}
 	else 
 	{
-		xInvEntry = (b2.x + b2.w / 2) - b1.x;
-		xInvExit = b2.x - (b1.x + b1.w / 2);
+		// box 1 moving from right to left
+		// right of box 2 - left of box 1
+		xInvEntry = (b2.x + b2.w / 2) - (b1.x - b1.w / 2);
+
+		// left of box 2 - right of box 1
+		xInvExit = (b2.x - b2.w / 2) - (b1.x + b1.w / 2);
 	}
 
 	if (b1.vy > 0.0f)
 	{
-		yInvEntry = b2.y - (b1.y + b1.h / 2);
-		yInvExit = (b2.y + b2.h / 2) - b1.y;
+		// box 1 moving from botton to top
+		// botton of b2 - top of box 1
+		yInvEntry = (b2.y - b2.h / 2) - (b1.y + b1.h / 2);
+
+		// top of b2 - botton of b1
+		yInvExit = (b2.y + b2.h / 2) - (b1.y - b1.h / 2);
 	}
 	else
 	{
-		yInvEntry = (b2.y + b2.h / 2) - b1.y;
-		yInvExit = b2.y - (b1.y + b1.h / 2);
+		// box 1 moving from top to botton
+		// top of box 2 - botton of box 1
+		yInvEntry = (b2.y + b2.h / 2) - (b1.y - b1.h / 2);
+
+		// botton of box 2  - top of box 1
+		yInvExit = (b2.y - b2.h / 2) - (b1.y + b1.h / 2);
 	}
 
 	// find time of collision and time of leaving for each axis (if statement is to prevent divide by zero)

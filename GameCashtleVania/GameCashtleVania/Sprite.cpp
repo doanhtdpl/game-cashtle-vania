@@ -25,11 +25,10 @@ void Sprite::Draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transc
 				( RectRS->bottom - RectRS->top) / 2.0f,
 				0 );
 		}
-		
 		this->_SpriteHandel->Draw(image->Get_Texture(), RectRS, center, &pos, transcolor);
 	}else {
+		
 		this->_SpriteHandel->Draw(image->Get_Texture(), RectRS, NULL, &pos, transcolor);
-
 	}	
 }
 
