@@ -16,11 +16,17 @@
     <Filter Include="DirectX\Texture">
       <UniqueIdentifier>{069935ad-7d28-4759-a3e0-f674b5ab9d10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\Simon">
-      <UniqueIdentifier>{f6822935-53a1-44e9-a42a-6f60c361b773}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\Interface">
       <UniqueIdentifier>{830a5d61-f021-431e-8c39-eeb243b17169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject">
+      <UniqueIdentifier>{834f9db5-f01c-4ce4-b7aa-37ed6b448184}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Simon">
+      <UniqueIdentifier>{f6822935-53a1-44e9-a42a-6f60c361b773}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\StaticObject">
+      <UniqueIdentifier>{2ffeeacf-8b7c-4db0-b8f7-a5ff2ae19d8b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,16 +64,13 @@
       <Filter>Config</Filter>
     </ClCompile>
     <ClCompile Include="Simon.cpp">
-      <Filter>GameObject\Simon</Filter>
+      <Filter>GameObject\DynamicObject\Simon</Filter>
     </ClCompile>
     <ClCompile Include="FileUtils.cpp">
       <Filter>Config</Filter>
     </ClCompile>
     <ClCompile Include="ObjectFactory.cpp">
       <Filter>Config</Filter>
-    </ClCompile>
-    <ClCompile Include="DynamicObject.cpp">
-      <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="IMove.cpp">
       <Filter>GameObject\Interface</Filter>
@@ -77,6 +80,15 @@
     </ClCompile>
     <ClCompile Include="ICollision.cpp">
       <Filter>GameObject\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicObject.cpp">
+      <Filter>GameObject\DynamicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticObject.cpp">
+      <Filter>GameObject\StaticObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>GameObject\StaticObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,13 +129,10 @@
       <Filter>Config</Filter>
     </ClInclude>
     <ClInclude Include="Simon.h">
-      <Filter>GameObject\Simon</Filter>
+      <Filter>GameObject\DynamicObject\Simon</Filter>
     </ClInclude>
     <ClInclude Include="FileUtils.h">
       <Filter>Config</Filter>
-    </ClInclude>
-    <ClInclude Include="DynamicObject.h">
-      <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="IMove.h">
       <Filter>GameObject\Interface</Filter>
@@ -133,6 +142,15 @@
     </ClInclude>
     <ClInclude Include="ICollision.h">
       <Filter>GameObject\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicObject.h">
+      <Filter>GameObject\DynamicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticObject.h">
+      <Filter>GameObject\StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>GameObject\StaticObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

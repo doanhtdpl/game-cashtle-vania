@@ -5,7 +5,7 @@
 #include "ObjectGame.h"
 #include "IMove.h"
 #include <list>
-//#include "StaticObject.h"
+#include "StaticObject.h"
 //#include "InvisibleObject.h"
 
 class DynamicObject: public ObjectGame, public IMove
@@ -15,6 +15,9 @@ public:
 	virtual char* className();
 	virtual void Update(float deltatime);
 	virtual void Update(float delta_Time, std::list<ObjectGame*> *_ListObjectCollision);
+	Box GetBox();
+	float Collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime);
+	float Collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime);
 	DynamicObject(void);
 	~DynamicObject(void);
 };

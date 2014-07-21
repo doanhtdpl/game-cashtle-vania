@@ -5,6 +5,7 @@
 #include <list>
 #include <vector>
 #include <string>
+#include "ICollision.h"
 
 class ObjectGame
 {
@@ -20,11 +21,14 @@ public:
 	bool _isAnimatedSprite;//default = false, but when object iherit IAnimatedSprite-> True;
 	bool _Left;//Direction. Default left
 	RECT *_rectRS;//NULL if object hasn't animated sprite
+
+	Box _box;//bound object
 public:
 	virtual char* className();
 	ObjectGame(void);
 	ObjectGame(std::vector<std::string> arr);
 	void UpdateRect();
+	virtual Box GetBox();
 	~ObjectGame(void);
 };
 
