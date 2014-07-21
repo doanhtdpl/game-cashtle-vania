@@ -39,15 +39,19 @@ void ManageSprite::DrawObject(ObjectGame *Object)
 	D3DXVECTOR3 pos_Draw;
 
 	pos_Draw = _camera->GetPointTransform(Object->_pos.x, Object->_pos.y);
-	//pos_Draw.x -= Object->_width / 2;
-	//pos_Draw.y -= Object->_height / 2;
+	
+
 	//khong quay ve ben trai
 	if (Object->_Left)
 	{
-		_Sprite->Draw(texture, rectRS, pos_Draw);
+		// ve tai goc trai tren
+		pos_Draw.x -= Object->_width / 2;
+		pos_Draw.y -= Object->_height / 2;
+		_Sprite->Draw(texture, rectRS, pos_Draw, transcolor, false);
 	}else
 	{
-		_Sprite->DrawFlipX(texture, rectRS, pos_Draw);
+		// ve tai trung tam va quay anh.
+		_Sprite->DrawFlipX(texture, rectRS, pos_Draw, transcolor, true);
 	}
 	
 	//
