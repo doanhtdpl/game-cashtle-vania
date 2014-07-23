@@ -22,9 +22,12 @@ ManageGame::~ManageGame(void)
 
 void ManageGame::GameDraw()
 {
-	ManageSprite::CreateInstance()->DrawObject( Simon::GetInstance() );
+	
 
 	ManageSprite::CreateInstance()->DrawObject(brick);
+
+	mapBG->DrawBackGround();
+	ManageSprite::CreateInstance()->DrawObject( Simon::GetInstance() );
 }
 
 void ManageGame::Clear_Screen()
@@ -43,7 +46,7 @@ void ManageGame::GameUpdate(float DeltaTime)
 	Simon::GetInstance()->Update(DeltaTime);
 	float normalX = 0;
 	float normalY = 0;
-	Simon::GetInstance()->Collision((StaticObject*)brick, normalX, normalY, DeltaTime);
+	//Simon::GetInstance()->Collision((StaticObject*)brick, normalX, normalY, DeltaTime);
 }
 
 void ManageGame::GameInit()
@@ -53,7 +56,8 @@ void ManageGame::GameInit()
 	FileUtils::getInstance()->ReadFileImage();
 	FileUtils::getInstance()->LoadCSV();
 	SimonFactory::getInstance()->CreateObj();
-
+	mapBG = new BackGround();
+	mapBG->ReadFromFile("..\\Resource\\MapBackGround\\mapBG.txt");
 	brick = new Brick();
 }
 

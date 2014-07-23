@@ -28,6 +28,9 @@
     <Filter Include="GameObject\StaticObject">
       <UniqueIdentifier>{2ffeeacf-8b7c-4db0-b8f7-a5ff2ae19d8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{5528ad25-69b2-46a0-bf78-72d62340c32c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -90,6 +93,9 @@
     <ClCompile Include="Brick.cpp">
       <Filter>GameObject\StaticObject</Filter>
     </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -151,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="Brick.h">
       <Filter>GameObject\StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
