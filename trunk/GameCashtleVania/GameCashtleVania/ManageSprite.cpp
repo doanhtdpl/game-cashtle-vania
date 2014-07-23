@@ -62,11 +62,13 @@ void ManageSprite::Update_Camera(float posx_mario)
 	_camera->Update(posx_mario);
 }
 
-void ManageSprite::Draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor)
+void ManageSprite::Draw(int IDImage, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor)
 {
+	Texture* texture = ManageTexture::getInstance()->getTetureByKey(IDImage);
 	D3DXVECTOR3 pos_Draw;
 	pos_Draw =_camera->GetPointTransform(pos.x, pos.y);
-	_Sprite->Draw(image, RectRS, pos_Draw, transcolor);
+	
+	_Sprite->Draw(texture, RectRS, pos_Draw, transcolor,true);
 	//this->_SpriteHandel->Draw(image->Get_Texture(), RectRS, NULL, &pos, transcolor);
 }
 

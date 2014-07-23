@@ -5,6 +5,7 @@
 #include "Input.h"
 
 #include "Brick.h"
+#include "BackGround.h"
 
 class ManageGame : public Game
 {
@@ -13,6 +14,7 @@ public:
 	static int _count_LifeMario;
 	static int _score;
 
+	BackGround* mapBG;
 	Brick* brick;
 
 	void GameUpdate(float DeltaTime);

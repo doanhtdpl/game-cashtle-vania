@@ -19,7 +19,9 @@ public:
 	static ManageSprite* CreateInstance();
 	void Init_Sprite(LPD3DXSPRITE spriteHandle);
 	void DrawObject(ObjectGame *Object);
-	void Draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor);
+
+	//ve hinh theo IDImage tai vi tri trung tam. pos la vi tri o giua
+	void Draw(int IDImage, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor = 0xFFFFFFFF);
 	void Update_Camera(float posx_mario);
 	friend class Font;
 	~ManageSprite(void);
