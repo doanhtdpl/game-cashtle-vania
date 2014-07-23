@@ -84,7 +84,7 @@ void BackGround::DrawBackGround()
 			D3DXVECTOR2 pos = D3DXVECTOR2( j * _tileWidth, (_mapWidth - i) * _tileHeight);
 			D3DXVECTOR3 posCenter = D3DXVECTOR3(pos.x - _tileWidth / 2, pos.y - _tileWidth / 2 , 0);
 
-			ManageSprite::CreateInstance()->Draw(this->_IDImage, GetRectRSInHM(IDTile), posCenter);
+			ManageSprite::createInstance()->draw(this->_IDImage, GetRectRSInHM(IDTile), posCenter);
 		}
 	}
 }

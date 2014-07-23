@@ -8,7 +8,7 @@ class ObjectFactory
 {
 public:
 	void addInfo(std::vector<std::string> arr);
-	virtual ObjectGame* CreateObj() = 0;
+	virtual ObjectGame* createObj() = 0;
 protected:
 	std::vector<std::string> info;
 private:

@@ -16,8 +16,8 @@ public:
 	bool _CanJum;// co the nhay
 	Posture_Moves _posture;
 public:
-	virtual void Move(float Delta_Time) = 0;
-	virtual void UpdatePostureMove(DWORD deltatime);
+	virtual void move(float Delta_Time) = 0;
+	virtual void updatePostureMove(DWORD deltatime);
 	IMove(void);
 	~IMove(void);
 };

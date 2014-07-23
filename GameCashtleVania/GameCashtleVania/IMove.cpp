@@ -9,7 +9,7 @@ IMove::~IMove(void)
 {
 }
 
-void IMove::UpdatePostureMove(DWORD deltaTime)
+void IMove::updatePostureMove(DWORD deltaTime)
 {
 //	switch (this->_posture)
 //	{

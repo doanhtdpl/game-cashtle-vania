@@ -25,12 +25,12 @@ Game::~Game(void)
 	}
 }
 
-HWND Game::GetWindowHandle()
+HWND Game::getWindowHandle()
 {
 	return _hWnd;
 }
 
-LPDIRECT3DDEVICE9 Game::GetD3DDEVICE()
+LPDIRECT3DDEVICE9 Game::getD3DDEVICE()
 {
 	return _d3ddv;
 }
@@ -138,7 +138,7 @@ bool Game::Init(HINSTANCE hInstance)
 		return false;
 	}
 
-	GameInit();
+	gameInit();
 	return true;
 }
 
@@ -165,9 +165,9 @@ void Game::GameRun()
 		if (_DeltaTime >= tick_per_frame)
 		{
 			frame_start = now;
-			ProcessInput();
+			processInput();
 			float delta_time = (float)_DeltaTime / 1000;
-			GameUpdate(delta_time);
+			gameUpdate(delta_time);
 			Render();
 		}
 	}
@@ -175,7 +175,7 @@ void Game::GameRun()
 
 void Game::GameEnd()
 {
-	this->Delete_Memory_Game();
+	this->delete_Memory_Game();
 
 	if (_d3ddv!=NULL) _d3ddv->Release();
 	if (_d3d!=NULL) _d3d->Release();
@@ -189,22 +189,22 @@ void Game::GameEnd()
 void Game::Render()
 {
 	_d3ddv->BeginScene();//bat dau render
-	Clear_Screen();
+	clear_Screen();
 	//xoa man hinh
 	SpriteHandle->Begin(D3DXSPRITE_ALPHABLEND);//render 2D
-	GameDraw();//render game 2D
+	gameDraw();//render game 2D
 	SpriteHandle->End();
 
 	_d3ddv->EndScene();
 	_d3ddv->Present(NULL, NULL, NULL, NULL);
 }
 
-void Game::GameDraw()
+void Game::gameDraw()
 {
 
 }
 
-void Game::GameUpdate(float deltatime)
+void Game::gameUpdate(float deltatime)
 {
 
 }

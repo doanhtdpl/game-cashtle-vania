@@ -27,8 +27,8 @@ public:
 	virtual char* className();
 	ObjectGame(void);
 	ObjectGame(std::vector<std::string> arr);
-	void UpdateRect();
-	virtual Box GetBox();
+	void updateRect();
+	virtual Box getBox();
 	~ObjectGame(void);
 };
 

@@ -3,7 +3,7 @@
 
 ICollision* ICollision::_instance = NULL;
 
-ICollision* ICollision::GetInstance()
+ICollision* ICollision::getInstance()
 {
 	if (_instance == NULL)
 	{
@@ -13,7 +13,7 @@ ICollision* ICollision::GetInstance()
 	return _instance;
 }
 
-Box ICollision::SetBox(float _x, float _y, float _w, float _h, float _vx, float _vy)
+Box ICollision::setBox(float _x, float _y, float _w, float _h, float _vx, float _vy)
 {
 	return Box(_x, _y, _w, _h, _vx, _vy);
 }
@@ -63,7 +63,7 @@ bool ICollision::AABBCheck(Box b1, Box b2)
 }
 
 // returns a box the spans both a current box and the destination box
-Box ICollision::GetSweptBroadphaseBox(Box box, float deltaTime)
+Box ICollision::getSweptBroadphaseBox(Box box, float deltaTime)
 {
 	Box broadphasebox(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -76,7 +76,7 @@ Box ICollision::GetSweptBroadphaseBox(Box box, float deltaTime)
 }
 
 //va cham voi b2 dung yen
-float ICollision::SweptAABB(Box b1, Box b2, float& normalx, float& normaly, float deltaTime)
+float ICollision::sweptAABB(Box b1, Box b2, float& normalx, float& normaly, float deltaTime)
 {
 	float xInvEntry, yInvEntry;
 	float xInvExit, yInvExit;

@@ -6,7 +6,7 @@ class SimonFactory: public ObjectFactory
 {
 public:
 	static SimonFactory* getInstance();
-	Simon* CreateObj();
+	Simon* createObj();
 protected:
 private:
 	static SimonFactory* _instance;

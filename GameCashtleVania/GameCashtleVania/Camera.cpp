@@ -14,19 +14,19 @@ Camera::~Camera(void)
 {
 }
 
-D3DXVECTOR3 Camera::GetPosCamera()
+D3DXVECTOR3 Camera::getPosCamera()
 {
 	return _pos;
 }
 
-void Camera::Update(float x)
+void Camera::update(float x)
 {
 	_pos.x = x - 400;
 	if(_pos.x < 0)
 		_pos.x = 0;
 }
 
-D3DXVECTOR3 Camera::GetPointTransform(float x, float y)
+D3DXVECTOR3 Camera::getPointTransform(float x, float y)
 {
 	
 	_MatrixTransform._41 = - _pos.x;

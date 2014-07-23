@@ -17,18 +17,18 @@ public:
 	Sprite(LPD3DXSPRITE spriteHandle);
 	~Sprite(void);
 	//ve texture tai vi tri mac dinh la chinh giua
-	void Draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor = 0xFFFFFFFF, bool isCenter = true);
+	void draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor = 0xFFFFFFFF, bool isCenter = true);
 	
 	//ve texture tai vi tri mac dinh la chinh giua voi scale
-	void Draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DXVECTOR2 scale, D3DCOLOR transcolor = 0xFFFFFFFF, bool isCenter = true);
+	void draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DXVECTOR2 scale, D3DCOLOR transcolor = 0xFFFFFFFF, bool isCenter = true);
 
 	//ve texture tai vi tri mac dinh la chinh giua.
 	//va lap theo chieu ngang
-	void DrawFlipX(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor = 0xFFFFFFFF, bool isCenter = true);
+	void drawFlipX(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor = 0xFFFFFFFF, bool isCenter = true);
 	
 	//ve texture tai vi tri mac dinh la chinh giua.
 	//va lap theo chieu doc
-	void DrawFlipY(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor = 0xFFFFFFFF, bool isCenter = true);
+	void drawFlipY(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor = 0xFFFFFFFF, bool isCenter = true);
 };
 
 #endif // !__SPRITE__H__

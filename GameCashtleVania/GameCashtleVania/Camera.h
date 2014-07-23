@@ -14,9 +14,9 @@ public:
 	//static Camera* CreateInstance();
 	Camera(void);
 	~Camera(void);
-	void Update(float x);
-	D3DXVECTOR3 GetPosCamera();
-	D3DXVECTOR3 GetPointTransform(float x, float y);
+	void update(float x);
+	D3DXVECTOR3 getPosCamera();
+	D3DXVECTOR3 getPointTransform(float x, float y);
 };
 
 

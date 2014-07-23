@@ -17,7 +17,7 @@ ObjectGame::ObjectGame(std::vector<std::string> arr)
 
 }
 
-void ObjectGame::UpdateRect()
+void ObjectGame::updateRect()
 {
 	this->_rect.top = _pos.y + this->_height / 2;
 	this->_rect.bottom = this->_rect.top - this->_height;
@@ -35,7 +35,7 @@ char* ObjectGame::className()
 	return "Object Game";
 }
 
-Box ObjectGame::GetBox()
+Box ObjectGame::getBox()
 {
 	this->_box = Box(_pos.x, _pos.y, _width, _height);
 	return _box;
