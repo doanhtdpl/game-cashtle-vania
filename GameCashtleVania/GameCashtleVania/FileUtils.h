@@ -5,7 +5,7 @@
 #include <vector>
 #include <hash_map>
 
-#define fileImage "..\\Resource\\file\\Image3.csv"
+#define fileImage "..\\Resource\\file\\Image.csv"
 #define fileSimon "..\\Resource\\file\\Simon.csv"
 
 class FileUtils
