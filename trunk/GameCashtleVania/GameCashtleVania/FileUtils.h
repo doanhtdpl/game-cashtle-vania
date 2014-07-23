@@ -12,11 +12,11 @@ class FileUtils
 {
 public:
 	static FileUtils* getInstance();
-	void ReadFileCSV(char* fileName, ObjectFactory* objFactory);
-	void ReadFileMap();
-	void ReadFileImage();
-	void LoadCSV();
-	std::vector<std::string> Split(std::string s, char key);
+	void readFileCSV(char* fileName, ObjectFactory* objFactory);
+	void readFileMap();
+	void readFileImage();
+	void loadCSV();
+	std::vector<std::string> split(std::string s, char key);
 protected:
 private:
 	static FileUtils* _instance;

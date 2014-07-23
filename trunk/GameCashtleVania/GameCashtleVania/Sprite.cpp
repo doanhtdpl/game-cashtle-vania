@@ -10,7 +10,7 @@ Sprite::~Sprite(void)
 {
 }
 
-void Sprite::Draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor, bool isCenter)
+void Sprite::draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor, bool isCenter)
 {
 	if (isCenter)
 	{
@@ -25,14 +25,14 @@ void Sprite::Draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transc
 				( RectRS->bottom - RectRS->top) / 2.0f,
 				0 );
 		}
-		this->_SpriteHandel->Draw(image->Get_Texture(), RectRS, center, &pos, transcolor);
+		this->_SpriteHandel->Draw(image->getTexture(), RectRS, center, &pos, transcolor);
 	}else {
 		
-		this->_SpriteHandel->Draw(image->Get_Texture(), RectRS, NULL, &pos, transcolor);
+		this->_SpriteHandel->Draw(image->getTexture(), RectRS, NULL, &pos, transcolor);
 	}	
 }
 
-void Sprite::Draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DXVECTOR2 scale, D3DCOLOR transcolor /* = 0xFFFFFFFF */, bool isCenter /* = true */)
+void Sprite::draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DXVECTOR2 scale, D3DCOLOR transcolor /* = 0xFFFFFFFF */, bool isCenter /* = true */)
 {
 	HRESULT result;
 
@@ -62,7 +62,7 @@ void Sprite::Draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DXVECTOR2 sca
 		return;
 	}
 
-	this->Draw(image, RectRS, newPos, transcolor, isCenter);
+	this->draw(image, RectRS, newPos, transcolor, isCenter);
 
 	result = this->_SpriteHandel->SetTransform(&oldMatrix);
 	if (result != D3D_OK)
@@ -72,15 +72,15 @@ void Sprite::Draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DXVECTOR2 sca
 }
 
 //ve texture theo lat ngang
-void Sprite::DrawFlipX(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor, bool isCenter)
+void Sprite::drawFlipX(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor, bool isCenter)
 {
 	D3DXVECTOR2 scaling = D3DXVECTOR2(-1, 1);
-	this->Draw(image, RectRS, pos, scaling, transcolor, isCenter);
+	this->draw(image, RectRS, pos, scaling, transcolor, isCenter);
 }
 
 //ve texture theo lap doc
-void Sprite::DrawFlipY(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor, bool isCenter)
+void Sprite::drawFlipY(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor, bool isCenter)
 {
 	D3DXVECTOR2 scaling = D3DXVECTOR2(1, -1);
-	this->Draw(image, RectRS, pos, scaling, transcolor, isCenter);
+	this->draw(image, RectRS, pos, scaling, transcolor, isCenter);
 }

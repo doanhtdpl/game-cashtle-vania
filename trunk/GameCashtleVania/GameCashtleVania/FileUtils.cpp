@@ -22,7 +22,7 @@ FileUtils::FileUtils()
 }
 
 //doc file csv va luu objectFactory vao list
-void FileUtils::ReadFileCSV(char* fileName, ObjectFactory* objFactory)
+void FileUtils::readFileCSV(char* fileName, ObjectFactory* objFactory)
 {
 	string line;
 	ifstream* myfile = new ifstream(fileName);
@@ -35,7 +35,7 @@ void FileUtils::ReadFileCSV(char* fileName, ObjectFactory* objFactory)
 		{
 			if (getline(*myfile, line))
 			{
-				vector<string> arr = Split(line, ',');
+				vector<string> arr = split(line, ',');
 				int ID_Object = atoi(arr[0].c_str());
 				objFactory->addInfo(arr);
 				//them objectfactory vao list
@@ -47,17 +47,17 @@ void FileUtils::ReadFileCSV(char* fileName, ObjectFactory* objFactory)
 }
 
 //load tat ca file CSV va luu vao list ObjectFactory
-void FileUtils::LoadCSV()
+void FileUtils::loadCSV()
 {
-	this->ReadFileCSV(fileSimon, SimonFactory::getInstance());
+	this->readFileCSV(fileSimon, SimonFactory::getInstance());
 }
 
-void FileUtils::ReadFileMap()
+void FileUtils::readFileMap()
 {
 
 }
 
-void FileUtils::ReadFileImage()
+void FileUtils::readFileImage()
 {
 	string line;
 	ifstream* myfile = new ifstream(fileImage);
@@ -72,7 +72,7 @@ void FileUtils::ReadFileImage()
 			{
 				//IDImage - Link
 
-				vector<string> arr = Split(line, ',');
+				vector<string> arr = split(line, ',');
 				int ID_Image = atoi(arr[0].c_str());
 				string linkResource = arr[1];
 				ManageTexture::getInstance()->createTextureByFileName(ID_Image, linkResource);
@@ -82,7 +82,7 @@ void FileUtils::ReadFileImage()
 }
 
 //cat 1 dong thanh cac chu cach nhau boi key: s = so tuan hoang. key = " "--> "so" - "tuan" - "hoang"
-vector<string> FileUtils::Split(string s, char key)
+vector<string> FileUtils::split(string s, char key)
 {
 	vector<string> arr;
 	string sTemp = "";

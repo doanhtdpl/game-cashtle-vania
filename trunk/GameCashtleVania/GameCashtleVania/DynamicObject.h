@@ -11,13 +11,13 @@
 class DynamicObject: public ObjectGame, public IMove
 {
 public:
-	virtual void Move(float Delta_Time);// overide IMOVE
+	virtual void move(float Delta_Time);// overide IMOVE
 	virtual char* className();
-	virtual void Update(float deltatime);
-	virtual void Update(float delta_Time, std::list<ObjectGame*> *_ListObjectCollision);
-	Box GetBox();
-	virtual float Collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime);
-	virtual float Collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime);
+	virtual void update(float deltatime);
+	virtual void update(float delta_Time, std::list<ObjectGame*> *_ListObjectCollision);
+	Box getBox();
+	virtual float collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime);
+	virtual float collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime);
 	DynamicObject(void);
 	~DynamicObject(void);
 };

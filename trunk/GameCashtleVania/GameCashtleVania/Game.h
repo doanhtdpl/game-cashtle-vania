@@ -21,19 +21,19 @@ protected:
 
 	bool Init_Window(HINSTANCE );
 	bool Init_Direct3D();
-	virtual void GameUpdate(float DeltaTime) = 0;
-	virtual void GameDraw() = 0;
-	virtual void GameInit() = 0;
-	virtual void Clear_Screen() = 0;
-	virtual void ProcessInput() = 0;
-	virtual void Delete_Memory_Game() = 0;
+	virtual void gameUpdate(float DeltaTime) = 0;
+	virtual void gameDraw() = 0;
+	virtual void gameInit() = 0;
+	virtual void clear_Screen() = 0;
+	virtual void processInput() = 0;
+	virtual void delete_Memory_Game() = 0;
 	void Render();
 
 	static LRESULT CALLBACK WinProc(HWND, UINT, WPARAM, LPARAM);
 public:
 	Game();
-	HWND GetWindowHandle();
-	LPDIRECT3DDEVICE9 GetD3DDEVICE();
+	HWND getWindowHandle();
+	LPDIRECT3DDEVICE9 getD3DDEVICE();
 
 	bool Init(HINSTANCE );
 	void GameRun();

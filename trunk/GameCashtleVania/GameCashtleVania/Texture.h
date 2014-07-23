@@ -13,10 +13,10 @@ private:
 public:
 	Texture(LPDIRECT3DDEVICE9 );
 	~Texture(void);
-	bool Load_Image(std::string , D3DCOLOR );
-	LPDIRECT3DTEXTURE9 Get_Texture();
-	int Get_Height();
-	int Get_Width();
+	bool load_Image(std::string , D3DCOLOR );
+	LPDIRECT3DTEXTURE9 getTexture();
+	int getHeight();
+	int getWidth();
 };
 
 #endif // !__TEXTURE__H__

@@ -58,17 +58,17 @@ public:
 	bool AABB(Box b1, Box b2, float& moveX, float& moveY);
 
 	// returns a box the spans both a current box and the destination box
-	Box GetSweptBroadphaseBox(Box box, float deltaTime);
+	Box getSweptBroadphaseBox(Box box, float deltaTime);
 
 	// performs collision detection on moving box b1 and static box b2
 	// returns the time that the collision occured (where 0 is the start of the movement and 1 is the destination)
 	// getting the new position can be retrieved by box.x = box.x + box.vx * collisiontime
 	// normalx and normaly return the normal of the collided surface (this can be used to do a response)
-	float SweptAABB(Box b1, Box b2, float& normalx, float& normaly, float deltaTime);
+	float sweptAABB(Box b1, Box b2, float& normalx, float& normaly, float deltaTime);
 	
-	Box SetBox(float _x, float _y, float _w, float _h, float _vx, float _vy);
+	Box setBox(float _x, float _y, float _w, float _h, float _vx, float _vy);
 
-	static ICollision* GetInstance();
+	static ICollision* getInstance();
 protected:
 
 private:

@@ -16,7 +16,7 @@ Texture::~Texture(void)
 	}
 
 }
-bool Texture::Load_Image(std::string fileName, D3DCOLOR color )
+bool Texture::load_Image(std::string fileName, D3DCOLOR color )
 {
 	HRESULT result; // take a value return
 	//save information of source file into avaiable _infoImageT
@@ -50,15 +50,15 @@ bool Texture::Load_Image(std::string fileName, D3DCOLOR color )
 	}
 	return  1;
 }
-LPDIRECT3DTEXTURE9 Texture::Get_Texture()
+LPDIRECT3DTEXTURE9 Texture::getTexture()
 {
 	return _texture;
 }
-int Texture::Get_Height()
+int Texture::getHeight()
 {
 	return _infoImageT.Height;
 }
-int Texture::Get_Width()
+int Texture::getWidth()
 {
 	return _infoImageT.Width;
 }

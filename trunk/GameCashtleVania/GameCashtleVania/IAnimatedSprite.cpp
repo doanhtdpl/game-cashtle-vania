@@ -25,7 +25,7 @@ IAnimatedSprite::~IAnimatedSprite(void)
 {
 }
 
-void IAnimatedSprite::Animated(float deltaTime)
+void IAnimatedSprite::animated(float deltaTime)
 {
 	_beforeTimeOld += deltaTime;
 
@@ -42,7 +42,7 @@ void IAnimatedSprite::Animated(float deltaTime)
 	
 }
 
-RECT* IAnimatedSprite::UpdateRectRS(int width, int height)
+RECT* IAnimatedSprite::updateRectRS(int width, int height)
 {
 	RECT* rectRS = new RECT();
 	int x,y;

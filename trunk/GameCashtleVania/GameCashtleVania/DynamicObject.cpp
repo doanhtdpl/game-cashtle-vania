@@ -15,7 +15,7 @@ DynamicObject::~DynamicObject(void)
 {
 }
 
-void DynamicObject::Move(float Delta_Time)
+void DynamicObject::move(float Delta_Time)
 {
 	if (this->_pos.x < this->_width / 2)
 		this->_pos.x = this->_width / 2;
@@ -48,49 +48,49 @@ char* DynamicObject::className()
 	return "Dynamic Object";
 }
 
-Box DynamicObject::GetBox()
+Box DynamicObject::getBox()
 {
 	this->_box = Box(this->_pos.x, this->_pos.y, this->_width, this->_height, this->_vx, this->_vy);
 	return _box;
 }
 
-void DynamicObject::Update(float deltatime)
+void DynamicObject::update(float deltatime)
 {
 
 }
 
-void DynamicObject::Update(float Delta_Time, std::list<ObjectGame*> *_ListObjectCollision)
+void DynamicObject::update(float Delta_Time, std::list<ObjectGame*> *_ListObjectCollision)
 {
-	this->UpdatePostureMove(Delta_Time);
-	this->Move(Delta_Time);
+	this->updatePostureMove(Delta_Time);
+	this->move(Delta_Time);
 }
 
-float DynamicObject::Collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime)
+float DynamicObject::collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime)
 {
 	return 0.0f;
 }
 
-float DynamicObject::Collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime)
+float DynamicObject::collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime)
 {
-	Box box = this->GetBox();
-	Box staticBox = staticObject->GetBox();
+	Box box = this->getBox();
+	Box staticBox = staticObject->getBox();
 
-	Box broadphaseBox = ICollision::GetInstance()->GetSweptBroadphaseBox(box, deltaTime);
+	Box broadphaseBox = ICollision::getInstance()->getSweptBroadphaseBox(box, deltaTime);
 
 	float moveX = 0;
 	float moveY = 0;
 
 	//kiem tra 2 box hien tai da va cham chua
-	if (ICollision::GetInstance()->AABBCheck(box, staticBox))
+	if (ICollision::getInstance()->AABBCheck(box, staticBox))
 	{
 		//dich chuyen object
 		return 0.0f;
 	}else
 	{
 		//kiem tra 2 object co the va cham ko?
-		if (ICollision::GetInstance()->AABB(broadphaseBox, staticBox, moveX, moveY))
+		if (ICollision::getInstance()->AABB(broadphaseBox, staticBox, moveX, moveY))
 		{
-			float timeCol = ICollision::GetInstance()->SweptAABB(box, staticBox, normalx, normaly, deltaTime);
+			float timeCol = ICollision::getInstance()->sweptAABB(box, staticBox, normalx, normaly, deltaTime);
 			return timeCol;
 		}else
 		{

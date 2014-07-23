@@ -16,13 +16,13 @@ public:
 	Camera		  *_camera;
 public:
 	ManageSprite();
-	static ManageSprite* CreateInstance();
-	void Init_Sprite(LPD3DXSPRITE spriteHandle);
-	void DrawObject(ObjectGame *Object);
+	static ManageSprite* createInstance();
+	void init_Sprite(LPD3DXSPRITE spriteHandle);
+	void drawObject(ObjectGame *Object);
 
 	//ve hinh theo IDImage tai vi tri trung tam. pos la vi tri o giua
-	void Draw(int IDImage, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor = 0xFFFFFFFF);
-	void Update_Camera(float posx_mario);
+	void draw(int IDImage, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor = 0xFFFFFFFF);
+	void update_Camera(float posx_mario);
 	friend class Font;
 	~ManageSprite(void);
 };

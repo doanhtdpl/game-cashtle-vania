@@ -17,7 +17,7 @@ SimonFactory::SimonFactory()
 
 }
 
-Simon* SimonFactory::CreateObj() 
+Simon* SimonFactory::createObj() 
 {
-	return Simon::CreateInstance(info);
+	return Simon::createInstance(info);
 }

@@ -16,8 +16,8 @@ public:
 	IAnimatedSprite(void);
 	IAnimatedSprite(int curFrame,int increase, int totalFrames, int coloumn, DWORD _elapseTimeSwitchFrame);
 	~IAnimatedSprite(void);
-	virtual void Animated(float deltaTime);//change curframe
-	RECT* UpdateRectRS(int width, int height);
+	virtual void animated(float deltaTime);//change curframe
+	RECT* updateRectRS(int width, int height);
 };
 
 #endif // !__IANIMATED_SPRITE_H__

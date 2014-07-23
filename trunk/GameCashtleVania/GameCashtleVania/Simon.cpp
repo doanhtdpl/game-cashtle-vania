@@ -4,7 +4,7 @@
 
 Simon* Simon::_instance = NULL;
 
-Simon* Simon::GetInstance()
+Simon* Simon::getInstance()
 {
 	if (_instance == NULL)
 	{
@@ -14,7 +14,7 @@ Simon* Simon::GetInstance()
 	return _instance;
 }
 
-Simon* Simon::CreateInstance(std::vector<std::string> arr)
+Simon* Simon::createInstance(std::vector<std::string> arr)
 {
 	if (_instance == NULL)
 	{
@@ -54,7 +54,7 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_elapseTimeSwitchFrame = EslapseTimeSwitchFrame;
 	this->_beforeTimeOld = 0.0f;
 
-	this->_rectRS = this->UpdateRectRS(this->_width, this->_height);
+	this->_rectRS = this->updateRectRS(this->_width, this->_height);
 
 	_moveMent = SimonMove::Stand;
 	this->_CanJum = true;
@@ -64,7 +64,7 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_vy = this->_Vy_default;
 }
 
-void Simon::Move(float Delta_Time)
+void Simon::move(float Delta_Time)
 {
 	switch (_moveMent)
 	{
@@ -110,10 +110,10 @@ void Simon::Move(float Delta_Time)
 	}
 }
 
-void Simon::Update(float deltatime)
+void Simon::update(float deltatime)
 {
-	Move(deltatime);
-	Animated(deltatime);
+	move(deltatime);
+	animated(deltatime);
 
 	if (this->_moveMent == SimonMove::Moves)
 	{
@@ -121,7 +121,7 @@ void Simon::Update(float deltatime)
 	}
 }
 
-void Simon::Animated(float deltatime)
+void Simon::animated(float deltatime)
 {
 	this->_beforeTimeOld += deltatime;
 	if (_beforeTimeOld > _elapseTimeSwitchFrame)
@@ -156,10 +156,10 @@ void Simon::Animated(float deltatime)
 		}
 	}
 
-	this->_rectRS = this->UpdateRectRS(this->_width, this->_height);
+	this->_rectRS = this->updateRectRS(this->_width, this->_height);
 }
 
-void Simon::ProcessInput()
+void Simon::processInput()
 {
 	Input::CreateInstance()->ProcessKeyboard();
 
@@ -190,25 +190,25 @@ void Simon::ProcessInput()
 
 //implement method collision
 
-float Simon::Collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime)
+float Simon::collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime)
 {
 	return 0.0f;
 }
 
-float Simon::Collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime)
+float Simon::collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime)
 {
-	Box box = this->GetBox();
-	Box staticBox = staticObject->GetBox();
+	Box box = this->getBox();
+	Box staticBox = staticObject->getBox();
 
-	Box broadphaseBox = ICollision::GetInstance()->GetSweptBroadphaseBox(box, deltaTime);
+	Box broadphaseBox = ICollision::getInstance()->getSweptBroadphaseBox(box, deltaTime);
 
 	float moveX = 0;
 	float moveY = 0;
 
 	//kiem tra 2 box hien tai da va cham chua
-	if (ICollision::GetInstance()->AABBCheck(box, staticBox))
+	if (ICollision::getInstance()->AABBCheck(box, staticBox))
 	{
-		if (ICollision::GetInstance()->AABB(box, staticBox, moveX, moveY))
+		if (ICollision::getInstance()->AABB(box, staticBox, moveX, moveY))
 		{
 			this->_pos.x += moveX;
 			this->_pos.y += moveY;
@@ -217,9 +217,9 @@ float Simon::Collision(StaticObject* staticObject, float &normalx, float &normal
 	}else
 	{
 		//kiem tra 2 object co the va cham ko?
-		if (ICollision::GetInstance()->AABB(broadphaseBox, staticBox, moveX, moveY))
+		if (ICollision::getInstance()->AABB(broadphaseBox, staticBox, moveX, moveY))
 		{
-			float timeCol = ICollision::GetInstance()->SweptAABB(box, staticBox, normalx, normaly, deltaTime);
+			float timeCol = ICollision::getInstance()->sweptAABB(box, staticBox, normalx, normaly, deltaTime);
 			return timeCol;
 		}else
 		{

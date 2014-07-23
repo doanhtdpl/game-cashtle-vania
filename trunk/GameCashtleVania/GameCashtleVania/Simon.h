@@ -10,17 +10,17 @@ class Simon : public DynamicObject, IAnimatedSprite
 {
 public:
 	Simon();
-	static Simon* GetInstance();
-	static Simon* CreateInstance(std::vector<std::string> arr);
+	static Simon* getInstance();
+	static Simon* createInstance(std::vector<std::string> arr);
 	~Simon();
 	Simon(std::vector<std::string> arr);
-	void Move(float Delta_Time);
-	void Update(float deltatime);
-	void Animated(float deltatime);
-	void ProcessInput();
+	void move(float Delta_Time);
+	void update(float deltatime);
+	void animated(float deltatime);
+	void processInput();
 
-	float Collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime);
-	float Collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime);
+	float collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime);
+	float collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime);
 protected:
 private:
 	static Simon* _instance;
