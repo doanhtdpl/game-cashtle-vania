@@ -18,17 +18,16 @@ private:
 	int _column;// tong so tile tren 1 dong cua background; 17
 	int _IDImage;
 	std::hash_map<int, RECT*> _listTileRectRS;
-
 public:
 	BackGround();
 	~BackGround();
-	RECT* GetRectResouceByIDTile(int IDTIle);
-	RECT* GetRectRSInHM(int IDTile);
-	void ReadFromFile(char* filePath);
-	std::vector<std::string> Split(std::string s, char key);
-	void DrawBackGround();
-	void AddElement(std::vector<std::string> arr, int rowIndex);
-
+	RECT* getRectResouceByIDTile(int IDTIle);
+	RECT* getRectRSInHM(int IDTile);
+	void readFromFile(std::string filePath);
+	//std::vector<std::string> split(std::string s, char key);
+	void drawBackGround();
+	void addElement(std::vector<std::string> arr, int rowIndex);
+	std::vector<std::string> BackGround::split(std::string s, char key);
 };
 
 #endif // !__BACK_GROUND_H__

@@ -13,7 +13,7 @@ public:
 	int _ID;//each object has a ID to identified with other object
 	int _ID_Image;
 	RECT _rect;//rect used to check collision
-	D3DXVECTOR3 _pos;//position of object
+	D3DXVECTOR2 _pos;//position of object
 	bool _isALive;//life or die??
 	int _height;//height of object and uses to draw.
 	int _width;
@@ -27,7 +27,7 @@ public:
 	virtual char* className();
 	ObjectGame(void);
 	ObjectGame(std::vector<std::string> arr);
-	void updateRect();
+	void updateRect();// kill it
 	virtual Box getBox();
 	~ObjectGame(void);
 };

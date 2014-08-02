@@ -2,6 +2,7 @@
 #define __INTERFACE_MOVE_H__
 
 #include "utils.h"
+#include <d3d9.h>
 
 class IMove
 {

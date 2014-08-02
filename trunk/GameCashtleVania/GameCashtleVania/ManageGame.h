@@ -8,12 +8,21 @@
 
 class ManageGame : public Game
 {
+private:
+	int levelCurrent;// level 1
+	int iDScene;// scene 1
+	void WinGame();
+	void LoseGame();
+	void RestartScene();
+	void NextScene();
+	void NextLevel();
 public:
-	static int _Word_Map;
 	static int _count_LifeMario;
 	static int _score;
 	BackGround* mapBG;
 	Brick* brick;
+	int level;
+	int scene;
 
 	void gameUpdate(float DeltaTime);
 	void gameDraw();

@@ -1,21 +1,11 @@
 #ifndef __UTILS___
 #define __UTILS___
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dinput.h>
-#include <dsound.h>
-
-
-#include <Windows.h>
-#include <time.h>
 #include <iostream>
-#include <list>
-#include <hash_map>
-#include <iterator>
 #include <vector>
-#include <fstream>
 #include <string>
+
+using namespace std;
 
 #define EslapseTimeSwitchFrame 0.1
 
@@ -50,16 +40,16 @@ enum Choice_Setting
 	Music_BG = 1,
 	Sound = 2
 };
-
-enum World_Map
-{
-	Level1 = 1,
-	Level2 = 2,
-	Level3 = 3,
-	Creep_Sewer1 = 4,
-	Creep_Sewer2 = 5,
-	Creep_Sewer3 = 6
-};
+//
+//enum World_Map
+//{
+//	Level1 = 1,
+//	Level2 = 2,
+//	Level3 = 3,
+//	Creep_Sewer1 = 4,
+//	Creep_Sewer2 = 5,
+//	Creep_Sewer3 = 6
+//};
 
 enum Posture_Moves
 {
