@@ -15,7 +15,7 @@ public:
 	virtual char* className();
 	virtual void update(float deltatime);
 	virtual void update(float delta_Time, std::list<ObjectGame*> *_ListObjectCollision);
-	Box getBox();
+	virtual Box getBox();
 	virtual float collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime);
 	virtual float collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime);
 	DynamicObject(void);

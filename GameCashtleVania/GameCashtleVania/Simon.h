@@ -18,7 +18,7 @@ public:
 	void update(float deltatime);
 	void animated(float deltatime);
 	void processInput();
-
+	
 	float collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime);
 	float collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime);
 protected:
@@ -39,7 +39,7 @@ enum SimonMove
 	Sit,//dang ngoi
 	PrepareUpTheStair,//chuan bi len cau thang
 	OnStair,//dang dung tren cau thang
-	UpTheStair,//len cau thang
+	PrepareLeaveTheStair,//len cau thang
 	Jum,//dang nhay
 	Free//dang roi tu do
 };

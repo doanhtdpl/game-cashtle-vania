@@ -1,0 +1,6 @@
+Level,IDScene,iD_Scene_Restart,iD_Scene_Next,finalScene,bGPath,mapPath
+1,1,1,2,0,..\Resource\MapBackGround\Level1Scene1.txt,..\Resource\MapBackGround\Level1Scene1.txt
+1,2,2,3,0,..\Resource\MapBackGround\Level1Scene2.txt,..\Resource\MapBackGround\Level1Scene1.txt
+1,3,3,4,0,..\Resource\MapBackGround\Level1Scene3.txt,..\Resource\MapBackGround\Level1Scene1.txt
+1,4,3,3,0,..\Resource\MapBackGround\Level1Scene4.txt,..\Resource\MapBackGround\Level1Scene1.txt
+1,5,5,0,1,..\Resource\MapBackGround\Level1Scene5.txt,..\Resource\MapBackGround\Level1Scene1.txt

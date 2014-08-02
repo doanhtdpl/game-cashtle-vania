@@ -7,10 +7,10 @@ using namespace std;
 BackGround::BackGround()
 {
 	this->_matrix = NULL;
-	this->_IDImage = 2001;
+	this->_IDImage = 2002;
 }
 
-void BackGround::ReadFromFile(char* filePath)
+void BackGround::readFromFile(std::string filePath)
 {
 	this->_column = 17;
 
@@ -22,9 +22,18 @@ void BackGround::ReadFromFile(char* filePath)
 	{
 		//doc dong dau tien lay chi so dong va cot cua ma tran
 		getline(*myfile, line);
-		arr = Split(line, '\t');
+		
+		//chuan hoa dong dau tien. Bo nhung ki tu khong phai so
+		int k = 0;
+		while(line[k] < 48 || line[k] > 57)
+		{
+			line.erase(line.begin());
+		}
+
+		arr = split(line, '\t');
 		_mapWidth = atoi(arr[0].c_str()); 
 		_mapHeight = atoi(arr[1].c_str());
+
 		this->_matrix = new int*[_mapWidth];
 		for (int i = 0; i < _mapWidth; i++)
 		{
@@ -33,7 +42,7 @@ void BackGround::ReadFromFile(char* filePath)
 
 		//doc dong thu hai lay do dai va rong cua tile map
 		std::getline(*myfile, line);
-		arr = Split(line, '\t');
+		arr = split(line, '\t');
 		this->_tileHeight = atoi(arr[0].c_str()); 
 		this->_tileWidth = atoi(arr[1].c_str());
 
@@ -42,8 +51,8 @@ void BackGround::ReadFromFile(char* filePath)
 		{
 			if (std::getline(*myfile, line))
 			{
-				arr = Split(line, '\t');
-				AddElement(arr, row);
+				arr = split(line, '\t');
+				addElement(arr, row);
 				row++;
 				//them objectfactory vao list
 			}
@@ -52,7 +61,7 @@ void BackGround::ReadFromFile(char* filePath)
 }
 
 // lay rectResource cua IDTile tren background
-RECT* BackGround::GetRectResouceByIDTile(int IDTile)
+RECT* BackGround::getRectResouceByIDTile(int IDTile)
 {
 	RECT* rectRS = new RECT();
 
@@ -67,12 +76,12 @@ RECT* BackGround::GetRectResouceByIDTile(int IDTile)
 	return rectRS;
 }
 
-RECT* BackGround::GetRectRSInHM(int IDTile)
+RECT* BackGround::getRectRSInHM(int IDTile)
 {
 	return this->_listTileRectRS.find(IDTile)->second;
 }
 
-void BackGround::DrawBackGround()
+void BackGround::drawBackGround()
 {
 	int IDTile;
 	for (int i = 0; i < _mapWidth; i++)
@@ -84,13 +93,13 @@ void BackGround::DrawBackGround()
 			D3DXVECTOR2 pos = D3DXVECTOR2( j * _tileWidth, (_mapWidth - i) * _tileHeight);
 			D3DXVECTOR3 posCenter = D3DXVECTOR3(pos.x - _tileWidth / 2, pos.y - _tileWidth / 2 , 0);
 
-			ManageSprite::createInstance()->draw(this->_IDImage, GetRectRSInHM(IDTile), posCenter);
+			ManageSprite::createInstance()->draw(this->_IDImage, getRectRSInHM(IDTile), posCenter);
 		}
 	}
 }
 
 // luu 1 dong vao matran
-void BackGround::AddElement(std::vector<std::string> arr, int rowIndex)
+void BackGround::addElement(std::vector<std::string> arr, int rowIndex)
 {
 	int IDTile;
 	RECT* rectRS;
@@ -101,12 +110,12 @@ void BackGround::AddElement(std::vector<std::string> arr, int rowIndex)
 		this->_matrix[rowIndex][col] = IDTile;
 		
 		//insert rectRS and IDTIle into hashMap
-		rectRS = GetRectResouceByIDTile(IDTile);
+		rectRS = getRectResouceByIDTile(IDTile);
 		this->_listTileRectRS[IDTile] = rectRS;
 	}
 }
 
-std::vector<string> BackGround::Split(string s, char key)
+std::vector<string> BackGround::split(string s, char key)
 {
 	vector<string> arr;
 	string sTemp = "";

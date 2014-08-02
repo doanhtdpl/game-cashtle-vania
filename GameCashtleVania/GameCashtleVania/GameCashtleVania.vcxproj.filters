@@ -31,6 +31,15 @@
     <Filter Include="Map">
       <UniqueIdentifier>{5528ad25-69b2-46a0-bf78-72d62340c32c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map\Level">
+      <UniqueIdentifier>{7d6464ad-2eb1-4009-98f8-c42edaea887b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Weapon">
+      <UniqueIdentifier>{cf44e945-5cdd-4943-a50d-acd21455623f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Weapon\IronRod">
+      <UniqueIdentifier>{08bdb651-0f37-41ef-bc0e-7da3744f5b42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -96,6 +105,15 @@
     <ClCompile Include="BackGround.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="MapLoader.cpp">
+      <Filter>Map\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="IronRod.cpp">
+      <Filter>GameObject\DynamicObject\Weapon\IronRod</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>GameObject\DynamicObject\Weapon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -160,6 +178,18 @@
     </ClInclude>
     <ClInclude Include="BackGround.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapLoader.h">
+      <Filter>Map\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="IronRod.h">
+      <Filter>GameObject\DynamicObject\Weapon\IronRod</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>GameObject\DynamicObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="TagClassName.h">
+      <Filter>DirectX</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

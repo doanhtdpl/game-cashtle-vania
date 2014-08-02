@@ -40,7 +40,6 @@ Simon::Simon(std::vector<std::string> arr)
 	//doc tu map
 	this->_pos.x = 30;
 	this->_pos.y = 34;
-	this->_pos.z = 0;
 
 	//IMove
 	this->_Vx_default = atoi(arr.at(5).c_str());
@@ -64,7 +63,7 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_vy = this->_Vy_default;
 }
 
-void Simon::move(float Delta_Time)
+void Simon::move(float delta_Time)
 {
 	switch (_moveMent)
 	{
@@ -75,7 +74,7 @@ void Simon::move(float Delta_Time)
 		{
 			if (this->_CanMoveL)
 			{
-				this->_pos.x -= this->_vx * Delta_Time;
+				this->_pos.x -= this->_vx * delta_Time;
 			}else
 			{
 				_moveMent = SimonMove::Stand;
@@ -84,7 +83,7 @@ void Simon::move(float Delta_Time)
 		{
 			if (this->_CanMoveR)
 			{
-				this->_pos.x += this->_vx * Delta_Time;
+				this->_pos.x += this->_vx * delta_Time;
 			}else
 			{
 				_moveMent = SimonMove::Stand;
@@ -93,17 +92,22 @@ void Simon::move(float Delta_Time)
 		break;
 	case Stand:
 		break;
-	case PrepareUpTheStair:
-		break;
 	case OnStair:
 		break;
-	case UpTheStair:
-		break;
 	case Jum:
-		this->_pos.y += this->_vy * Delta_Time;
+		this->_pos.y += this->_vy * delta_Time;
+		this->_High_Jumped += this->_vy * delta_Time;
+		if (this->_High_Jumped >= this->_JumH_Max)
+		{
+			//dam bao luc nao simon cung chi nhay khong vuot qua JumH_Max
+			this->_pos.y -= this->_High_Jumped - this->_JumH_Max;
+			this->_moveMent =  SimonMove::Free;
+			this->_High_Jumped = false;
+		}
 		break;
 	case Free:
-		this->_pos.y += this->_vy * Delta_Time * 2;//chi can cho roi nhanh hon thoi. Khong can dung gia toc
+		//khi nao cham dat thi dung
+		this->_pos.y += this->_vy * delta_Time * 2;//chi can cho roi nhanh hon thoi. Khong can dung gia toc
 		break;
 	default:
 		break;
@@ -132,20 +136,16 @@ void Simon::animated(float deltatime)
 		case None:
 			break;
 		case Moves:
-			this->_curFrame --;
-			if (_curFrame < 0 )
+			this->_curFrame ++;
+			if (_curFrame > 3 )
 			{
-				_curFrame = 3;
+				_curFrame = 0;
 			}
 			break;
 		case Stand:
-			this->_curFrame = 3;
-			break;
-		case PrepareUpTheStair:
+			this->_curFrame = 0;
 			break;
 		case OnStair:
-			break;
-		case UpTheStair:
 			break;
 		case Jum:
 			break;

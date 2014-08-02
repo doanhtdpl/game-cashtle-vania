@@ -4,8 +4,8 @@
 #include "ManageSprite.h"
 #include "SimonFactory.h"
 #include "Simon.h"
+#include "MapLoader.h"
 
-int ManageGame::_Word_Map = 1;
 int ManageGame::_count_LifeMario = 4;
 int ManageGame::_score = 0;
 
@@ -22,7 +22,7 @@ ManageGame::~ManageGame(void)
 
 void ManageGame::gameDraw()
 {
-	mapBG->DrawBackGround();
+	mapBG->drawBackGround();
 
 	ManageSprite::createInstance()->drawObject( Simon::getInstance() );
 
@@ -45,18 +45,23 @@ void ManageGame::gameUpdate(float DeltaTime)
 	Simon::getInstance()->update(DeltaTime);
 	float normalX = 0;
 	float normalY = 0;
-	Simon::getInstance()->collision((StaticObject*)brick, normalX, normalY, DeltaTime);
+	//Simon::getInstance()->collision((StaticObject*)brick, normalX, normalY, DeltaTime);
 }
 
 void ManageGame::gameInit()
 {
+	MapLoader::getInstance()->readInfoSceneFromFile();
 	ManageSprite::createInstance()->init_Sprite(this->SpriteHandle);
 	ManageTexture::createInstance(this->_d3ddv);
 	FileUtils::getInstance()->readFileImage();
 	FileUtils::getInstance()->loadCSV();
 	SimonFactory::getInstance()->createObj();
 	mapBG = new BackGround();
-	mapBG->ReadFromFile("..\\Resource\\MapBackGround\\mapBG.txt");
+	//mapBG->readFromFile("..\\Resource\\MapBackGround\\mapBG.txt");
+	level = 1;
+	scene = 2;
+	InfoScene* infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
+	mapBG->readFromFile(infoScene->bGPath);
 	brick = new Brick();
 }
 
