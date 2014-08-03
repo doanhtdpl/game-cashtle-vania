@@ -8,9 +8,11 @@ class ObjectFactory
 {
 public:
 	void addInfo(std::vector<std::string> arr);
-	virtual ObjectGame* createObj() = 0;
+	virtual ObjectGame* createObj();
+	virtual ObjectGame* createObj(int ID);
 protected:
-	std::vector<std::string> info;
+	// vector chua list cac arr : std::vector<std::string> la thong tin cua 1 object
+	std::vector<std::vector<std::string>> info;
 private:
 };
 #endif // !__OBJECT_FACTORY_H__

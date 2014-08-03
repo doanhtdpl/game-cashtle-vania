@@ -18,7 +18,6 @@ Box ICollision::setBox(float _x, float _y, float _w, float _h, float _vx, float 
 	return Box(_x, _y, _w, _h, _vx, _vy);
 }
 
-
 //return true neu 2 box dang va cham
 // moveX va moveY tra va huong ma box di chuyeb de tranh va cham
 bool ICollision::AABB(Box b1, Box b2, float& moveX, float& moveY)
@@ -43,8 +42,8 @@ bool ICollision::AABB(Box b1, Box b2, float& moveX, float& moveY)
 
 	// find the offset of both sides
 	// tim khoang cach di chuyen de khong bi va cham
-	moveX = abs(l) < r ? l : r;
-	moveY = abs(t) < b ? t : b;
+	moveX = abs(l) < abs(r) ? l : r;
+	moveY = abs(t) < abs(b) ? t : b;
 
 	// only use whichever offset is the smallest
 	// chi su dung 1 phan dich chuyen nho hon
@@ -132,8 +131,8 @@ float ICollision::sweptAABB(Box b1, Box b2, float& normalx, float& normaly, floa
 	}
 	else
 	{
-		xEntry = xInvEntry / b1.vx * deltaTime;
-		xExit = xInvExit / b1.vx * deltaTime;
+		xEntry = xInvEntry / (b1.vx * deltaTime);
+		xExit = xInvExit / (b1.vx * deltaTime);
 	}
 
 	if (b1.vy == 0.0f)
@@ -143,8 +142,8 @@ float ICollision::sweptAABB(Box b1, Box b2, float& normalx, float& normaly, floa
 	}
 	else
 	{
-		yEntry = yInvEntry / b1.vy * deltaTime;
-		yExit = yInvExit / b1.vy * deltaTime;
+		yEntry = yInvEntry / (b1.vy * deltaTime);
+		yExit = yInvExit / (b1.vy * deltaTime);
 	}
 
 	// find the earliest/latest times of collision

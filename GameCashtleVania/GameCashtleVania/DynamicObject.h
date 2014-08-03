@@ -12,9 +12,9 @@ class DynamicObject: public ObjectGame, public IMove
 {
 public:
 	virtual void move(float Delta_Time);// overide IMOVE
-	virtual char* className();
+	virtual std::string className();
 	virtual void update(float deltatime);
-	virtual void update(float delta_Time, std::list<ObjectGame*> *_ListObjectCollision);
+	virtual void update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
 	virtual Box getBox();
 	virtual float collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime);
 	virtual float collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime);

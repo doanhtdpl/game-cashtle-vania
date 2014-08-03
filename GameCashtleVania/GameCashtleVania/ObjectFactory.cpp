@@ -1,10 +1,17 @@
 #include "ObjectFactoty.h"
 using namespace std;
 
+ObjectGame* ObjectFactory::createObj(int ID)
+{
+	return NULL;
+}
+
+ObjectGame* ObjectFactory::createObj()
+{
+	return NULL;
+}
+
 void ObjectFactory::addInfo(vector<string> arr) 
 {
-	for (int i = 0; i < arr.size(); i++)
-	{
-		info.push_back(arr.at(i));
-	}
+	info.push_back(arr);
 }

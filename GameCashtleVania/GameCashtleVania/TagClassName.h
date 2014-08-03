@@ -9,13 +9,14 @@
 class TagClassName
 {
 public:
-	const std::string tagEnemy;
+	std::string tagEnemy;
 	const std::string tagSimon;
 	const std::string tagItem;
 	const std::string tagHideObject;
 	const std::string tagWeapon;
-	const std::string tagGroundObject;
+	std::string tagGroundObject;
 	static TagClassName* getInstance();
+	TagClassName();
 protected:
 private:
 	static TagClassName* _instance;

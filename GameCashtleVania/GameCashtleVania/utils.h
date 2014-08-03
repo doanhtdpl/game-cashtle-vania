@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#define EslapseTimeSwitchFrame 0.1
+#define EslapseTimeSwitchFrame 0.09
 
 #define ClassName "Cashtle Vania"
 #define Screen_Width 800
