@@ -1,3 +1,14 @@
+#ifndef __TYPE_ROD__ENUM__
+#define __TYPE_ROD__ENUM__
+//co' 3 loai rod. Moi loai tuong ung voi Frame anh khac nhau va do dai roi khi quat cung khac nhau
+enum Type_Rod
+{
+	Rod1 = 1,
+	Rod2 = 2,
+	Rod3 = 3
+};
+#endif // !__TYPE_ROD__ENUM__
+
 #ifndef __STATE_ROD__ENUM_
 #define __STATE_ROD__ENUM_
 
@@ -9,17 +20,6 @@ enum State_Rod
 };
 
 #endif // !__STATE_ROD__ENUM_
-
-#ifndef __TYPE_ROD__ENUM__
-
-//co' 3 loai rod. Moi loai tuong ung voi Frame anh khac nhau va do dai roi khi quat cung khac nhau
-enum Type_Rod
-{
-	Rod1 = 1,
-	Rod2 = 2,
-	Rod3 = 3
-};
-#endif // !__TYPE_ROD__ENUM__
 
 #ifndef __IRON_ROD_H_
 #define __IRON_ROD_H_
@@ -35,19 +35,31 @@ public:
 	State_Rod getStateRod(); // tra ve trang thai hien tai cua rod
 	void ChangeState();//thay doi trang thai 
 	void ChangeTypeRod();//thay doi roi
-	void Use(D3DXVECTOR2 posSimon);//
+	void Use(D3DXVECTOR2 posSimon, bool Left);//
 	Box getBox();// box de va cham
-	void updateRectRS(int width, int height);
-	float timeChangeState;//doc tu file
-	
+	void animated(float deltaTime);
+	RECT* updateRectRS(int width, int height);
+	void update(float delta_Time, std::list<ObjectGame*> *_ListObjectCollision);
+
 	static IronRod* getInstance();
+	static IronRod* createInstance(std::vector<std::string> arr);
 	IronRod();
 	IronRod(std::vector<std::string> arr);
 protected:
 	Type_Rod _typeRod;
 	State_Rod _stateRod;
-	float _realWidth;//chieu dai thuc su cua roi
-	float _realHeight;//chieu rong thuc su cua roi
+	float timeChangeState;
+	float realWidth;//dung trong get box de xet va cham
+
+	float _elapseTimeState1;
+	float _elapseTimeState2;
+	float _elapseTimeState3;
+
+	float _widthState12;
+	float _widthState3;
+	float _realWidthType12;//chieu dai thuc su cua roi loai 1 2
+	float _realWidthType3;//chieu dai thuc su cua roi loai 3
+	float realHeight;//chieu rong thuc su cua roi
 private:
 	static IronRod* _instance;
 };

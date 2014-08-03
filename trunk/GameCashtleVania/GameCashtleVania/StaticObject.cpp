@@ -14,7 +14,7 @@ StaticObject::~StaticObject(void)
 {
 }
 
-char* StaticObject::className()
+std::string StaticObject::className()
 {
 	return "Static Object";
 }	

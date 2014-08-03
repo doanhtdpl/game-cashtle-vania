@@ -40,6 +40,24 @@
     <Filter Include="GameObject\DynamicObject\Weapon\IronRod">
       <UniqueIdentifier>{08bdb651-0f37-41ef-bc0e-7da3744f5b42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Config\IronRodFactory">
+      <UniqueIdentifier>{15140ab3-7204-427e-8450-3714c3a50152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config\SimonFactoty">
+      <UniqueIdentifier>{ad9cd0ba-ee4c-476d-83bf-c2485b6a7250}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\StaticObject\Brick">
+      <UniqueIdentifier>{b7ab5087-310b-49e1-86b8-334ab580ed4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\StaticObject\Stair">
+      <UniqueIdentifier>{907e1f17-c1b9-4490-9bd2-8ecfca003670}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\StaticObject\Door">
+      <UniqueIdentifier>{7798f388-4d28-4b5d-b7d4-4c498f48dcd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config\GroundBGFactory">
+      <UniqueIdentifier>{568c5ed9-4d6f-4650-a8a9-370a5de76846}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -72,9 +90,6 @@
     <ClCompile Include="ManageTexture.cpp">
       <Filter>DirectX\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="SimonFactory.cpp">
-      <Filter>Config</Filter>
-    </ClCompile>
     <ClCompile Include="Simon.cpp">
       <Filter>GameObject\DynamicObject\Simon</Filter>
     </ClCompile>
@@ -99,9 +114,6 @@
     <ClCompile Include="StaticObject.cpp">
       <Filter>GameObject\StaticObject</Filter>
     </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>GameObject\StaticObject</Filter>
-    </ClCompile>
     <ClCompile Include="BackGround.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -113,6 +125,33 @@
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>GameObject\DynamicObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonFactory.cpp">
+      <Filter>Config\SimonFactoty</Filter>
+    </ClCompile>
+    <ClCompile Include="IronRodFac.cpp">
+      <Filter>Config\IronRodFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>GameObject\StaticObject\Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="Stair.cpp">
+      <Filter>GameObject\StaticObject\Stair</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundBGObj.cpp">
+      <Filter>GameObject\StaticObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>GameObject\StaticObject\Door</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundBGFac.cpp">
+      <Filter>Config\GroundBGFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="TagClassName.cpp">
+      <Filter>DirectX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -149,9 +188,6 @@
     <ClInclude Include="ManageTexture.h">
       <Filter>DirectX\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="SimonFactory.h">
-      <Filter>Config</Filter>
-    </ClInclude>
     <ClInclude Include="Simon.h">
       <Filter>GameObject\DynamicObject\Simon</Filter>
     </ClInclude>
@@ -173,9 +209,6 @@
     <ClInclude Include="StaticObject.h">
       <Filter>GameObject\StaticObject</Filter>
     </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>GameObject\StaticObject</Filter>
-    </ClInclude>
     <ClInclude Include="BackGround.h">
       <Filter>Map</Filter>
     </ClInclude>
@@ -190,6 +223,30 @@
     </ClInclude>
     <ClInclude Include="TagClassName.h">
       <Filter>DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonFactory.h">
+      <Filter>Config\SimonFactoty</Filter>
+    </ClInclude>
+    <ClInclude Include="IronRodFac.h">
+      <Filter>Config\IronRodFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>GameObject\StaticObject\Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="Stair.h">
+      <Filter>GameObject\StaticObject\Stair</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundBGObj.h">
+      <Filter>GameObject\StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>GameObject\StaticObject\Door</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundBGFac.h">
+      <Filter>Config\GroundBGFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

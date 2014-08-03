@@ -24,7 +24,7 @@ public:
 
 	Box _box;//bound object
 public:
-	virtual char* className();
+	virtual std::string className();
 	ObjectGame(void);
 	ObjectGame(std::vector<std::string> arr);
 	void updateRect();// kill it

@@ -1,6 +1,6 @@
 #include "Brick.h"
 
-Brick::Brick() : StaticObject()
+Brick::Brick() : GroundBGObj()
 {
 	this->_ID = 301;
 	this->_pos.x = 80;
@@ -9,4 +9,9 @@ Brick::Brick() : StaticObject()
 	this->_ID_Image = 1028;
 	this->_isAnimatedSprite = false;
 	this->_isALive = true;
+}
+
+Brick::Brick(std::vector<std::string> arr) : GroundBGObj(arr)
+{
+
 }

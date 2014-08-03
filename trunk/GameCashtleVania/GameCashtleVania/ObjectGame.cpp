@@ -30,7 +30,7 @@ ObjectGame::~ObjectGame(void)
 {
 }
 
-char* ObjectGame::className()
+std::string ObjectGame::className()
 {
 	return "Object Game";
 }

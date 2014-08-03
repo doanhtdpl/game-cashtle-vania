@@ -7,6 +7,8 @@
 
 #define fileImage "..\\Resource\\file\\Image.csv"
 #define fileSimon "..\\Resource\\file\\Simon.csv"
+#define fileIronRod "..\\Resource\\file\\IronRod.csv"
+#define fileGroundBG "..\\Resource\\file\\GroundBG.csv"
 
 class FileUtils
 {

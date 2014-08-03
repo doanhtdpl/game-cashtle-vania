@@ -2,6 +2,8 @@
 #include "ManageTexture.h"
 #include <fstream>
 #include "SimonFactory.h"
+#include "IronRodFac.h"
+#include "GroundBGFac.h"
 
 using namespace std;
 
@@ -50,6 +52,8 @@ void FileUtils::readFileCSV(char* fileName, ObjectFactory* objFactory)
 void FileUtils::loadCSV()
 {
 	this->readFileCSV(fileSimon, SimonFactory::getInstance());
+	this->readFileCSV(fileIronRod, IronRodFac::getInstance());
+	this->readFileCSV(fileGroundBG, GroundBGFac::getInstance());
 }
 
 void FileUtils::readFileMap()

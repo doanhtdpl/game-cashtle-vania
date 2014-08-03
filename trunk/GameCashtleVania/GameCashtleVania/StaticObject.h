@@ -5,7 +5,7 @@
 class StaticObject : public ObjectGame
 {
 public:
-	virtual char* className();
+	virtual std::string className();
 	StaticObject(void);
 	StaticObject(std::vector<std::string> arr);
 	~StaticObject(void);

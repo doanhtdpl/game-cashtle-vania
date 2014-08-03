@@ -20,7 +20,6 @@ public:
 	static int _count_LifeMario;
 	static int _score;
 	BackGround* mapBG;
-	Brick* brick;
 	int level;
 	int scene;
 

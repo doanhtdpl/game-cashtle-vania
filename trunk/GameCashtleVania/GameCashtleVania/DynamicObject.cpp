@@ -43,7 +43,7 @@ void DynamicObject::move(float Delta_Time)
 	}
 }
 
-char* DynamicObject::className()
+std::string DynamicObject::className()
 {
 	return "Dynamic Object";
 }
@@ -59,10 +59,10 @@ void DynamicObject::update(float deltatime)
 
 }
 
-void DynamicObject::update(float Delta_Time, std::list<ObjectGame*> *_ListObjectCollision)
+void DynamicObject::update(float delta_Time, std::vector<ObjectGame*> listObjectCollision)
 {
-	this->updatePostureMove(Delta_Time);
-	this->move(Delta_Time);
+	this->updatePostureMove(delta_Time);
+	this->move(delta_Time);
 }
 
 float DynamicObject::collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime)

@@ -1,6 +1,7 @@
 #include "BackGround.h"
 #include "ManageSprite.h"
 #include <fstream>
+#include "GroundBGFac.h"
 
 using namespace std;
 
@@ -84,17 +85,29 @@ RECT* BackGround::getRectRSInHM(int IDTile)
 void BackGround::drawBackGround()
 {
 	int IDTile;
+
+	//ve tat ca hinh anh khong phia doi tuong ground
 	for (int i = 0; i < _mapWidth; i++)
 	{
 		for (int j = 0; j < _mapHeight; j++)
 		{
 			IDTile = _matrix[i][j];
-			// vi tri top left cua tile hien tai tren the gioi game
-			D3DXVECTOR2 pos = D3DXVECTOR2( j * _tileWidth, (_mapWidth - i) * _tileHeight);
-			D3DXVECTOR3 posCenter = D3DXVECTOR3(pos.x - _tileWidth / 2, pos.y - _tileWidth / 2 , 0);
-
-			ManageSprite::createInstance()->draw(this->_IDImage, getRectRSInHM(IDTile), posCenter);
+			
+			if (IDTile < 1600)
+			{
+				// vi tri top left cua tile hien tai tren the gioi game
+				D3DXVECTOR2 pos = D3DXVECTOR2( j * _tileWidth, (_mapWidth - i) * _tileHeight);
+				D3DXVECTOR3 posCenter = D3DXVECTOR3(pos.x - _tileWidth / 2, pos.y - _tileWidth / 2 , 0);
+				ManageSprite::createInstance()->draw(this->_IDImage, getRectRSInHM(IDTile), posCenter);
+			}
 		}
+	}
+
+	//ve GroundBGObj
+	for (int i = 0; i < this->_listObjectInMap.size(); i++)
+	{
+		ObjectGame* object = this->_listObjectInMap.at(i);
+		ManageSprite::createInstance()->drawObject(object);
 	}
 }
 
@@ -108,10 +121,26 @@ void BackGround::addElement(std::vector<std::string> arr, int rowIndex)
 		// add matrix
 		IDTile = atoi(arr[col].c_str());
 		this->_matrix[rowIndex][col] = IDTile;
-		
-		//insert rectRS and IDTIle into hashMap
-		rectRS = getRectResouceByIDTile(IDTile);
-		this->_listTileRectRS[IDTile] = rectRS;
+		if (IDTile >= 1600)
+		{
+			D3DXVECTOR2 pos = D3DXVECTOR2( col * _tileWidth, (_mapWidth - rowIndex) * _tileHeight);
+			D3DXVECTOR2 posCenter = D3DXVECTOR2(pos.x + _tileWidth / 2, pos.y - _tileWidth / 2);
+
+			// day la 1 doi tuong GroundBGObj
+			GroundBGObj* groundObj = GroundBGFac::getInstance()->createObj(IDTile);
+			groundObj->_pos = posCenter;
+			_listObjectInMap.push_back(groundObj);
+		}
+		else
+		{
+			// no khong phai la 1 doi tuong co va cham. Chi la doi tuong dung de ve background
+			
+
+			//insert rectRS and IDTIle into hashMap
+			rectRS = getRectResouceByIDTile(IDTile);
+			this->_listTileRectRS[IDTile] = rectRS;
+		}
+
 	}
 }
 

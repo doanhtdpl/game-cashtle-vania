@@ -19,5 +19,5 @@ SimonFactory::SimonFactory()
 
 Simon* SimonFactory::createObj() 
 {
-	return Simon::createInstance(info);
+	return Simon::createInstance(info.at(0));
 }
