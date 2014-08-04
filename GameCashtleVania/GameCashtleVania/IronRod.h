@@ -38,8 +38,7 @@ public:
 	void Use(D3DXVECTOR2 posSimon, bool Left);//
 	Box getBox();// box de va cham
 	void animated(float deltaTime);
-	RECT* updateRectRS(int width, int height);
-	void update(float delta_Time, std::list<ObjectGame*> *_ListObjectCollision);
+	void update(float delta_Time, std::vector<ObjectGame*> _ListObjectCollision);
 
 	static IronRod* getInstance();
 	static IronRod* createInstance(std::vector<std::string> arr);

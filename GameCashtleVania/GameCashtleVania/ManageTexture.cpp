@@ -35,6 +35,19 @@ ManageTexture::ManageTexture(LPDIRECT3DDEVICE9 d3ddv)
 bool ManageTexture::createTextureByFileName(int key, std::string filename)
 {
 	Texture* texture = new Texture(this->_d3ddv);
+	//if (key == 1501)
+	//{
+	//	if (texture->load_Image(filename, D3DCOLOR_XRGB(255, 255, 255)))
+	//	{
+	//		this->addTexture(key, texture);
+	//		return true;
+	//	}else
+	//	{
+	//		return false;
+	//		//Show Message
+	//		//MessageBox();
+	//	}
+	//}
 	if (texture->load_Image(filename, color)) 
 	{
 		this->addTexture(key, texture);

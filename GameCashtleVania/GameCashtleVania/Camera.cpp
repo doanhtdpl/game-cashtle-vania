@@ -1,9 +1,10 @@
 #include "Camera.h"
+#include "utils.h"
 
 Camera::Camera(void)
 {
 	_pos.x = 0;
-	_pos.y = 600;
+	_pos.y = Screen_Height;
 	_pos.z = 0;
 
 	D3DXMatrixIdentity(&_MatrixTransform);
@@ -21,7 +22,7 @@ D3DXVECTOR3 Camera::getPosCamera()
 
 void Camera::update(float x)
 {
-	_pos.x = x - 400;
+	_pos.x = x - Screen_Width / 2;
 	if(_pos.x < 0)
 		_pos.x = 0;
 }
@@ -37,5 +38,5 @@ D3DXVECTOR3 Camera::getPointTransform(float x, float y)
 
 	D3DXVec3Transform(&v_result, &posOld, &_MatrixTransform);
 
-	return D3DXVECTOR3(v_result.x, v_result.y, v_result.z);
+	return D3DXVECTOR3(v_result.x, v_result.y - 20, v_result.z);
 }

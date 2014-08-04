@@ -5,8 +5,6 @@
 #include "SimonFactory.h"
 #include "Simon.h"
 #include "MapLoader.h"
-#include "IronRod.h"
-#include "IronRodFac.h"
 
 int ManageGame::_count_LifeMario = 4;
 int ManageGame::_score = 0;
@@ -25,11 +23,15 @@ void ManageGame::gameDraw()
 	mapBG->drawBackGround();
 
 	ManageSprite::createInstance()->drawObject( Simon::getInstance() );
-
-	if (IronRod::getInstance()->_isALive)
+	if (Simon::getInstance()->ironRod->_isALive)
 	{
-		ManageSprite::createInstance()->drawObject( IronRod::getInstance() );
+		ManageSprite::createInstance()->drawObject( Simon::getInstance()->ironRod );
 	}
+	
+	//if (IronRod::getInstance()->_isALive)
+	//{
+	//	ManageSprite::createInstance()->drawObject( IronRod::getInstance() );
+	//}
 	//ManageSprite::createInstance()->drawObject(brick);
 }
 
@@ -57,9 +59,6 @@ void ManageGame::gameInit()
 	
 	//tao Simon
 	SimonFactory::getInstance()->createObj();
-	
-	//khoi tao Rod khi tao Simon
-	IronRodFac::getInstance()->createObj();
 	
 	mapBG = new BackGround();
 	//mapBG->readFromFile("..\\Resource\\MapBackGround\\mapBG.txt");
