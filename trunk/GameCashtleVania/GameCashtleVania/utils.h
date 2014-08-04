@@ -10,8 +10,8 @@ using namespace std;
 #define EslapseTimeSwitchFrame 0.09
 
 #define ClassName "Cashtle Vania"
-#define Screen_Width 800
-#define Screen_Height 600
+#define Screen_Width 600
+#define Screen_Height 480
 #define Frame_Rate 60
 #define KEYBOARD_BUFFER_SIZE 256
 

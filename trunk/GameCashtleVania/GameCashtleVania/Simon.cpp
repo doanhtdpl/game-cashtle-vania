@@ -1,8 +1,9 @@
-#include "Simon.h"
+﻿#include "Simon.h"
 #include "utils.h"
 #include "Input.h"
-#include "IronRod.h"
 #include "TagClassName.h"
+#include "IronRodFac.h"
+#include "ManageSprite.h"
 
 Simon* Simon::_instance = NULL;
 
@@ -36,7 +37,9 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_ID = atoi(arr.at(0).c_str());
 	this->_ID_Image = atoi(arr.at(1).c_str());
 	this->_width = atoi(arr.at(3).c_str());
-	this->_height = atoi(arr.at(4).c_str());
+	this->HeightDefault = atoi(arr.at(4).c_str());
+	this->HeightSit = 50;
+	this->_height = HeightDefault;
 	this->_isAnimatedSprite = true;
 
 	//doc tu map
@@ -70,6 +73,10 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_CanJum = true;
 	this->delayJump = 0.15;//doc tu file luon.
 	this->_timeDelayJumpCur = 0.0f;
+
+	//khoi tao Rod khi tao Simon
+	ironRod = IronRodFac::getInstance()->createObj();
+	this->_attacking = false;
 }
 
 // UPdate trang thai cua simon truoc. Sau do moi tinh cho no Move nhu the nao
@@ -80,19 +87,28 @@ void Simon::updateMovement(float delta_Time)
 	case None:
 		break;
 	case Moves:
-		this->_CanJum = true;
-		this->_CanMoveL = true;
-		this->_CanMoveR = true;
-		this->_High_Jumped = 0;
-		this->_vy = 0;
-
-		if (this->_Left)//dang di chuyen qua ben trai
+		if (_attacking)
 		{
-			this->_vx = -this->_Vx_default;
+			this->_moveMent = SimonMove::Stand;
+			this->_vx = 0;
+			this->_vy = 0;
 		}else
 		{
-			this->_vx = this->_Vx_default;
+			this->_CanJum = true;
+			this->_CanMoveL = true;
+			this->_CanMoveR = true;
+			this->_High_Jumped = 0;
+			this->_vy = 0;
+
+			if (this->_Left)//dang di chuyen qua ben trai
+			{
+				this->_vx = -this->_Vx_default;
+			}else
+			{
+				this->_vx = this->_Vx_default;
+			}
 		}
+		
 		break;
 	case Stand:
 		this->_CanMoveL = true;
@@ -102,7 +118,17 @@ void Simon::updateMovement(float delta_Time)
 		this->_vx = 0.0f;
 		this->_vy = 0.0f;
 		break;
-	case OnStair:
+	case Sit:
+		this->_CanMoveL = false;
+		this->_CanMoveR = false;
+		this->_High_Jumped = 0;
+		this->_CanJum = false;
+		this->_vx = 0.0f;
+		this->_vy = 0.0f;
+		break;
+	case UpStair:
+		break;
+	case DownStair:
 		break;
 	case Jum:
 		this->_vy = this->_Vy_default;
@@ -152,6 +178,7 @@ void Simon::updateMovement(float delta_Time)
 	default:
 		break;
 	}
+
 }
 
 void Simon::move(float delta_Time)
@@ -186,8 +213,16 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 		this->collision((StaticObject*)obj, normalX, normalY, deltatime);
 	}*/
 
-
-	IronRod::getInstance()->update(deltatime, NULL);
+	ironRod->update(deltatime, _listObjectCollision);
+	if (!ironRod->_isALive)
+	{
+		this->_attacking = false;
+	}else
+	{
+		int dir = ironRod->_Left ? 1 : -1;
+		ironRod->_pos.x = this->_pos.x - dir * 28; 
+		ironRod->_pos.y = this->_pos.y;
+	}
 }
 
 void Simon::update(float deltatime)
@@ -199,12 +234,46 @@ void Simon::update(float deltatime)
 	{
 		this->_moveMent = SimonMove::Stand;
 	}
-
-	IronRod::getInstance()->update(deltatime, NULL);
 }
 
 void Simon::animated(float deltatime)
 {
+	//Dang su dung roi
+	if (_attacking)
+	{
+		switch (_moveMent)
+		{
+		case None:
+			break;
+		case Moves:
+			this->_curFrame = 4 + ironRod->getStateRod();
+			break;
+		case Stand:
+			this->_curFrame = 4 + ironRod->getStateRod();
+			break;
+		case Sit:
+			this->_curFrame = 14 + ironRod->getStateRod();
+			break;
+		case UpStair:
+			this->_curFrame = 20 + ironRod->getStateRod();
+			break;
+		case DownStair:
+			this->_curFrame = 17 + ironRod->getStateRod();
+			break;
+		case Jum:
+			this->_curFrame = 4 + ironRod->getStateRod();
+			break;
+		case Free:
+			this->_curFrame = 4 + ironRod->getStateRod();
+			break;
+		default:
+			break;
+		}
+		this->_rectRS = this->updateRectRS(this->_width, this->_height);
+		return;
+	}
+
+
 	this->_beforeTimeOld += deltatime;
 	if (_beforeTimeOld > _elapseTimeSwitchFrame)
 	{
@@ -223,7 +292,11 @@ void Simon::animated(float deltatime)
 		case Stand:
 			this->_curFrame = 0;
 			break;
-		case OnStair:
+		case Sit:
+			this->_curFrame = 4;
+			break;
+		case UpStair:
+
 			break;
 		case Jum:
 			this->_curFrame = 4;
@@ -235,8 +308,22 @@ void Simon::animated(float deltatime)
 			break;
 		}
 	}
-
 	this->_rectRS = this->updateRectRS(this->_width, this->_height);
+}
+
+RECT* Simon::updateRectRS(int width, int height)
+{
+	RECT* rectRS = new RECT();
+	int x,y;
+	x = (_curFrame % _coloumn) * width;
+	y = (_curFrame / _coloumn) * HeightDefault;
+	//cập nhật lại vị trí của Rect Resource
+	rectRS->left = x;
+	rectRS->right = x + width;
+	rectRS->top = y ;
+	rectRS->bottom = y + height;
+
+	return rectRS;
 }
 
 void Simon::processInput()
@@ -262,6 +349,32 @@ void Simon::processInput()
 		}
 	}
 
+	//Neu phim Down khong duoc nhan. thi chuyen ve stand neu no dang ngoi
+	if (key_up == DIK_DOWN)
+	{
+		if (this->_moveMent == SimonMove::Sit)
+		{
+			this->_moveMent = SimonMove::Stand;
+			//thay doi chieu cao, dong thoi fix vi tri
+			this->_height = this->HeightDefault;
+			this->_pos.y += (this->HeightDefault - this->HeightSit) / 2;
+		}
+	}else
+	{
+		//neu de phim Down thi chuyen sang ngoi neu simon dang dung yen
+		if (Input::CreateInstance()->IsKeyDown(DIK_DOWN) || key == DIK_DOWN)
+		{
+			if (this->_moveMent == SimonMove::Stand)
+			{
+				this->_moveMent = SimonMove::Sit;
+				//giam chieu cao 1 nua, dong thoi fix lai vi tri
+				this->_height = this->HeightSit;
+				this->_pos.y -= (this->HeightDefault - this->HeightSit) / 2;
+			}
+		}
+	}
+	
+
 	if (key == DIK_SPACE)
 	{
 		if (this->_CanJum)
@@ -272,7 +385,13 @@ void Simon::processInput()
 
 	if (key == DIK_Z)
 	{
-		IronRod::getInstance()->Use(this->_pos, this->_Left);
+		//chua su dung roi
+		if (!this->_attacking)
+		{
+			this->_attacking = true;
+			IronRod::getInstance()->Use(this->_pos, this->_Left);
+		}
+		
 	}
 }
 
