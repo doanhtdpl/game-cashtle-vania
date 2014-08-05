@@ -12,7 +12,6 @@ class ObjectGame
 public:
 	int _ID;//each object has a ID to identified with other object
 	int _ID_Image;
-	RECT _rect;//rect used to check collision
 	D3DXVECTOR2 _pos;//position of object
 	bool _isALive;//life or die??
 	int _height;//height of object and uses to draw.
@@ -27,7 +26,6 @@ public:
 	virtual std::string className();
 	ObjectGame(void);
 	ObjectGame(std::vector<std::string> arr);
-	void updateRect();// kill it
 	virtual Box getBox();
 	~ObjectGame(void);
 };

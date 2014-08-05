@@ -17,7 +17,6 @@ public:
 	Simon(std::vector<std::string> arr);
 	void updateMovement(float deltaTime);
 	void move(float delta_Time);
-	void update(float deltatime);
 	void update(float deltatime, std::vector<ObjectGame*> _listObjectCollision);
 	RECT* updateRectRS(int width, int height);
 	void animated(float deltatime);
@@ -48,14 +47,14 @@ enum SimonMove
 {
 	None,//khong gi ca
 	Moves,//dang di
-	Stand,//dung yen
+	Idle,//dung yen
 	Sit,//dang ngoi
 	PrepareUpTheStair,//chuan bi len cau thang
 	PrepareDownTheStair,
 	UpStair,//dang di len cau thang
 	DownStair,
 	PrepareLeaveTheStair,//len cau thang
-	Jum,//dang nhay
+	Jump,//dang nhay
 	Free//dang roi tu do
 };
 

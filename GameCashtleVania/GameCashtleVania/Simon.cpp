@@ -89,7 +89,7 @@ void Simon::updateMovement(float delta_Time)
 	case Moves:
 		if (_attacking)
 		{
-			this->_moveMent = SimonMove::Stand;
+			this->_moveMent = SimonMove::Idle;
 			this->_vx = 0;
 			this->_vy = 0;
 		}else
@@ -110,7 +110,7 @@ void Simon::updateMovement(float delta_Time)
 		}
 		
 		break;
-	case Stand:
+	case Idle:
 		this->_CanMoveL = true;
 		this->_CanMoveR = true;
 		this->_High_Jumped = 0;
@@ -130,7 +130,7 @@ void Simon::updateMovement(float delta_Time)
 		break;
 	case DownStair:
 		break;
-	case Jum:
+	case Jump:
 		this->_vy = this->_Vy_default;
 		this->_High_Jumped += this->_vy * delta_Time;
 		this->_CanJum = false;
@@ -187,7 +187,7 @@ void Simon::move(float delta_Time)
 	{
 		//co the di qua ben trai va v
 		this->_pos.x += this->_vx * delta_Time;
-		this->_moveMent = SimonMove::Stand;
+		this->_moveMent = SimonMove::Idle;
 	}
 	
 	this->_pos.y += this->_vy * delta_Time;
@@ -225,17 +225,6 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 	}
 }
 
-void Simon::update(float deltatime)
-{
-	move(deltatime);
-	animated(deltatime);
-
-	if (this->_moveMent == SimonMove::Moves)
-	{
-		this->_moveMent = SimonMove::Stand;
-	}
-}
-
 void Simon::animated(float deltatime)
 {
 	//Dang su dung roi
@@ -248,7 +237,7 @@ void Simon::animated(float deltatime)
 		case Moves:
 			this->_curFrame = 4 + ironRod->getStateRod();
 			break;
-		case Stand:
+		case Idle:
 			this->_curFrame = 4 + ironRod->getStateRod();
 			break;
 		case Sit:
@@ -260,7 +249,7 @@ void Simon::animated(float deltatime)
 		case DownStair:
 			this->_curFrame = 17 + ironRod->getStateRod();
 			break;
-		case Jum:
+		case Jump:
 			this->_curFrame = 4 + ironRod->getStateRod();
 			break;
 		case Free:
@@ -289,7 +278,7 @@ void Simon::animated(float deltatime)
 				_curFrame = 0;
 			}
 			break;
-		case Stand:
+		case Idle:
 			this->_curFrame = 0;
 			break;
 		case Sit:
@@ -298,7 +287,7 @@ void Simon::animated(float deltatime)
 		case UpStair:
 
 			break;
-		case Jum:
+		case Jump:
 			this->_curFrame = 4;
 			break;
 		case Free:
@@ -354,7 +343,7 @@ void Simon::processInput()
 	{
 		if (this->_moveMent == SimonMove::Sit)
 		{
-			this->_moveMent = SimonMove::Stand;
+			this->_moveMent = SimonMove::Idle;
 			//thay doi chieu cao, dong thoi fix vi tri
 			this->_height = this->HeightDefault;
 			this->_pos.y += (this->HeightDefault - this->HeightSit) / 2;
@@ -364,7 +353,7 @@ void Simon::processInput()
 		//neu de phim Down thi chuyen sang ngoi neu simon dang dung yen
 		if (Input::CreateInstance()->IsKeyDown(DIK_DOWN) || key == DIK_DOWN)
 		{
-			if (this->_moveMent == SimonMove::Stand)
+			if (this->_moveMent == SimonMove::Idle)
 			{
 				this->_moveMent = SimonMove::Sit;
 				//giam chieu cao 1 nua, dong thoi fix lai vi tri
@@ -379,7 +368,7 @@ void Simon::processInput()
 	{
 		if (this->_CanJum)
 		{
-			this->_moveMent = SimonMove::Jum;
+			this->_moveMent = SimonMove::Jump;
 		}
 	}
 
@@ -414,7 +403,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				// bi va cham theo AABBCheck
 				if (this->_moveMent == SimonMove::Free || this->_moveMent == SimonMove::Moves)
 				{
-					this->_moveMent = SimonMove::Stand;
+					this->_moveMent = SimonMove::Idle;
 					this->_pos.x += normalX;
 					this->_pos.y += normalY;
 					this->_vx = 0;
@@ -430,7 +419,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				if (normalX == 1)
 				{
 					this->_pos.x += timeCollision * (deltatime * this->_vx);
-					if (this->_moveMent == SimonMove::Jum)
+					if (this->_moveMent == SimonMove::Jump)
 					{
 						this->_moveMent == SimonMove::Free;
 					}
@@ -441,7 +430,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				if (normalX == -1)
 				{
 					this->_pos.x += timeCollision * (deltatime * this->_vx);
-					if (this->_moveMent == SimonMove::Jum)
+					if (this->_moveMent == SimonMove::Jump)
 					{
 						this->_moveMent == SimonMove::Free;
 					}
@@ -452,7 +441,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				if (normalY == 1)
 				{
 					this->_pos.y += timeCollision * (deltatime * this->_vy);
- 					this->_moveMent = SimonMove::Stand;
+ 					this->_moveMent = SimonMove::Idle;
 					
 				}
 

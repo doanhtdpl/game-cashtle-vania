@@ -63,7 +63,7 @@ void ManageGame::gameInit()
 	mapBG = new BackGround();
 	//mapBG->readFromFile("..\\Resource\\MapBackGround\\mapBG.txt");
 	level = 1;
-	scene = 1;
+	scene = 2;
 	InfoScene* infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
 	mapBG->readFromFile(infoScene->bGPath);
 }

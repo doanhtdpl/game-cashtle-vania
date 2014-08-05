@@ -61,6 +61,8 @@ void BackGround::readFromFile(std::string filePath)
 	}
 }
 
+
+
 // lay rectResource cua IDTile tren background
 RECT* BackGround::getRectResouceByIDTile(int IDTile)
 {
@@ -166,4 +168,38 @@ std::vector<string> BackGround::split(string s, char key)
 
 BackGround::~BackGround()
 {
+}
+
+void BackGround::fixMapBackground(std::string filePath)
+{
+	std::string line;
+	std::vector<std::string> arr;
+	std::ifstream* myfile = new std::ifstream(filePath);
+
+	//lay list chua IDBG tuong ung voi IDImage;
+	std::hash_map<int, int> listID = GroundBGFac::getInstance()->getLishIDImageIDBG();
+
+	if (myfile->is_open())
+	{
+		//doc dong dau tien lay chi so dong va cot cua ma tran
+		getline(*myfile, line);
+
+		//doc dong thu hai lay do dai va rong cua tile map
+		std::getline(*myfile, line);
+	
+		int row = 0;
+		while ( !myfile->eof()) 
+		{
+			if (std::getline(*myfile, line))
+			{
+				arr = split(line, '\t');
+				for (int i = 0; i < arr.size(); i++)
+				{
+					//k la ID BG
+					int ID_BG = atoi(arr.at(i).c_str());
+				}
+				//them objectfactory vao list
+			}
+		}
+	}
 }

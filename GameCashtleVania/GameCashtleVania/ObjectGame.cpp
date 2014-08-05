@@ -17,15 +17,6 @@ ObjectGame::ObjectGame(std::vector<std::string> arr)
 
 }
 
-void ObjectGame::updateRect()
-{
-	this->_rect.top = _pos.y + this->_height / 2;
-	this->_rect.bottom = this->_rect.top - this->_height;
-
-	this->_rect.left = _pos.x - this->_width / 2;
-	this->_rect.right = this->_rect.left + this->_width;
-}
-
 ObjectGame::~ObjectGame(void)
 {
 }

@@ -65,6 +65,11 @@ void DynamicObject::update(float delta_Time, std::vector<ObjectGame*> listObject
 	this->move(delta_Time);
 }
 
+void DynamicObject::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
+{
+
+}
+
 float DynamicObject::collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime)
 {
 	return 0.0f;
