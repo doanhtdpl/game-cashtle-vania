@@ -37,6 +37,8 @@ public:
 	void addElement(std::vector<std::string> arr, int rowIndex);
 	void addObject(std::vector<std::string> arr, int rowIndex);
 	std::vector<std::string> BackGround::split(std::string s, char key);
+
+	void fixMapBackground(std::string filePath);
 };
 
 #endif // !__BACK_GROUND_H__

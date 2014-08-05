@@ -58,6 +58,42 @@
     <Filter Include="Config\GroundBGFactory">
       <UniqueIdentifier>{568c5ed9-4d6f-4650-a8a9-370a5de76846}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\DynamicObject\Enemy">
+      <UniqueIdentifier>{6ae4af1e-b318-4938-8b29-f64724b028d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Enemy\FishMan">
+      <UniqueIdentifier>{abb3c20d-6822-45c1-9800-467e6699755a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Enemy\DragonSkullCannon">
+      <UniqueIdentifier>{a6604f57-393e-406d-918d-af1710395750}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Enemy\Zombie">
+      <UniqueIdentifier>{75823e3f-3dd4-4d33-b28b-c2dd6ca3028c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Enemy\VampireBat">
+      <UniqueIdentifier>{1adfab0d-d23d-4c46-9a8f-8564969bef86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Enemy\AxeMan">
+      <UniqueIdentifier>{7b0a5073-1a29-45d9-9360-97698cbb2c4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Enemy\BlackKnight">
+      <UniqueIdentifier>{0d6693bf-3031-4b98-a46b-4ed08acdfe8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Enemy\WhiteSkeleton">
+      <UniqueIdentifier>{41039383-e6a9-48ba-8a2f-8ef71893b663}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Enemy\Ghost">
+      <UniqueIdentifier>{dc377d1a-0fb9-456a-b3d3-8d2ab0d59013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Enemy\BlackLeopard">
+      <UniqueIdentifier>{c530d04f-8624-4916-9d2e-5750410f1f20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Enemy\Medusa">
+      <UniqueIdentifier>{e1a5d154-e605-45b0-b1a8-603076916434}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config\EnemyFactory">
+      <UniqueIdentifier>{4bd63be3-7fb7-46f3-a02a-c6c2abd6d614}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -153,6 +189,12 @@
     <ClCompile Include="TagClassName.cpp">
       <Filter>DirectX</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>GameObject\DynamicObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFactory.cpp">
+      <Filter>Config\EnemyFactory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -247,6 +289,12 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>GameObject\DynamicObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>Config\EnemyFactory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

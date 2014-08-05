@@ -55,3 +55,20 @@ std::vector<std::string> GroundBGFac::getInfoByIDBG(int ID_BG)
 		}
 	}
 }
+
+//Hash Map chua IDBG -- IDImage
+std::hash_map<int, int> GroundBGFac::getLishIDImageIDBG()
+{
+	std::hash_map<int, int> list;
+	//tim nhung cap IDBG -- IDImage
+	std::vector<std::string> arr;
+	for (int i = 0; i < info.size(); i++)
+	{
+		arr = info.at(i);
+		int IDImage = atoi(arr.at(1).c_str());
+		int IDBG = atoi(arr.at(2).c_str());
+		list[IDBG] = IDImage;
+	}
+
+	return list;
+}
