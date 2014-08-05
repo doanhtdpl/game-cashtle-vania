@@ -94,6 +94,9 @@
     <Filter Include="Config\EnemyFactory">
       <UniqueIdentifier>{4bd63be3-7fb7-46f3-a02a-c6c2abd6d614}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\StaticObject\HideObject">
+      <UniqueIdentifier>{23ff786d-b5e9-4780-8f77-6175114fc57b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -195,6 +198,39 @@
     <ClCompile Include="EnemyFactory.cpp">
       <Filter>Config\EnemyFactory</Filter>
     </ClCompile>
+    <ClCompile Include="AxeMan.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\AxeMan</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackKnight.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\BlackKnight</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackLeopard.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\BlackLeopard</Filter>
+    </ClCompile>
+    <ClCompile Include="DragonSkullCannon.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\DragonSkullCannon</Filter>
+    </ClCompile>
+    <ClCompile Include="FishMan.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\FishMan</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="Medusa.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\Medusa</Filter>
+    </ClCompile>
+    <ClCompile Include="VampireBat.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\VampireBat</Filter>
+    </ClCompile>
+    <ClCompile Include="WhiteSkeleton.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\WhiteSkeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\Zombie</Filter>
+    </ClCompile>
+    <ClCompile Include="HideObject.cpp">
+      <Filter>GameObject\StaticObject\HideObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -295,6 +331,39 @@
     </ClInclude>
     <ClInclude Include="EnemyFactory.h">
       <Filter>Config\EnemyFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="AxeMan.h">
+      <Filter>GameObject\DynamicObject\Enemy\AxeMan</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackKnight.h">
+      <Filter>GameObject\DynamicObject\Enemy\BlackKnight</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackLeopard.h">
+      <Filter>GameObject\DynamicObject\Enemy\BlackLeopard</Filter>
+    </ClInclude>
+    <ClInclude Include="DragonSkullCannon.h">
+      <Filter>GameObject\DynamicObject\Enemy\DragonSkullCannon</Filter>
+    </ClInclude>
+    <ClInclude Include="FishMan.h">
+      <Filter>GameObject\DynamicObject\Enemy\FishMan</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>GameObject\DynamicObject\Enemy\Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="Medusa.h">
+      <Filter>GameObject\DynamicObject\Enemy\Medusa</Filter>
+    </ClInclude>
+    <ClInclude Include="VampireBat.h">
+      <Filter>GameObject\DynamicObject\Enemy\VampireBat</Filter>
+    </ClInclude>
+    <ClInclude Include="WhiteSkeleton.h">
+      <Filter>GameObject\DynamicObject\Enemy\WhiteSkeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>GameObject\DynamicObject\Enemy\Zombie</Filter>
+    </ClInclude>
+    <ClInclude Include="HideObject.h">
+      <Filter>GameObject\StaticObject\HideObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
