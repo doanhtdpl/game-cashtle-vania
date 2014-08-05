@@ -1,5 +1,5 @@
 #ifndef __STATE_ENEMY__
-
+#define __STATE_ENEMY__
 enum EnemyMovement
 {
 	None,
@@ -9,7 +9,6 @@ enum EnemyMovement
 	Jump
 };
 #endif // !__STATE_ENEMY__
-
 
 #ifndef __ENEMY__H__
 #define __ENEMY__H__

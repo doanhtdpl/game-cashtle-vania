@@ -80,17 +80,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AxeMan.cpp" />
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="BlackKnight.cpp" />
+    <ClCompile Include="BlackLeopard.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Door.cpp" />
+    <ClCompile Include="DragonSkullCannon.cpp" />
     <ClCompile Include="DynamicObject.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="FileUtils.cpp" />
+    <ClCompile Include="FishMan.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GroundBGFac.cpp" />
     <ClCompile Include="GroundBGObj.cpp" />
+    <ClCompile Include="HideObject.cpp" />
     <ClCompile Include="IAnimatedSprite.cpp" />
     <ClCompile Include="ICollision.cpp" />
     <ClCompile Include="IMove.cpp" />
@@ -103,6 +110,7 @@
     <ClCompile Include="ManageTexture.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapLoader.cpp" />
+    <ClCompile Include="Medusa.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjectGame.cpp" />
     <ClCompile Include="Simon.cpp" />
@@ -112,20 +120,30 @@
     <ClCompile Include="StaticObject.cpp" />
     <ClCompile Include="TagClassName.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="VampireBat.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WhiteSkeleton.cpp" />
+    <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AxeMan.h" />
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="BlackKnight.h" />
+    <ClInclude Include="BlackLeopard.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Door.h" />
+    <ClInclude Include="DragonSkullCannon.h" />
     <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="FileUtils.h" />
+    <ClInclude Include="FishMan.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Ghost.h" />
     <ClInclude Include="GroundBGFac.h" />
     <ClInclude Include="GroundBGObj.h" />
+    <ClInclude Include="HideObject.h" />
     <ClInclude Include="IAnimatedSprite.h" />
     <ClInclude Include="ICollision.h" />
     <ClInclude Include="IMove.h" />
@@ -137,6 +155,7 @@
     <ClInclude Include="ManageTexture.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />
+    <ClInclude Include="Medusa.h" />
     <ClInclude Include="ObjectFactoty.h" />
     <ClInclude Include="ObjectGame.h" />
     <ClInclude Include="Simon.h" />
@@ -147,7 +166,10 @@
     <ClInclude Include="TagClassName.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="VampireBat.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WhiteSkeleton.h" />
+    <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
