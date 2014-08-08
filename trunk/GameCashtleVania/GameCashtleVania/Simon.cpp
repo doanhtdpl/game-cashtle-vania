@@ -394,14 +394,23 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 	for (int i = 0; i < _listObjectCollision.size(); i++)
 	{
 		ObjectGame* obj = _listObjectCollision.at(i);
-		if (obj->className() == TagClassName::getInstance()->tagGroundObject)
+		if (obj->className() == TagClassName::getInstance()->tagHideObject)
 		{
 			//va cham voi doi tuong nen
 			timeCollision = this->collision((StaticObject*)obj, normalX, normalY, deltatime);
 			if (timeCollision == 2.0f)
 			{
 				// bi va cham theo AABBCheck
-				if (this->_moveMent == SimonMove::Free || this->_moveMent == SimonMove::Moves)
+				if (this->_moveMent == SimonMove::Free && normalY < 0)
+				{
+					this->_moveMent = SimonMove::Idle;
+					this->_pos.x += normalX;
+					this->_pos.y += normalY;
+					this->_vx = 0;
+					this->_vy = 0;
+				}
+
+				if (this->_moveMent == SimonMove::Moves)
 				{
 					this->_moveMent = SimonMove::Idle;
 					this->_pos.x += normalX;
@@ -442,7 +451,6 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				{
 					this->_pos.y += timeCollision * (deltatime * this->_vy);
  					this->_moveMent = SimonMove::Idle;
-					
 				}
 
 				//obj dang nhay

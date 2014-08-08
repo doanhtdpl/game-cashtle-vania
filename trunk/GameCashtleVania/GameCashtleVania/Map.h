@@ -6,10 +6,10 @@
 class Map
 {
 public:
-	std::hash_map< int, ObjectGame*> ListObjectInMap;
-	std::vector<int> List_IdNode;
+	std::hash_map< int, ObjectGame*> listObjectInMap;
+	std::vector<int> list_IdNode;
 public:
-	void ReadMapFromFile();
+	void readMapFromFile(std::string filePath);
 	Map(void);
 	~Map(void);
 };

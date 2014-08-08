@@ -4,7 +4,7 @@
 #include "Game.h"
 #include "Input.h"
 #include "BackGround.h"
-#include "Brick.h"
+#include "Map.h"
 
 class ManageGame : public Game
 {
@@ -19,7 +19,8 @@ private:
 public:
 	static int _count_LifeMario;
 	static int _score;
-	BackGround* mapBG;
+	BackGround* _mapBG;
+	Map* _map;
 	int level;
 	int scene;
 

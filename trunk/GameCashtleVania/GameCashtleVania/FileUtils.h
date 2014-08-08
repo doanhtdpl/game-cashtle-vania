@@ -9,6 +9,8 @@
 #define fileSimon "..\\Resource\\file\\Simon.csv"
 #define fileIronRod "..\\Resource\\file\\IronRod.csv"
 #define fileGroundBG "..\\Resource\\file\\GroundBG.csv"
+#define fileLight "..\\Resource\\file\\Light.csv"
+
 
 class FileUtils
 {
@@ -18,7 +20,7 @@ public:
 	void readFileMap();
 	void readFileImage();
 	void loadCSV();
-	std::vector<std::string> split(std::string s, char key);
+	static std::vector<std::string> split(std::string s, char key);
 protected:
 private:
 	static FileUtils* _instance;
