@@ -3,13 +3,13 @@
 
 enum TypeHideObect
 {
-	Ground = 701,
-	UpStair = 702,
+	Ground = 702,
+	UpStair = 704,
 	DownStair = 703,
 	StopScrollScene = 704,
-	AppearEnemy = 705,
-	ChangeScene = 706,
-	Free = 707
+	AppearEnemy = 706,
+	ChangeScene = 705,
+	Free = 701
 };
 #endif // !__TYPE__HIDE__OBJECT__
 
@@ -23,7 +23,9 @@ class HideObject : public ObjectGame
 public:
 	HideObject();
 	HideObject(std::vector<std::string> arr);
+	HideObject(std::vector<std::string> arr, TypeHideObect _type);
 	TypeHideObect getTypeHideObject();
+	void setTypeHideObj(TypeHideObect _type);
 	std::string className();
 protected:
 	TypeHideObect _typeHideObject;

@@ -23,9 +23,11 @@ public:
 
 	Box _box;//bound object
 public:
-	virtual std::string className();
+	virtual std::string className() = 0;
 	ObjectGame(void);
 	ObjectGame(std::vector<std::string> arr);
+	virtual void update(float deltaTime);
+	virtual void update(float deltaTime, std::vector<ObjectGame*> listObjectCollision);
 	virtual Box getBox();
 	~ObjectGame(void);
 };

@@ -67,7 +67,7 @@ void Enemy::updateMovement(float delta_Time)
 			this->_vy -= this->_ay * delta_Time;
 			if (this->_vy <= 0)
 			{
-				this->_movement = EnemyMovement::Free;
+				this->_movement = EnemyMovement::Freee;
 			}
 		}
 		
@@ -102,11 +102,11 @@ void Enemy::updateMovement(float delta_Time)
 			//{
 			//	//het thoi gian delay. Roi xuong thoi!!!
 			//	this->_timeDelayJumpCur = 0.0f;
-			//	this->_moveMent = SimonMove::Free;
+			//	this->_moveMent = SimonMove::Freee;
 			//}
 		}
 		break;
-	case EnemyMovement::Free:
+	case EnemyMovement::Freee:
 		this->_vy = -this->_Vy_default * 2;
 		this->_High_Jumped = 0;
 		this->_CanJum = false;

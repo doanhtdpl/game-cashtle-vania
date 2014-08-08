@@ -2,6 +2,7 @@
 #include "ManageSprite.h"
 #include <fstream>
 #include "GroundBGFac.h"
+#include "FileUtils.h"
 
 using namespace std;
 
@@ -31,7 +32,7 @@ void BackGround::readFromFile(std::string filePath)
 			line.erase(line.begin());
 		}
 
-		arr = split(line, '\t');
+		arr = FileUtils::split(line, '\t');
 		_mapWidth = atoi(arr[0].c_str()); 
 		_mapHeight = atoi(arr[1].c_str());
 
@@ -43,7 +44,7 @@ void BackGround::readFromFile(std::string filePath)
 
 		//doc dong thu hai lay do dai va rong cua tile map
 		std::getline(*myfile, line);
-		arr = split(line, '\t');
+		arr = FileUtils::split(line, '\t');
 		this->_tileHeight = atoi(arr[0].c_str()); 
 		this->_tileWidth = atoi(arr[1].c_str());
 
@@ -52,7 +53,7 @@ void BackGround::readFromFile(std::string filePath)
 		{
 			if (std::getline(*myfile, line))
 			{
-				arr = split(line, '\t');
+				arr = FileUtils::split(line, '\t');
 				addElement(arr, row);
 				row++;
 				//them objectfactory vao list
@@ -95,7 +96,7 @@ void BackGround::drawBackGround()
 		{
 			IDTile = _matrix[i][j];
 			
-			if (IDTile < 1600)
+			if (IDTile < 600)
 			{
 				// vi tri top left cua tile hien tai tren the gioi game
 				D3DXVECTOR2 pos = D3DXVECTOR2( j * _tileWidth, (_mapWidth - i) * _tileHeight);
@@ -123,15 +124,15 @@ void BackGround::addElement(std::vector<std::string> arr, int rowIndex)
 		// add matrix
 		IDTile = atoi(arr[col].c_str());
 		this->_matrix[rowIndex][col] = IDTile;
-		if (IDTile >= 1600)
+		if (IDTile >= 600)
 		{
 			D3DXVECTOR2 pos = D3DXVECTOR2( col * _tileWidth, (_mapWidth - rowIndex) * _tileHeight);
 			D3DXVECTOR2 posCenter = D3DXVECTOR2(pos.x + _tileWidth / 2, pos.y - _tileWidth / 2);
 
 			// day la 1 doi tuong GroundBGObj
-			GroundBGObj* groundObj = GroundBGFac::getInstance()->createObj(IDTile);
-			groundObj->_pos = posCenter;
-			_listObjectInMap.push_back(groundObj);
+			//GroundBGObj* groundObj = GroundBGFac::getInstance()->createObj(IDTile);
+			//groundObj->_pos = posCenter;
+			//_listObjectInMap.push_back(groundObj);
 		}
 		else
 		{
@@ -146,60 +147,26 @@ void BackGround::addElement(std::vector<std::string> arr, int rowIndex)
 	}
 }
 
-std::vector<string> BackGround::split(string s, char key)
-{
-	vector<string> arr;
-	string sTemp = "";
-	int index = 0;
-	while(index < s.length())
-	{
-		while(s[index] != key && index < s.length() && s[index] != ' ')
-		{
-			sTemp += s[index];
-			index++;
-		}
-		if(sTemp.size() > 0)
-			arr.push_back(sTemp);
-		index++;
-		sTemp.clear();
-	}
-	return arr;
-}
+//std::vector<string> BackGround::split(string s, char key)
+//{
+//	vector<string> arr;
+//	string sTemp = "";
+//	int index = 0;
+//	while(index < s.length())
+//	{
+//		while(s[index] != key && index < s.length() && s[index] != ' ')
+//		{
+//			sTemp += s[index];
+//			index++;
+//		}
+//		if(sTemp.size() > 0)
+//			arr.push_back(sTemp);
+//		index++;
+//		sTemp.clear();
+//	}
+//	return arr;
+//}
 
 BackGround::~BackGround()
 {
-}
-
-void BackGround::fixMapBackground(std::string filePath)
-{
-	std::string line;
-	std::vector<std::string> arr;
-	std::ifstream* myfile = new std::ifstream(filePath);
-
-	//lay list chua IDBG tuong ung voi IDImage;
-	std::hash_map<int, int> listID = GroundBGFac::getInstance()->getLishIDImageIDBG();
-
-	if (myfile->is_open())
-	{
-		//doc dong dau tien lay chi so dong va cot cua ma tran
-		getline(*myfile, line);
-
-		//doc dong thu hai lay do dai va rong cua tile map
-		std::getline(*myfile, line);
-	
-		int row = 0;
-		while ( !myfile->eof()) 
-		{
-			if (std::getline(*myfile, line))
-			{
-				arr = split(line, '\t');
-				for (int i = 0; i < arr.size(); i++)
-				{
-					//k la ID BG
-					int ID_BG = atoi(arr.at(i).c_str());
-				}
-				//them objectfactory vao list
-			}
-		}
-	}
 }

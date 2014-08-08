@@ -31,3 +31,13 @@ Box ObjectGame::getBox()
 	this->_box = Box(_pos.x, _pos.y, _width, _height);
 	return _box;
 }
+
+void ObjectGame::update(float deltaTime, std::vector<ObjectGame*> listObjectCollision)
+{
+
+}
+
+void ObjectGame::update(float deltaTime)
+{
+
+}

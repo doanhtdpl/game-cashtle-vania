@@ -97,6 +97,21 @@
     <Filter Include="GameObject\StaticObject\HideObject">
       <UniqueIdentifier>{23ff786d-b5e9-4780-8f77-6175114fc57b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\DynamicObject\Item">
+      <UniqueIdentifier>{76543538-f3c1-47cf-a8f9-30b2c480bd68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config\HideObjectFactory">
+      <UniqueIdentifier>{f1df25ba-6bf6-4b4f-86b8-8dd0dcd9a9c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\StaticObject\GroundObj">
+      <UniqueIdentifier>{9761323b-de1e-4e7b-96de-c037b4feba4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\StaticObject\Light">
+      <UniqueIdentifier>{2748a408-da02-4cce-8fe1-ccd3f43c8038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config\LightFactory">
+      <UniqueIdentifier>{8878e3df-924e-4ad4-b4b5-60b6839278b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -177,9 +192,6 @@
     <ClCompile Include="Stair.cpp">
       <Filter>GameObject\StaticObject\Stair</Filter>
     </ClCompile>
-    <ClCompile Include="GroundBGObj.cpp">
-      <Filter>GameObject\StaticObject</Filter>
-    </ClCompile>
     <ClCompile Include="Door.cpp">
       <Filter>GameObject\StaticObject\Door</Filter>
     </ClCompile>
@@ -230,6 +242,21 @@
     </ClCompile>
     <ClCompile Include="HideObject.cpp">
       <Filter>GameObject\StaticObject\HideObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>GameObject\DynamicObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="HideObjectFactory.cpp">
+      <Filter>Config\HideObjectFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundBGObj.cpp">
+      <Filter>GameObject\StaticObject\GroundObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>GameObject\StaticObject\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="LightFactory.cpp">
+      <Filter>Config\LightFactory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -314,9 +341,6 @@
     <ClInclude Include="Stair.h">
       <Filter>GameObject\StaticObject\Stair</Filter>
     </ClInclude>
-    <ClInclude Include="GroundBGObj.h">
-      <Filter>GameObject\StaticObject</Filter>
-    </ClInclude>
     <ClInclude Include="Door.h">
       <Filter>GameObject\StaticObject\Door</Filter>
     </ClInclude>
@@ -364,6 +388,21 @@
     </ClInclude>
     <ClInclude Include="HideObject.h">
       <Filter>GameObject\StaticObject\HideObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>GameObject\DynamicObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="HideObjectFactory.h">
+      <Filter>Config\HideObjectFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundBGObj.h">
+      <Filter>GameObject\StaticObject\GroundObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>GameObject\StaticObject\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="LightFactory.h">
+      <Filter>Config\LightFactory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

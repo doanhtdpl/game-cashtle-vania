@@ -1,13 +1,15 @@
 #ifndef __STATE_ENEMY__
 #define __STATE_ENEMY__
+
 enum EnemyMovement
 {
 	None,
 	Idle,
 	Moves,
-	Free,
-	Jump
+	Jump,
+	Freee
 };
+
 #endif // !__STATE_ENEMY__
 
 #ifndef __ENEMY__H__

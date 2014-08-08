@@ -31,7 +31,7 @@ void IAnimatedSprite::animated(float deltaTime)
 
 	if (_beforeTimeOld > _elapseTimeSwitchFrame)
 	{
-		this->_curFrame += this->_increase;
+		this->_curFrame ++;
 		if (this->_curFrame >= this->_totalFrames)
 		{
 			this->_curFrame = 0;

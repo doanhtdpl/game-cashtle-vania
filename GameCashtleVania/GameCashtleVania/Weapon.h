@@ -14,4 +14,5 @@ public:
 protected:
 private:
 };
+
 #endif // !__WEAPON__H__

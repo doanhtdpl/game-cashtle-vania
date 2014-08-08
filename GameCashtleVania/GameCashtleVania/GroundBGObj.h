@@ -3,10 +3,10 @@
 
 #include "StaticObject.h"
 
+// 2 loai: 
 class GroundBGObj : public StaticObject
 {
 public:
-	int _ID_BG;//ID cua anh load tu bg
 	GroundBGObj();
 	GroundBGObj(std::vector<std::string> arr);
 	virtual std::string className();

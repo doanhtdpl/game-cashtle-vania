@@ -16,4 +16,5 @@ TagClassName::TagClassName()
 {
 	this->tagEnemy = "Enemy";
 	this->tagGroundObject = "GroundObject";
+	this->tagLight = "Light";
 }

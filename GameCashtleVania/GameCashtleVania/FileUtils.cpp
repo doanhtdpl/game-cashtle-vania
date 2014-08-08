@@ -3,7 +3,7 @@
 #include <fstream>
 #include "SimonFactory.h"
 #include "IronRodFac.h"
-#include "GroundBGFac.h"
+#include "LightFactory.h"
 
 using namespace std;
 
@@ -53,7 +53,7 @@ void FileUtils::loadCSV()
 {
 	this->readFileCSV(fileSimon, SimonFactory::getInstance());
 	this->readFileCSV(fileIronRod, IronRodFac::getInstance());
-	this->readFileCSV(fileGroundBG, GroundBGFac::getInstance());
+	this->readFileCSV(fileLight, LightFactory::getInstance());
 }
 
 void FileUtils::readFileMap()

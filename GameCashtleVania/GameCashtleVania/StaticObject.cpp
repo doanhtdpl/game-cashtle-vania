@@ -17,4 +17,9 @@ StaticObject::~StaticObject(void)
 std::string StaticObject::className()
 {
 	return "Static Object";
-}	
+}
+
+void StaticObject::update(float deltaTime)
+{
+
+}
