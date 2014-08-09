@@ -3,8 +3,8 @@
 
 #include "Game.h"
 #include "Input.h"
-#include "BackGround.h"
-#include "Map.h"
+#include "QuadTreeBackground.h"
+#include "QuadTreeObject.h"
 
 class ManageGame : public Game
 {
@@ -19,8 +19,10 @@ private:
 public:
 	static int _count_LifeMario;
 	static int _score;
-	BackGround* _mapBG;
-	Map* _map;
+	
+	QuadTreeBackground* quadTreeBG;
+	QuadTreeObject* quadTreeObj;
+	RECT screen;
 	int level;
 	int scene;
 

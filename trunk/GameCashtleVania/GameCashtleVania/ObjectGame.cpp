@@ -41,3 +41,14 @@ void ObjectGame::update(float deltaTime)
 {
 
 }
+
+RECT ObjectGame::getRect()
+{
+	this->_rect.top = _pos.y + this->_height / 2;
+	this->_rect.bottom = this->_rect.top - this->_height;
+
+	this->_rect.left = _pos.x - this->_width / 2;
+	this->_rect.right = this->_rect.left + this->_width;
+
+	return this->_rect;
+}

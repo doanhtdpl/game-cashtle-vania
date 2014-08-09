@@ -117,6 +117,10 @@
     <ClCompile Include="Medusa.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjectGame.cpp" />
+    <ClCompile Include="QNode.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
+    <ClCompile Include="QuadTreeBackground.cpp" />
+    <ClCompile Include="QuadTreeObject.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="SimonFactory.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -166,6 +170,10 @@
     <ClInclude Include="Medusa.h" />
     <ClInclude Include="ObjectFactoty.h" />
     <ClInclude Include="ObjectGame.h" />
+    <ClInclude Include="QNode.h" />
+    <ClInclude Include="QuadTree.h" />
+    <ClInclude Include="QuadTreeBackground.h" />
+    <ClInclude Include="QuadTreeObject.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="SimonFactory.h" />
     <ClInclude Include="Sprite.h" />

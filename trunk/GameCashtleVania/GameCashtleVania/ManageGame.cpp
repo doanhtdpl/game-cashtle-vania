@@ -21,26 +21,29 @@ ManageGame::~ManageGame(void)
 
 void ManageGame::gameDraw()
 {
-	_mapBG->drawBackGround();
+	//_mapBG->drawBackGround();
+
+
+	quadTreeBG->draw(screen);
+	quadTreeObj->draw(screen);
 
 	ManageSprite::createInstance()->drawObject( Simon::getInstance() );
 	if (Simon::getInstance()->ironRod->_isALive)
 	{
 		ManageSprite::createInstance()->drawObject( Simon::getInstance()->ironRod );
 	}
-
-	std::hash_map<int, ObjectGame*>::iterator it = _map->listObjectInMap.begin();
-	while (it != _map->listObjectInMap.end())
-	{
-		//draw
-		ObjectGame* obj = it->second;
-		if (obj->className() != TagClassName::getInstance()->tagHideObject)
-		{
-			ManageSprite::createInstance()->drawObject(obj);
-		}
-		
-		++it;
-	}
+	//std::hash_map<int, ObjectGame*>::iterator it = _map->listObjectInMap.begin();
+	//while (it != _map->listObjectInMap.end())
+	//{
+	//	//draw
+	//	ObjectGame* obj = it->second;
+	//	if (obj->className() != TagClassName::getInstance()->tagHideObject)
+	//	{
+	//		ManageSprite::createInstance()->drawObject(obj);
+	//	}
+	//	
+	//	++it;
+	//}
 }
 
 
@@ -52,20 +55,29 @@ void ManageGame::processInput()
 void ManageGame::gameUpdate(float deltaTime)
 {
 	ManageSprite::createInstance()->update_Camera(Simon::getInstance()->_pos.x);
-	
+	screen = ManageSprite::createInstance()->_camera->getScreen();
+
 	std::vector<ObjectGame*> arr;
-	std::hash_map<int, ObjectGame*>::iterator it = _map->listObjectInMap.begin();
-	while (it != _map->listObjectInMap.end())
+	arr = quadTreeObj->getObjectInScreen(screen);
+	std::vector<ObjectGame*>::iterator it = arr.begin();
+	ObjectGame* obj;
+	while(it != arr.end())
 	{
-		//draw
-		ObjectGame* obj = it->second;
-		arr.push_back(obj);
-		if (obj->className() != TagClassName::getInstance()->tagHideObject)
-		{
-			obj->update(deltaTime);
-		}
-		++it;
+		obj = *it++;
+		obj->update(deltaTime);
 	}
+	//std::hash_map<int, ObjectGame*>::iterator it;
+	//while (it != _map->listObjectInMap.end())
+	//{
+	//	//draw
+	//	ObjectGame* obj = it->second;
+	//	arr.push_back(obj);
+	//	if (obj->className() != TagClassName::getInstance()->tagHideObject)
+	//	{
+	//		obj->update(deltaTime);
+	//	}
+	//	++it;
+	//}
 
 	Simon::getInstance()->update(deltaTime, arr);
 	//Simon::getInstance()->collision((StaticObject*)brick, normalX, normalY, DeltaTime);
@@ -83,13 +95,24 @@ void ManageGame::gameInit()
 	//tao Simon
 	SimonFactory::getInstance()->createObj();
 	
-	_mapBG = new BackGround();
-	_map = new Map();
+	quadTreeBG = QuadTreeBackground::getInstance();
+	quadTreeObj = QuadTreeObject::getInstance();
+	
 	level = 1;
 	scene = 1;
 	InfoScene* infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
-	_mapBG->readFromFile(infoScene->bGPath);
-	_map->readMapFromFile(infoScene->mapPath);
+	//dua thong tin file cho quadtree
+
+	quadTreeBG->fileMap = infoScene->bGPath;
+	quadTreeBG->fileQuadtree = infoScene->bGQuadTree;
+	quadTreeBG->loadMap();
+
+	quadTreeObj->fileMap = infoScene->mapPath;
+	quadTreeObj->fileQuadtree = infoScene->mQuadTree;
+	quadTreeObj->loadMap();
+
+
+	screen = ManageSprite::createInstance()->_camera->getScreen();
 }
 
 void ManageGame::delete_Memory_Game()

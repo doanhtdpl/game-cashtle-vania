@@ -112,6 +112,27 @@
     <Filter Include="Config\LightFactory">
       <UniqueIdentifier>{8878e3df-924e-4ad4-b4b5-60b6839278b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map\QuadTree">
+      <UniqueIdentifier>{f8677a76-6930-4f06-8b53-178a0bef445f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\QuadNode">
+      <UniqueIdentifier>{1714213d-7a56-4f7b-ba2d-e43e636c6b0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Map">
+      <UniqueIdentifier>{8fc5a25f-b82a-4bb4-bf3a-4bd13a83823c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Background">
+      <UniqueIdentifier>{00098c6d-c6ae-443e-b1b7-5ee434cfe19a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Map\MapBackground">
+      <UniqueIdentifier>{165f3d79-ae5c-4621-81da-f6e9828c1137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\QuadTree\QuadTreeObject">
+      <UniqueIdentifier>{883a8004-b290-42f8-b8d9-46ba471046b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\QuadTree\QuadTreeBackground">
+      <UniqueIdentifier>{4ecabc28-0f27-4e1c-bab4-b81aca48d0ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -168,9 +189,6 @@
     <ClCompile Include="StaticObject.cpp">
       <Filter>GameObject\StaticObject</Filter>
     </ClCompile>
-    <ClCompile Include="BackGround.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="MapLoader.cpp">
       <Filter>Map\Level</Filter>
     </ClCompile>
@@ -197,9 +215,6 @@
     </ClCompile>
     <ClCompile Include="GroundBGFac.cpp">
       <Filter>Config\GroundBGFactory</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="TagClassName.cpp">
       <Filter>DirectX</Filter>
@@ -258,6 +273,24 @@
     <ClCompile Include="LightFactory.cpp">
       <Filter>Config\LightFactory</Filter>
     </ClCompile>
+    <ClCompile Include="QuadTree.cpp">
+      <Filter>Map\QuadTree</Filter>
+    </ClCompile>
+    <ClCompile Include="QNode.cpp">
+      <Filter>Map\QuadNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Map\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTreeObject.cpp">
+      <Filter>Map\QuadTree\QuadTreeObject</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTreeBackground.cpp">
+      <Filter>Map\QuadTree\QuadTreeBackground</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>Map\Background</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -314,9 +347,6 @@
     <ClInclude Include="StaticObject.h">
       <Filter>GameObject\StaticObject</Filter>
     </ClInclude>
-    <ClInclude Include="BackGround.h">
-      <Filter>Map</Filter>
-    </ClInclude>
     <ClInclude Include="MapLoader.h">
       <Filter>Map\Level</Filter>
     </ClInclude>
@@ -346,9 +376,6 @@
     </ClInclude>
     <ClInclude Include="GroundBGFac.h">
       <Filter>Config\GroundBGFactory</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>GameObject\DynamicObject\Enemy</Filter>
@@ -403,6 +430,24 @@
     </ClInclude>
     <ClInclude Include="LightFactory.h">
       <Filter>Config\LightFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadTree.h">
+      <Filter>Map\QuadTree</Filter>
+    </ClInclude>
+    <ClInclude Include="QNode.h">
+      <Filter>Map\QuadNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Map\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadTreeObject.h">
+      <Filter>Map\QuadTree\QuadTreeObject</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadTreeBackground.h">
+      <Filter>Map\QuadTree\QuadTreeBackground</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
+      <Filter>Map\Background</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

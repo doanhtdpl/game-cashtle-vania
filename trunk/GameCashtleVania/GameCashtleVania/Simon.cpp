@@ -76,6 +76,7 @@ Simon::Simon(std::vector<std::string> arr)
 
 	//khoi tao Rod khi tao Simon
 	ironRod = IronRodFac::getInstance()->createObj();
+	//ironRod = new IronRod();
 	this->_attacking = false;
 }
 
@@ -212,8 +213,8 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 		ObjectGame* obj = _listObjectCollision.at(i);
 		this->collision((StaticObject*)obj, normalX, normalY, deltatime);
 	}*/
-
 	ironRod->update(deltatime, _listObjectCollision);
+
 	if (!ironRod->_isALive)
 	{
 		this->_attacking = false;

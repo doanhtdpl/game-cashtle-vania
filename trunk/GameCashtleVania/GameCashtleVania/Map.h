@@ -7,9 +7,9 @@ class Map
 {
 public:
 	std::hash_map< int, ObjectGame*> listObjectInMap;
-	std::vector<int> list_IdNode;
 public:
 	void readMapFromFile(std::string filePath);
+	int getIDMaxInList();
 	Map(void);
 	~Map(void);
 };
