@@ -9,7 +9,7 @@ class InfoScene
 {
 public:
 	InfoScene();
-	InfoScene(int _level, int _idScene, int _iDSceneRestart, int _iDSceneNext, bool _finalScene, std::string _bGPath, std::string mapPath);
+	InfoScene(std::vector<std::string> arr);
 public:
 	int level;//scene cua level nao
 	int iD_Scene;//ID cua scene. Vi du. level1 scene 1: ID = 1
@@ -17,7 +17,9 @@ public:
 	int iD_Scene_Next;//lay ID cua scene tiep theo
 	bool finalScene;//scene cuoi cung cua level do
 	std::string bGPath;//duong dan toi background
+	std::string bGQuadTree;//quadtree
 	std::string mapPath;//duong dan toi map editor
+	std::string mQuadTree;
 	//D3DVECTOR _posSimon;//vi tri bat dau cua simon o scene nay
 private:
 };
@@ -44,6 +46,5 @@ public:
 	static MapLoader* getInstance();
 	void readInfoSceneFromFile();//load thong tin tat ca scene len tu file
 	InfoScene* getInfoSceneByKey(int keyScene);
-	std::vector<std::string> split(std::string s, char key);
 };
 #endif // !__MAP_LOADER_H__

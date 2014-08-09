@@ -40,3 +40,20 @@ D3DXVECTOR3 Camera::getPointTransform(float x, float y)
 
 	return D3DXVECTOR3(v_result.x, v_result.y - 20, v_result.z);
 }
+
+RECT Camera::getScreen()
+{
+	RECT rect;
+	//if (this->_pos.x > Screen_Width / 2)
+	//{
+	//	rect.left = this->_pos.x - Screen_Width / 2;
+	//}else
+	//{
+	//	rect.left = 0;
+	//}
+	rect.left = this->_pos.x;	
+	rect.right = rect.left + Screen_Width;
+	rect.top = this->_pos.y;// + Screen_Height / 2
+	rect.bottom = rect.top - Screen_Height;
+	return rect;
+}

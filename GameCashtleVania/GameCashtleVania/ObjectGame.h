@@ -21,7 +21,9 @@ public:
 	bool _Left;//Direction. Default left
 	RECT *_rectRS;//NULL if object hasn't animated sprite
 
-	Box _box;//bound object
+	RECT _rect;//xen trong Quadtree
+
+	Box _box;//bound object -> xet va cham
 public:
 	virtual std::string className() = 0;
 	ObjectGame(void);
@@ -29,6 +31,7 @@ public:
 	virtual void update(float deltaTime);
 	virtual void update(float deltaTime, std::vector<ObjectGame*> listObjectCollision);
 	virtual Box getBox();
+	RECT getRect();
 	~ObjectGame(void);
 };
 

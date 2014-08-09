@@ -12,9 +12,54 @@ BackGround::BackGround()
 	this->_IDImage = 2002;
 }
 
-void BackGround::readFromFile(std::string filePath)
+void BackGround::readMapFromFile(std::string filePath)
 {
 	this->_column = 17;
+
+	//std::vector<std::vector<std::string>> info = FileUtils::readFile(filePath);
+	//std::vector<std::vector<std::string>>::iterator it;
+	//it = info.begin();
+	//std::vector<std::string> arr;
+
+	//arr = *it++;//lay dong dau tien. map width - map height
+	//int k = 0;
+	//std::string str = arr[0];
+	////chuan hoa lai dong dau tien
+	//while(str[k] < 48 || str[k] > 57)
+	//{
+	//	str.erase(str.begin());
+	//}
+	//arr = FileUtils::split(str, '\t');
+	//_mapWidth = atoi(arr[0].c_str()); 
+	//_mapHeight = atoi(arr[1].c_str());
+
+	//this->_matrix = new int*[_mapWidth];
+	//for (int i = 0; i < _mapWidth; i++)
+	//{
+	//	this->_matrix[i] = new int[_mapHeight];
+	//}
+
+	////////////////////////////////////////////////////////////////////////////
+	//arr = *it++;//lay dong tiep theo tileWidht  - tileHegit
+	//str = arr[0];
+	////chuan hoa lai dong dau tien
+	//while(str[k] < 48 || str[k] > 57)
+	//{
+	//	str.erase(str.begin());
+	//}
+	//arr = FileUtils::split(str, '\t');
+
+	//this->_tileHeight = atoi(arr[0].c_str()); 
+	//this->_tileWidth = atoi(arr[1].c_str());
+
+	//int row = 0;
+	////duyet nhung dong con lai
+	//while(it != info.end())
+	//{
+	//	arr = *it++;
+	//	addElement(arr, row);
+	//	row++;
+	//}
 
 	std::string line;
 	std::vector<std::string> arr;
@@ -62,8 +107,6 @@ void BackGround::readFromFile(std::string filePath)
 	}
 }
 
-
-
 // lay rectResource cua IDTile tren background
 RECT* BackGround::getRectResouceByIDTile(int IDTile)
 {
@@ -80,9 +123,9 @@ RECT* BackGround::getRectResouceByIDTile(int IDTile)
 	return rectRS;
 }
 
-RECT* BackGround::getRectRSInHM(int IDTile)
+RECT BackGround::getRectInHM(int ID)
 {
-	return this->_listTileRectRS.find(IDTile)->second;
+	return this->_listTileRectRS.find(ID)->second;
 }
 
 void BackGround::drawBackGround()
@@ -96,53 +139,59 @@ void BackGround::drawBackGround()
 		{
 			IDTile = _matrix[i][j];
 			
-			if (IDTile < 600)
+			//if (IDTile < 600)
 			{
 				// vi tri top left cua tile hien tai tren the gioi game
-				D3DXVECTOR2 pos = D3DXVECTOR2( j * _tileWidth, (_mapWidth - i) * _tileHeight);
+				D3DXVECTOR2 pos = D3DXVECTOR2( (j + 1) * _tileWidth, (_mapWidth - i + 1) * _tileHeight);
 				D3DXVECTOR3 posCenter = D3DXVECTOR3(pos.x - _tileWidth / 2, pos.y - _tileWidth / 2 , 0);
-				ManageSprite::createInstance()->draw(this->_IDImage, getRectRSInHM(IDTile), posCenter);
+				ManageSprite::createInstance()->draw(this->_IDImage, getRectResouceByIDTile(IDTile), posCenter);
 			}
 		}
 	}
+}
 
-	//ve GroundBGObj
-	for (int i = 0; i < this->_listObjectInMap.size(); i++)
-	{
-		ObjectGame* object = this->_listObjectInMap.at(i);
-		ManageSprite::createInstance()->drawObject(object);
-	}
+void BackGround::drawTileByID(int ID)
+{
+	int col = ID % _mapHeight;
+	int row = ID / _mapHeight;
+
+	int IDTile = _matrix[row][col];
+
+	D3DXVECTOR2 pos = D3DXVECTOR2( (col + 1) * _tileWidth, (_mapWidth - row) * _tileHeight);
+	D3DXVECTOR3 posCenter = D3DXVECTOR3(pos.x - _tileWidth / 2, pos.y - _tileWidth / 2 , 0);
+	ManageSprite::createInstance()->draw(this->_IDImage, getRectResouceByIDTile(IDTile), posCenter);
 }
 
 // luu 1 dong vao matran
 void BackGround::addElement(std::vector<std::string> arr, int rowIndex)
 {
 	int IDTile;
-	RECT* rectRS;
+	RECT rect;//vung bound xung quanh 
 	for (int col = 0; col < arr.size(); ++col)
 	{
 		// add matrix
 		IDTile = atoi(arr[col].c_str());
 		this->_matrix[rowIndex][col] = IDTile;
-		if (IDTile >= 600)
-		{
-			D3DXVECTOR2 pos = D3DXVECTOR2( col * _tileWidth, (_mapWidth - rowIndex) * _tileHeight);
-			D3DXVECTOR2 posCenter = D3DXVECTOR2(pos.x + _tileWidth / 2, pos.y - _tileWidth / 2);
 
-			// day la 1 doi tuong GroundBGObj
-			//GroundBGObj* groundObj = GroundBGFac::getInstance()->createObj(IDTile);
-			//groundObj->_pos = posCenter;
-			//_listObjectInMap.push_back(groundObj);
-		}
-		else
-		{
-			// no khong phai la 1 doi tuong co va cham. Chi la doi tuong dung de ve background
-			
+		//if (IDTile >= 600)
+		//{
+		//	D3DXVECTOR2 pos = D3DXVECTOR2( col * _tileWidth, (_mapWidth - rowIndex) * _tileHeight);
+		//	D3DXVECTOR2 posCenter = D3DXVECTOR2(pos.x + _tileWidth / 2, pos.y - _tileWidth / 2);
 
-			//insert rectRS and IDTIle into hashMap
-			rectRS = getRectResouceByIDTile(IDTile);
-			this->_listTileRectRS[IDTile] = rectRS;
-		}
+		//	// day la 1 doi tuong GroundBGObj
+		//	//GroundBGObj* groundObj = GroundBGFac::getInstance()->createObj(IDTile);
+		//	//groundObj->_pos = posCenter;
+		//	//_listObjectInMap.push_back(groundObj);
+		//}
+		//else
+		//{
+		//	// no khong phai la 1 doi tuong co va cham. Chi la doi tuong dung de ve background
+		//	
+
+		//	//insert rectRS and IDTIle into hashMap
+		//	rectRS = getRectResouceByIDTile(IDTile);
+		//	this->_listTileRectRS[IDTile] = rectRS;
+		//}
 
 	}
 }

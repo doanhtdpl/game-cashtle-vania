@@ -20,6 +20,9 @@ public:
 	void readFileMap();
 	void readFileImage();
 	void loadCSV();
+	
+	//doc tu file va luu vao 1 dong du lieu. Cac dong chuyen thanh cac mang string. 
+	static std::vector<std::vector<std::string>> readFile(std::string filePath, char key);
 	static std::vector<std::string> split(std::string s, char key);
 protected:
 private:
