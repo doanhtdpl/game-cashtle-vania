@@ -40,7 +40,7 @@ void Sprite::draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DXVECTOR2 sca
 	D3DXMATRIX oldMatrix;
 
 	//tim ra vi tri moi trong he toa do sau khi scale
-	D3DXVECTOR3 newPos = D3DXVECTOR3(pos.x / scale.x, pos.y / scale.y, 0);
+	D3DXVECTOR3 newPos = D3DXVECTOR3(pos.x / scale.x, pos.y / scale.y, pos.z);
 
 	result = this->_SpriteHandel->GetTransform(&oldMatrix);
 	if (result != D3D_OK)
@@ -61,6 +61,9 @@ void Sprite::draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DXVECTOR2 sca
 	{
 		return;
 	}
+
+	//doi nguoc truc z lai
+	//newPos.z = -newPos.z;
 
 	this->draw(image, RectRS, newPos, transcolor, isCenter);
 

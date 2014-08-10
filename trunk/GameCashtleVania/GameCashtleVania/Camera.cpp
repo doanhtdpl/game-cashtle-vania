@@ -9,6 +9,7 @@ Camera::Camera(void)
 
 	D3DXMatrixIdentity(&_MatrixTransform);
 	_MatrixTransform._22 = -1;
+	this->stopScrollScreen = false;
 }
 
 Camera::~Camera(void)
@@ -22,9 +23,12 @@ D3DXVECTOR3 Camera::getPosCamera()
 
 void Camera::update(float x)
 {
-	_pos.x = x - Screen_Width / 2;
-	if(_pos.x < 0)
-		_pos.x = 0;
+	if (!stopScrollScreen)
+	{
+		_pos.x = x - Screen_Width / 2;
+		if(_pos.x < 0)
+			_pos.x = 0;
+	}
 }
 
 D3DXVECTOR3 Camera::getPointTransform(float x, float y)

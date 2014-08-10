@@ -36,6 +36,5 @@ Light* LightFactory::createObj(std::vector<std::string> arr)
 	int y = atoi(arr.at(3).c_str());
 	obj->_pos.x = x;
 	obj->_pos.y = y;
-
 	return obj;
 }

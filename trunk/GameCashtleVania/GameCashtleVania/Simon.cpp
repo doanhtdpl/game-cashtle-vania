@@ -4,6 +4,8 @@
 #include "TagClassName.h"
 #include "IronRodFac.h"
 #include "ManageSprite.h"
+#include "HideObject.h"
+#include "ManageGame.h"
 
 Simon* Simon::_instance = NULL;
 
@@ -43,8 +45,9 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_isAnimatedSprite = true;
 
 	//doc tu map
-	this->_pos.x = 60;
+	this->_pos.x = 1000;
 	this->_pos.y = 200;
+	this->z = 1;
 
 	//IMove
 	this->_Vx_default = atoi(arr.at(5).c_str());
@@ -186,6 +189,10 @@ void Simon::move(float delta_Time)
 {
 	if ((this->_CanMoveL && this->_vx < 0) || (this->_CanMoveR && this->_vx > 0))
 	{
+		if (this->_pos.x >= 1250.5)
+		{
+			int x = 10;
+		}
 		//co the di qua ben trai va v
 		this->_pos.x += this->_vx * delta_Time;
 		this->_moveMent = SimonMove::Idle;
@@ -197,13 +204,16 @@ void Simon::move(float delta_Time)
 
 void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
 {
-	animated(deltatime);
+	processInput();
 
 	updateMovement(deltatime);
 
-	move(deltatime);
-
 	handleCollision(deltatime, _listObjectCollision);
+
+	animated(deltatime);
+	//updateMovement(deltatime);
+
+	move(deltatime);
 
 	//updateMovement(deltatime);
 
@@ -326,13 +336,13 @@ void Simon::processInput()
 	int key_up = Input::CreateInstance()->GetKeyUp();
 
 	//de phim
-	if (Input::CreateInstance()->IsKeyDown(DIK_RIGHT) && this->_CanMoveR)
+	if (Input::CreateInstance()->IsKeyDown(DIK_RIGHT) && this->_CanMoveR && !this->_attacking)
 	{
 		this->_moveMent = SimonMove::Moves;
 		this->_Left = false;
 	}else
 	{
-		if (Input::CreateInstance()->IsKeyDown(DIK_LEFT) && this->_CanMoveL)
+		if (Input::CreateInstance()->IsKeyDown(DIK_LEFT) && this->_CanMoveL && !this->_attacking)
 		{
 			this->_moveMent = SimonMove::Moves;
 			this->_Left = true;
@@ -340,7 +350,7 @@ void Simon::processInput()
 	}
 
 	//Neu phim Down khong duoc nhan. thi chuyen ve stand neu no dang ngoi
-	if (key_up == DIK_DOWN)
+	if (key_up == DIK_DOWN && !this->_attacking)
 	{
 		if (this->_moveMent == SimonMove::Sit)
 		{
@@ -365,7 +375,7 @@ void Simon::processInput()
 	}
 	
 
-	if (key == DIK_SPACE)
+	if (key == DIK_SPACE && !this->_attacking)
 	{
 		if (this->_CanJum)
 		{
@@ -397,69 +407,142 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 		ObjectGame* obj = _listObjectCollision.at(i);
 		if (obj->className() == TagClassName::getInstance()->tagHideObject)
 		{
+			HideObject* hideObj = (HideObject*)obj;
 			//va cham voi doi tuong nen
 			timeCollision = this->collision((StaticObject*)obj, normalX, normalY, deltatime);
-			if (timeCollision == 2.0f)
+			//if ( !((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f))
+			//{
+			//	//khong co va cham
+			//	break;
+			//}
+#pragma region HideObject = Ground
+			if (hideObj->getTypeHideObject() == TypeHideObect::Ground)
 			{
-				// bi va cham theo AABBCheck
-				if (this->_moveMent == SimonMove::Free && normalY < 0)
+				if (timeCollision == 2.0f)
 				{
-					this->_moveMent = SimonMove::Idle;
-					this->_pos.x += normalX;
-					this->_pos.y += normalY;
-					this->_vx = 0;
-					this->_vy = 0;
-				}
-
-				if (this->_moveMent == SimonMove::Moves)
-				{
-					this->_moveMent = SimonMove::Idle;
-					this->_pos.x += normalX;
-					this->_pos.y += normalY;
-					this->_vx = 0;
-					this->_vy = 0;
-				}
-			}else
-			{
-				//truong hop duoi
-			}
-			if (timeCollision < 1.0f)//co va cham
-			{
-				//Object dang di chuyen qua ben trai
-				if (normalX == 1)
-				{
-					this->_pos.x += timeCollision * (deltatime * this->_vx);
-					if (this->_moveMent == SimonMove::Jump)
+					// bi va cham theo AABBCheck
+					if (this->_moveMent == SimonMove::Free && normalY != 0)
 					{
-						this->_moveMent == SimonMove::Free;
+						this->_moveMent = SimonMove::Idle;
+						this->_pos.x += normalX;
+						this->_pos.y += normalY;
+						//this->_vx = 0;
+						this->_vy = 0;
 					}
-					this->_CanMoveL = false;
-				}
 
-				//Object dang di chuyen qua ben phai
-				if (normalX == -1)
-				{
-					this->_pos.x += timeCollision * (deltatime * this->_vx);
-					if (this->_moveMent == SimonMove::Jump)
+					if (this->_moveMent == SimonMove::Moves && normalX != 0)
 					{
-						this->_moveMent == SimonMove::Free;
+						this->_moveMent = SimonMove::Idle;
+						this->_pos.x += normalX;
+						this->_pos.y += normalY;
+						this->_vx = 0;
 					}
-					this->_CanMoveR = false;
-				}
-
-				//Obj dang roi
-				if (normalY == 1)
+				}else
 				{
-					this->_pos.y += timeCollision * (deltatime * this->_vy);
- 					this->_moveMent = SimonMove::Idle;
+					//truong hop duoi
 				}
-
-				//obj dang nhay
-				if (normalY == -1)
+				if (timeCollision < 1.0f)//co va cham
 				{
-					//ko lam gi ca
+					//Object dang di chuyen qua ben trai
+					if (normalX == 1)
+					{
+						this->_pos.x += timeCollision * (deltatime * this->_vx) + 0.5f;
+
+						if (this->_moveMent == SimonMove::Jump)
+						{
+							this->_moveMent == SimonMove::Free;
+						}
+
+						if (this->_moveMent == SimonMove::Moves)
+						{
+							this->_moveMent = SimonMove::Idle;
+						}
+						this->_vx = 0;
+						this->_CanMoveL = false;
+					}
+
+					//Object dang di chuyen qua ben phai
+					if (normalX == -1)
+					{
+						this->_pos.x += timeCollision * (deltatime * this->_vx) - 0.5f;
+						if (this->_moveMent == SimonMove::Jump)
+						{
+							this->_moveMent == SimonMove::Free;
+						}
+
+						if (this->_moveMent == SimonMove::Moves)
+						{
+							this->_moveMent = SimonMove::Idle;
+						}
+
+						this->_vx = 0;
+						this->_CanMoveR = false;
+					}
+
+					//Obj dang roi
+					if (normalY == 1)
+					{
+						this->_pos.y += timeCollision * (deltatime * this->_vy);
+						this->_moveMent = SimonMove::Idle;
+						//this->_vx = 0;
+						this->_vy = 0;
+					}
+
+					//obj dang nhay
+					if (normalY == -1)
+					{
+						//ko lam gi ca
+					}
 				}
 			}
+#pragma endregion
+			else
+			{
+#pragma region Hide Object = Stop Scrooll
+
+				if (hideObj->getTypeHideObject() == TypeHideObect::StopScrollScene)
+				{
+					//va cham voi doi tuong stop scroll
+					if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
+					{
+						ManageSprite::createInstance()->_camera->stopScrollScreen = true;											
+					}
+
+					//khi di qua lai ben trai va vuot left cua hide object -> cuon lai
+					if (this->_pos.x + this->_width / 2 <= hideObj->_pos.x - hideObj->_width / 2)
+					{
+						ManageSprite::createInstance()->_camera->stopScrollScreen = false;	
+					}
+				}
+#pragma endregion
+				else
+				{
+#pragma region HideObject = ChangeScene
+
+					if (hideObj->getTypeHideObject() == TypeHideObect::ChangeScene)
+					{
+						//change scene
+						//va cham voi doi tuong change Scene
+						if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
+						{
+							ManageGame::isChangeScene = true;					
+						}
+					}
+
+#pragma endregion
+					else
+					{
+						if (hideObj->getTypeHideObject() == TypeHideObect::UpStair)
+						{
+
+						}
+					}
+
+				}
+			}
+
+
+			
 		}
 	}
 }
@@ -489,8 +572,9 @@ float Simon::collision(StaticObject* staticObject, float &normalx, float &normal
 			normaly = moveY;
 			//this->_pos.x += moveX;
 			//this->_pos.y += moveY;
+			return 2.0f;
 		}
-		return 2.0f;
+		return 1.0f;
 	}else
 	{
 		//kiem tra 2 object co the va cham ko?

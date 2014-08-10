@@ -5,7 +5,7 @@ Weapon::Weapon()
 
 }
 
-void Weapon::update(float delta_Time, std::list<ObjectGame*> *_ListObjectCollision)
+void Weapon::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision)
 {
 
 }

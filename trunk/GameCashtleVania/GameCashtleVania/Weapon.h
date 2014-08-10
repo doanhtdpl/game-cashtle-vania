@@ -10,7 +10,7 @@ class Weapon : public DynamicObject
 public:
 	Weapon();
 	virtual void Use(D3DXVECTOR2 posSimon, bool Left) = 0;
-	void update(float delta_Time, std::list<ObjectGame*> *_ListObjectCollision);
+	virtual void update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
 protected:
 private:
 };

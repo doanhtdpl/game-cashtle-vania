@@ -27,6 +27,8 @@ public:
 	float collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime);
 	float collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime);
 
+
+	SimonMove _moveMent;
 	IronRod* ironRod;
 protected:
 	float HeightDefault;
@@ -36,7 +38,7 @@ protected:
 	float _attacking;//dang dung item or dung roi.
 private:
 	static Simon* _instance;
-	SimonMove _moveMent;
+
 };
 #endif // !__SIMON_H__
 
@@ -50,7 +52,7 @@ enum SimonMove
 	Idle,//dung yen
 	Sit,//dang ngoi
 	PrepareUpTheStair,//chuan bi len cau thang
-	PrepareDownTheStair,
+	PrepareDownTheStair,//chuan bi xuong cau thang
 	UpStair,//dang di len cau thang
 	DownStair,
 	PrepareLeaveTheStair,//len cau thang

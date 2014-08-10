@@ -6,7 +6,7 @@ Light::Light()
 
 }
 
-Light::Light(std::vector<std::string> arr)
+Light::Light(std::vector<std::string> arr) : StaticObject(arr)
 {
 	this->_ID		= atoi(arr[0].c_str());
 	this->_ID_Image = atoi(arr[1].c_str());
