@@ -11,6 +11,11 @@ DynamicObject::DynamicObject(void)
 	this->_High_Jumped = 0;
 }
 
+DynamicObject::DynamicObject(std::vector<std::string> arr) : ObjectGame(arr)
+{
+
+}
+
 DynamicObject::~DynamicObject(void)
 {
 }

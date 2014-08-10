@@ -9,12 +9,12 @@ ObjectGame::ObjectGame(void)
 	_isAnimatedSprite = false;
 	this->_height = 0;
 	this->_width = 0;
-
+	this->z = 0;
 }
 
 ObjectGame::ObjectGame(std::vector<std::string> arr)
 {
-
+	this->z = 0;
 }
 
 ObjectGame::~ObjectGame(void)

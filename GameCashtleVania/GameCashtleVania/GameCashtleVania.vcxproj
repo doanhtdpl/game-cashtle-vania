@@ -106,6 +106,7 @@
     <ClCompile Include="IronRod.cpp" />
     <ClCompile Include="IronRodFac.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Itween.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LightFactory.cpp" />
     <ClCompile Include="main.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="IronRod.h" />
     <ClInclude Include="IronRodFac.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Itween.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LightFactory.h" />
     <ClInclude Include="ManageGame.h" />

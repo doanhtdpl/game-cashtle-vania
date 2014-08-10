@@ -39,7 +39,7 @@ void ManageSprite::drawObject(ObjectGame *Object)
 	D3DXVECTOR3 pos_Draw;
 
 	pos_Draw = _camera->getPointTransform(Object->_pos.x, Object->_pos.y);
-	
+	pos_Draw.z = Object->z;
 
 	//khong quay ve ben trai
 	if (Object->_Left)

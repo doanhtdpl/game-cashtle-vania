@@ -22,6 +22,7 @@ public:
 	virtual float collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime);
 	virtual float collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime);
 	DynamicObject(void);
+	DynamicObject(std::vector<std::string> arr);
 	~DynamicObject(void);
 };
 

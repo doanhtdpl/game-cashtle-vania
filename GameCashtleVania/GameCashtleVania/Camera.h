@@ -14,6 +14,7 @@ public:
 	//static Camera* CreateInstance();
 	Camera(void);
 	~Camera(void);
+	bool stopScrollScreen;
 	void update(float x);
 	D3DXVECTOR3 getPosCamera();
 	D3DXVECTOR3 getPointTransform(float x, float y);

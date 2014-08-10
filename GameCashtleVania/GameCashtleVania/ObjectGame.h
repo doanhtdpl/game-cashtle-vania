@@ -13,6 +13,7 @@ public:
 	int _ID;//each object has a ID to identified with other object
 	int _ID_Image;
 	D3DXVECTOR2 _pos;//position of object
+	float z;//xet thang nao ve tren. mac dinh  = 0
 	bool _isALive;//life or die??
 	int _height;//height of object and uses to draw.
 	int _width;

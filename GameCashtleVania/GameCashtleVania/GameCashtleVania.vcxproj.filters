@@ -291,6 +291,9 @@
     <ClCompile Include="BackGround.cpp">
       <Filter>Map\Background</Filter>
     </ClCompile>
+    <ClCompile Include="Itween.cpp">
+      <Filter>GameObject\Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -448,6 +451,9 @@
     </ClInclude>
     <ClInclude Include="BackGround.h">
       <Filter>Map\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Itween.h">
+      <Filter>GameObject\Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,13 +6,29 @@
 #include "Simon.h"
 #include "MapLoader.h"
 #include "TagClassName.h"
+#include "Itween.h"
 
 int ManageGame::_count_LifeMario = 4;
 int ManageGame::_score = 0;
+bool ManageGame::isChangeScene = false;
 
-ManageGame::ManageGame(void)
+ManageGame* ManageGame::_instance = NULL;
+
+ManageGame* ManageGame::getInstance()
+{
+	if (_instance == NULL)
+	{
+		_instance = new ManageGame();
+	}
+
+	return _instance;
+}
+
+ManageGame::ManageGame()
 {
 	//ListObjectOnScenes = new list<ObjectGame*>();
+	//isChangeScene = false;
+	acting = false;
 }
 
 ManageGame::~ManageGame(void)
@@ -27,10 +43,10 @@ void ManageGame::gameDraw()
 	quadTreeBG->draw(screen);
 	quadTreeObj->draw(screen);
 
-	ManageSprite::createInstance()->drawObject( Simon::getInstance() );
+	ManageSprite::createInstance()->drawObject(simon);
 	if (Simon::getInstance()->ironRod->_isALive)
 	{
-		ManageSprite::createInstance()->drawObject( Simon::getInstance()->ironRod );
+		ManageSprite::createInstance()->drawObject( simon->ironRod );
 	}
 	//std::hash_map<int, ObjectGame*>::iterator it = _map->listObjectInMap.begin();
 	//while (it != _map->listObjectInMap.end())
@@ -49,7 +65,7 @@ void ManageGame::gameDraw()
 
 void ManageGame::processInput()
 {
-	Simon::getInstance()->processInput();
+	//Simon::getInstance()->processInput();
 }
 
 void ManageGame::gameUpdate(float deltaTime)
@@ -66,21 +82,88 @@ void ManageGame::gameUpdate(float deltaTime)
 		obj = *it++;
 		obj->update(deltaTime);
 	}
-	//std::hash_map<int, ObjectGame*>::iterator it;
-	//while (it != _map->listObjectInMap.end())
-	//{
-	//	//draw
-	//	ObjectGame* obj = it->second;
-	//	arr.push_back(obj);
-	//	if (obj->className() != TagClassName::getInstance()->tagHideObject)
-	//	{
-	//		obj->update(deltaTime);
-	//	}
-	//	++it;
-	//}
 
-	Simon::getInstance()->update(deltaTime, arr);
-	//Simon::getInstance()->collision((StaticObject*)brick, normalX, normalY, DeltaTime);
+	//khong co trang thai change scene
+	if (!isChangeScene)
+	{
+		simon->update(deltaTime, arr);
+	}else
+	{
+		changeScene(deltaTime);
+	}
+	
+}
+
+void ManageGame::changeScene(float deltaTime)
+{
+	
+	if (!acting)
+	{
+		//chua dien ra hanh dong
+		D3DXVECTOR2 posFrom = simon->_pos;
+		D3DXVECTOR2 posTo = D3DXVECTOR2(simon->_pos.x + 300, simon->_pos.y);
+		D3DXVECTOR2 speed = D3DXVECTOR2(simon->_Vx_default, 0);
+
+		Itween::getInstance()->posFrom = posFrom;
+		Itween::getInstance()->posTo = posTo;
+		Itween::getInstance()->speed = speed;
+		Itween::getInstance()->timeDelay = 2.0;
+		Itween::getInstance()->wasActing = false;
+		acting = true;
+	}else
+	{
+		simon->_moveMent = SimonMove::Moves;
+		simon->animated(deltaTime);
+		if (Itween::getInstance()->MoveTo(simon, deltaTime))
+		{
+			acting = false;
+			isChangeScene = false;
+			nextScene();
+		}
+	}
+	
+	
+
+}
+
+void ManageGame::nextScene()
+{
+	InfoScene* infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
+	if (infoScene->finalScene)
+	{
+		nextLevel();
+	}else
+	{
+		this->scene++;
+		infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
+
+		//dua thong tin file cho quadtree
+
+		quadTreeBG->fileMap = infoScene->bGPath;
+		quadTreeBG->fileQuadtree = infoScene->bGQuadTree;
+		quadTreeBG->loadMap();
+
+		quadTreeObj->fileMap = infoScene->mapPath;
+		quadTreeObj->fileQuadtree = infoScene->mQuadTree;
+		quadTreeObj->loadMap();
+
+		simon->_pos = D3DXVECTOR2(60, 64);
+	}
+}
+
+void ManageGame::nextLevel()
+{
+
+}
+
+void ManageGame::winGame()
+{
+
+}
+
+void ManageGame::loseGame()
+{
+
 }
 
 void ManageGame::gameInit()
@@ -93,7 +176,7 @@ void ManageGame::gameInit()
 	FileUtils::getInstance()->loadCSV();
 	
 	//tao Simon
-	SimonFactory::getInstance()->createObj();
+	simon = SimonFactory::getInstance()->createObj();
 	
 	quadTreeBG = QuadTreeBackground::getInstance();
 	quadTreeObj = QuadTreeObject::getInstance();

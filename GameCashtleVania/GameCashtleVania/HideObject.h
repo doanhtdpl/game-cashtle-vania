@@ -1,7 +1,7 @@
 #ifndef __TYPE__HIDE__OBJECT__
 #define __TYPE__HIDE__OBJECT__
 
-enum TypeHideObect
+enum class TypeHideObect
 {
 	Free = 701,
 	Ground = 702,

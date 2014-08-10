@@ -5,26 +5,35 @@
 #include "Input.h"
 #include "QuadTreeBackground.h"
 #include "QuadTreeObject.h"
+#include "Simon.h"
 
 class ManageGame : public Game
 {
 private:
+	static ManageGame* _instance;
+
 	int levelCurrent;// level 1
 	int iDScene;// scene 1
-	void WinGame();
-	void LoseGame();
-	void RestartScene();
-	void NextScene();
-	void NextLevel();
+	void winGame();
+	void loseGame();
+	void restartScene();
+	void nextScene();
+	void nextLevel();
+	void changeScene(float deltaTime);
 public:
 	static int _count_LifeMario;
 	static int _score;
 	
 	QuadTreeBackground* quadTreeBG;
 	QuadTreeObject* quadTreeObj;
+	Simon* simon;
 	RECT screen;
 	int level;
 	int scene;
+
+	//khi simon va cham Hide Object change scene thi goi thang nay = true. --> ChangeScene()
+	static bool isChangeScene;
+	bool acting;
 
 	void gameUpdate(float DeltaTime);
 	void gameDraw();
@@ -33,7 +42,8 @@ public:
 	void processInput();
 	void delete_Memory_Game();
 public:
-	ManageGame(void);
+	static ManageGame* getInstance();
+	ManageGame();
 	~ManageGame(void);
 };
 
