@@ -5,12 +5,12 @@ enum class TypeHideObect
 {
 	Free = 701,
 	Ground = 702,
-	DownStair = 703,
-	UpStair = 704,
+	DownStairLeft = 703,
+	UpStairLeft = 704,
 	ChangeScene = 705,
 	StopScrollScene = 706,
-	AppearEnemy = 707
-
+	DownStairRight = 713,
+	UpStairRight = 714
 };
 #endif // !__TYPE__HIDE__OBJECT__
 
