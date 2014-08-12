@@ -6,6 +6,7 @@ Camera::Camera(void)
 	_pos.x = 0;
 	_pos.y = Screen_Height;
 	_pos.z = 0;
+	this->speedX = 90;
 
 	D3DXMatrixIdentity(&_MatrixTransform);
 	_MatrixTransform._22 = -1;
@@ -21,11 +22,31 @@ D3DXVECTOR3 Camera::getPosCamera()
 	return _pos;
 }
 
-void Camera::update(float x)
+void Camera::update(float x, float deltaTime)
 {
+	float x_target = x - Screen_Width / 2;
+	float distance = x_target - _pos.x;
 	if (!stopScrollScreen)
 	{
-		_pos.x = x - Screen_Width / 2;
+		if (distance > 0)
+		{//di chuyen cau thang qua ben phai
+			if (distance > speedX * deltaTime)
+			{
+				_pos.x += speedX * deltaTime;
+			}else
+			{
+				_pos.x = x_target;
+			}
+		}else
+		{//di chuyen cau thang qua ben trai
+			if (abs(distance) > abs(speedX) * deltaTime)
+			{
+				_pos.x += -speedX * deltaTime;
+			}else
+			{
+				_pos.x = x_target;
+			}
+		}
 		if(_pos.x < 0)
 			_pos.x = 0;
 	}

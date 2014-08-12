@@ -70,7 +70,7 @@ void ManageGame::processInput()
 
 void ManageGame::gameUpdate(float deltaTime)
 {
-	ManageSprite::createInstance()->update_Camera(Simon::getInstance()->_pos.x);
+	ManageSprite::createInstance()->update_Camera(Simon::getInstance()->_pos.x, deltaTime);
 	screen = ManageSprite::createInstance()->_camera->getScreen();
 
 	std::vector<ObjectGame*> arr;
@@ -147,6 +147,7 @@ void ManageGame::nextScene()
 		quadTreeObj->fileQuadtree = infoScene->mQuadTree;
 		quadTreeObj->loadMap();
 
+		ManageSprite::createInstance()->_camera->stopScrollScreen = false;
 		simon->_pos = D3DXVECTOR2(60, 64);
 	}
 }
@@ -182,7 +183,7 @@ void ManageGame::gameInit()
 	quadTreeObj = QuadTreeObject::getInstance();
 	
 	level = 1;
-	scene = 1;
+	scene = 2;
 	InfoScene* infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
 	//dua thong tin file cho quadtree
 
