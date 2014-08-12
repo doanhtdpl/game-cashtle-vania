@@ -3,7 +3,6 @@
 #define __CAMERA_H__
 
 #include <d3dx9.h>
-#pragma once
 class Camera
 {
 private:
@@ -15,7 +14,8 @@ public:
 	Camera(void);
 	~Camera(void);
 	bool stopScrollScreen;
-	void update(float x);
+	float speedX;
+	void update(float x, float deltaTime);
 	D3DXVECTOR3 getPosCamera();
 	D3DXVECTOR3 getPointTransform(float x, float y);
 	RECT getScreen();

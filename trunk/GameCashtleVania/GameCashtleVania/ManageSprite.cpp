@@ -57,9 +57,9 @@ void ManageSprite::drawObject(ObjectGame *Object)
 	//
 }
 
-void ManageSprite::update_Camera(float posx_mario)
+void ManageSprite::update_Camera(float posx_simon, float deltaTime)
 {
-	_camera->update(posx_mario);
+	_camera->update(posx_simon, deltaTime);
 }
 
 void ManageSprite::draw(int IDImage, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor)
