@@ -45,15 +45,13 @@ public:
 
 	//tac dung vao simon khi va cham voi no
 	//moi item se khac nhau o diem nay
-	void effect();
+	void effectSimon();
 protected:
 	//item se roi va dy chuyen theo hinh zich zac quanh vi tri
 	float maxX;
 	float minX;
 	float disBound;//do lon cua vung di chuyen
-
 	bool _idle;//khong di chuyen nua
-
 	float timeLife;//thoi gian ton tai
 private:
 };

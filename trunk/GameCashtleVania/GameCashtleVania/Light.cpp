@@ -23,6 +23,7 @@ Light::Light(std::vector<std::string> arr) : StaticObject(arr)
 	this->_isALive = true;
 	this->_isAnimatedSprite = true;
 
+	this->_typeLight = (TypeLight)this->_ID;
 }
 
 std::string Light::className()
@@ -35,4 +36,16 @@ void Light::update(float deltaTime)
 	animated(deltaTime);
 	this->_rectRS = this->updateRectRS(this->_width, this->_height);
 
+}
+
+Item* Light::effectWhenCollisionRod()
+{
+	Item* item = NULL;
+	switch (this->_typeLight)
+	{
+	default:
+		break;
+	}
+
+	return item;
 }

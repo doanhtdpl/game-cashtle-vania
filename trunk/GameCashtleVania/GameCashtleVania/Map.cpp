@@ -4,6 +4,7 @@
 #include "LightFactory.h"
 #include "HideObjectFactory.h"
 #include "EnemyFactory.h"
+#include "MapLoader.h"
 
 Map::Map(void)
 {
@@ -34,6 +35,16 @@ void Map::readMapFromFile(std::string filePath)
 			{
 				obj = LightFactory::getInstance()->createObj(arr);
 			}
+		}
+		
+		//1 so doi tuong la bound cua scene
+		if (ID < 50)
+		{
+			//add bound cho info scene
+			MapLoader::getInstance()->getInfoSceneByKey(ID)->getBoundFromFile(arr);
+		}else
+		{
+			
 		}
 
 		this->listObjectInMap[ID_Quadtree] = obj;

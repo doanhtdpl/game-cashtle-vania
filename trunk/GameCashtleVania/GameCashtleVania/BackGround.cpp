@@ -9,7 +9,7 @@ using namespace std;
 BackGround::BackGround()
 {
 	this->_matrix = NULL;
-	this->_IDImage = 2002;
+	this->_IDImage = 2001;
 }
 
 void BackGround::readMapFromFile(std::string filePath)

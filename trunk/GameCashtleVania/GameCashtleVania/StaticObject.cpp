@@ -23,3 +23,8 @@ void StaticObject::update(float deltaTime)
 {
 
 }
+
+void StaticObject::update(float deltaTime, std::vector<ObjectGame*> listObjectCollision)
+{
+
+}

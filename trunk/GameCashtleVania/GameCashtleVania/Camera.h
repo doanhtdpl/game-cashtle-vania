@@ -8,12 +8,14 @@ class Camera
 private:
 	D3DXVECTOR3 _pos;
 	D3DXMATRIX _MatrixTransform;
+	RECT _boundScene;
 	//static Camera* _Camera_Object;
 public:
 	//static Camera* CreateInstance();
 	Camera(void);
 	~Camera(void);
 	bool stopScrollScreen;
+	void setBound(RECT rect);
 	float speedX;
 	void update(float x, float deltaTime);
 	D3DXVECTOR3 getPosCamera();
