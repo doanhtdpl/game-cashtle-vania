@@ -10,5 +10,6 @@ public:
 	StaticObject(std::vector<std::string> arr);
 	~StaticObject(void);
 	virtual void update(float deltaTime);
+	virtual void update(float deltaTime, std::vector<ObjectGame*> listObjectCollision);
 };
 

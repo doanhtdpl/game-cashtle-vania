@@ -9,7 +9,6 @@ enum class EnemyMovement
 	Jump,
 	Free
 };
-
 #endif // !__STATE_ENEMY__
 
 #ifndef __ENEMY__H__

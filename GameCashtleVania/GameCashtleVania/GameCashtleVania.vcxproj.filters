@@ -294,6 +294,9 @@
     <ClCompile Include="Itween.cpp">
       <Filter>GameObject\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>GameObject\DynamicObject\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -454,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="Itween.h">
       <Filter>GameObject\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>GameObject\DynamicObject\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

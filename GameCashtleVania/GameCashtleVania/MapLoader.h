@@ -2,6 +2,7 @@
 #define __InFo_SCENE_H__
 #include <string>
 #include <vector>
+#include <d3d9.h>
 //#include <d3dx9.h>
 //Luu thong tin cua tung scene trong cac level.
 //thong tin nay duoc doc len tu file
@@ -10,17 +11,22 @@ class InfoScene
 public:
 	InfoScene();
 	InfoScene(std::vector<std::string> arr);
+	
 public:
 	int level;//scene cua level nao
 	int iD_Scene;//ID cua scene. Vi du. level1 scene 1: ID = 1
 	int iD_Scene_Restart;//lay ID cua level duoc restart khi dang choi level nay
 	int iD_Scene_Next;//lay ID cua scene tiep theo
 	bool finalScene;//scene cuoi cung cua level do
+	RECT _bound;
 	std::string bGPath;//duong dan toi background
 	std::string bGQuadTree;//quadtree
 	std::string mapPath;//duong dan toi map editor
 	std::string mQuadTree;
 	//D3DVECTOR _posSimon;//vi tri bat dau cua simon o scene nay
+
+	RECT getBoundFromFile(std::vector<std::string> arr);
+	RECT getBound();
 private:
 };
 #endif // !__InFo_SCENE_H__

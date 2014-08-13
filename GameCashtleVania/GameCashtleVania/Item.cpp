@@ -43,7 +43,7 @@ void Item::handleCollision(float deltatime, std::vector<ObjectGame*> _listObject
 		if (obj->className() == TagClassName::getInstance()->tagSimon)
 		{
 			this->_isALive = false;
-			effect();
+			effectSimon();
 		}
 	}
 }
@@ -80,7 +80,7 @@ void Item::appear(D3DXVECTOR2 posAppear)
 	this->_isALive = true;
 }
 
-void Item::effect()
+void Item::effectSimon()
 {
 	//thay doi vai gia tri cua simon
 }

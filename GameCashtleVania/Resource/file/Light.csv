@@ -1,3 +1,10 @@
 ID,ID_Image,Name,Width,Height,Coloum,TotalFrame,elapstime
-604,1604,BigLight,32,64,2,2,0.3
-605,1605,SmallLight,16,32,2,2,0.3
+601,1604,BigLightHeart,32,64,2,2,0.3
+602,1604,BigLightRod,32,64,2,2,0.3
+603,1604,BigLightDagger,32,64,2,2,0.3
+611,1605,SmallLightAxe,16,32,2,2,0.3
+612,1605,SmallLightBoomerang,16,32,2,2,0.3
+613,1605,SmallLightCross,16,32,2,2,0.3
+614,1605,SmallLightDoubleShot,16,32,2,2,0.3
+615,1605,SmallLightFireBomb,16,32,2,2,0.3
+616,1605,SmallLightRandom,16,32,2,2,0.3

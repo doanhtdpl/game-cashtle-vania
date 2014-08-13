@@ -133,12 +133,24 @@ void QuadTreeObject::upDateQNode(QNode* Node)
 				ObjectGame* obj = this->mapObject.listObjectInMap.find(IDObject)->second;
 
 				//kiem tra no con song hay ko?
-				if (!obj->_isALive)
+				if (obj == NULL)
 				{
-					//chet roi
-					Node->_listID.erase(it);
+					//xem chung viec xoa
+					it = Node->_listID.erase(it);
+					//it--;
 				}
-				it++;
+				else
+				{
+					if (!obj->_isALive)
+					{
+						//chet roi
+						it = Node->_listID.erase(it);
+					}else
+					{
+						++it;
+					}
+				}
+				
 			}
 
 			//for (; t != Node->ListObject->end();)
