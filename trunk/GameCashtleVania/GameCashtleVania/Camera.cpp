@@ -6,7 +6,7 @@ Camera::Camera(void)
 	_pos.x = 0;
 	_pos.y = Screen_Height;
 	_pos.z = 0;
-	this->speedX = 90;
+	this->speedX = 100;
 
 	D3DXMatrixIdentity(&_MatrixTransform);
 	_MatrixTransform._22 = -1;

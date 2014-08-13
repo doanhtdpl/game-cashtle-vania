@@ -17,6 +17,10 @@ Enemy::Enemy(std::vector<std::string> arr)
 	this->_coloumn = atoi(arr.at(3).c_str());
 	this->_totalFrames = atoi(arr.at(3).c_str());
 	this->_elapseTimeSwitchFrame = atoi(arr.at(3).c_str());
+
+	this->TimeDelay = 0.2f;
+	this->_timeDelayCur = 0.0f;
+	this->_hp = 1;
 }
 
 std::string Enemy::className()
@@ -26,12 +30,18 @@ std::string Enemy::className()
 
 void Enemy::move(float delta_Time)
 {
+	if ((this->_CanMoveL && this->_vx < 0) || (this->_CanMoveR && this->_vx > 0))
+	{
+		//co the di qua ben trai va v
+		this->_pos.x += this->_vx * delta_Time;
+	}
 
+	this->_pos.y += this->_vy * delta_Time;
 }
 
 void Enemy::updateMovement(float delta_Time)
 {
-	switch (this->_movement)
+	switch (this->_moveMent)
 	{
 	case EnemyMovement::None:
 		break;
@@ -67,7 +77,7 @@ void Enemy::updateMovement(float delta_Time)
 			this->_vy -= this->_ay * delta_Time;
 			if (this->_vy <= 0)
 			{
-				this->_movement = EnemyMovement::Freee;
+				this->_moveMent = EnemyMovement::Free;
 			}
 		}
 		
@@ -106,7 +116,7 @@ void Enemy::updateMovement(float delta_Time)
 			//}
 		}
 		break;
-	case EnemyMovement::Freee:
+	case EnemyMovement::Free:
 		this->_vy = -this->_Vy_default * 2;
 		this->_High_Jumped = 0;
 		this->_CanJum = false;
@@ -128,10 +138,148 @@ void Enemy::updateMovement(float delta_Time)
 
 void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
 {
+	//chi va cham voi doi tuong Free
 	for (int i = 0; i < _listObjectCollision.size(); i++)
 	{
-		//xu ly va cham voi doi tuong ground or doi tuong an
+		//lay box collider khi bat dau xu ly va cham
+		this->_box = this->getBox();
+		float normalX = 0;
+		float normalY = 0;
+		float timeCollision;
+
+		ObjectGame* obj = _listObjectCollision.at(i);
+		if (obj->className() == TagClassName::getInstance()->tagHideObject)
+		{
+			HideObject* hideObj = (HideObject*)obj;
+			timeCollision = this->collision((StaticObject*)obj, normalX, normalY, deltatime);
+
+#pragma region HideObject = Ground
+			if (hideObj->getTypeHideObject() == TypeHideObect::Ground)
+			{
+				if (timeCollision == 2.0f)
+				{
+					// bi va cham theo AABBCheck
+					if (this->_moveMent == EnemyMovement::Free && normalY >= 0)
+					{
+						//dang roi
+						if (this->getRect().bottom > hideObj->getRect().bottom)
+						{
+							this->_moveMent = EnemyMovement::Idle;
+							this->_pos.x += normalX;
+							this->_pos.y += normalY;
+							//this->_vx = 0;
+							this->_vy = 0;
+						}
+
+					}
+
+					if (this->_moveMent == EnemyMovement::Moves && normalX != 0)
+					{
+						this->_moveMent = EnemyMovement::Idle;
+						this->_pos.x += normalX;
+						this->_pos.y += normalY;
+						this->_vx = 0;
+					}
+				}else
+				{
+					//truong hop duoi
+				}
+				if (timeCollision < 1.0f)//co va cham
+				{
+					//Object dang di chuyen qua ben trai
+					if (normalX == 1)
+					{
+
+
+						if (this->_moveMent == EnemyMovement::Jump)
+						{
+							this->_moveMent == EnemyMovement::Free;
+						}
+
+						if (this->_moveMent == EnemyMovement::Moves)
+						{
+							this->_pos.x += timeCollision * (deltatime * this->_vx) + 0.5f;
+							this->_moveMent = EnemyMovement::Idle;
+							this->_vx = 0;
+							this->_CanMoveL = false;
+						}
+
+					}
+
+					//Object dang di chuyen qua ben phai
+					if (normalX == -1)
+					{
+
+						if (this->_moveMent == EnemyMovement::Jump)
+						{
+							this->_moveMent == EnemyMovement::Free;
+						}
+
+						if (this->_moveMent == EnemyMovement::Moves)
+						{
+							this->_pos.x += timeCollision * (deltatime * this->_vx) - 0.5f;
+							this->_moveMent = EnemyMovement::Idle;
+							this->_vx = 0;
+							this->_CanMoveR = false;
+						}
+					}
+
+					//Obj dang roi
+					if (normalY == 1)
+					{
+						if (this->_moveMent == EnemyMovement::Free)
+						{
+							this->_pos.y += timeCollision * (deltatime * this->_vy);
+							this->_moveMent = EnemyMovement::Idle;
+							//this->_vx = 0;
+							this->_vy = 0;
+						}
+
+					}
+
+					//obj dang nhay
+					if (normalY == -1)
+					{
+						//ko lam gi ca
+					}
+				}
+			}
+#pragma endregion
+
+			//gap doi tuong an Free thi quay dau lai
+			if (hideObj->getTypeHideObject() == TypeHideObect::Free)
+			{
+				//co va cham
+				if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
+				{
+					//xu ly voi doi tuong hide object = Free
+					handleCollisionWithHideObject(deltatime, hideObj);
+				}
+			}
+		}
+
+		if (obj->className() == TagClassName::getInstance()->tagWeapon)
+		{
+			timeCollision = this->collision((DynamicObject*)obj, normalX, normalY, deltatime);
+			//co va cham
+			if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
+			{
+				_hp --;
+				if (_hp <= 0)
+				{
+					//die
+					this->_isALive = false;
+				}
+
+				_timeDelayCur = TimeDelay;
+			}
+		}
 	}
+}
+
+void Enemy::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)
+{
+
 }
 
 void Enemy::animated(float deltaTime)
@@ -141,11 +289,18 @@ void Enemy::animated(float deltaTime)
 
 void Enemy::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision)
 {
-	animated(delta_Time);
-	this->_rectRS = this->updateRectRS(this->_width, this->_height);
+	if (_timeDelayCur >= 0)
+	{
+		_timeDelayCur -= delta_Time;
+	}else
+	{
+		animated(delta_Time);
+		this->_rectRS = this->updateRectRS(this->_width, this->_height);
 
-	updateMovement(delta_Time);
-	move(delta_Time);
+		updateMovement(delta_Time);
 
-	handleCollision(delta_Time, _listObjectCollision);
+		handleCollision(delta_Time, _listObjectCollision);
+
+		move(delta_Time);
+	}
 }

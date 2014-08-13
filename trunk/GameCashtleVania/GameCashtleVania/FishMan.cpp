@@ -10,7 +10,7 @@ FishMan::FishMan(std::vector<std::string> arr) : Enemy(arr)
 
 }
 
-void FishMan::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
+void FishMan::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)
 {
 	//chi va cham voi doi tuong Free
 }

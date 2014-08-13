@@ -89,7 +89,7 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_prepareUpStairLeft = false;
 	this->_prepareUpStairRight = false;
 	this->_stepOnStair = StepOnStair::Step0;
-	this->_elapseTimeMoveStair = this->_elapseTimeSwitchFrame * 1.2;
+	this->_elapseTimeMoveStair = this->_elapseTimeSwitchFrame * 1.4;
 	this->_timeDelayMoveStair = 0.0f;
 }
 
@@ -276,10 +276,6 @@ void Simon::move(float delta_Time)
 {
 	if ((this->_CanMoveL && this->_vx < 0) || (this->_CanMoveR && this->_vx > 0))
 	{
-		if (this->_pos.x >= 1250.5)
-		{
-			int x = 10;
-		}
 		//co the di qua ben trai va v
 		this->_pos.x += this->_vx * delta_Time;
 		this->_moveMent = SimonMove::Idle;
@@ -650,13 +646,18 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				if (timeCollision == 2.0f)
 				{
 					// bi va cham theo AABBCheck
-					if (this->_moveMent == SimonMove::Free && normalY != 0)
+					if (this->_moveMent == SimonMove::Free && normalY >= 0)
 					{
-						this->_moveMent = SimonMove::Idle;
-						this->_pos.x += normalX;
-						this->_pos.y += normalY;
-						//this->_vx = 0;
-						this->_vy = 0;
+						//dang roi
+						if (this->getRect().bottom > hideObj->getRect().bottom)
+						{
+ 							this->_moveMent = SimonMove::Idle;
+							this->_pos.x += normalX;
+							this->_pos.y += normalY;
+							//this->_vx = 0;
+							this->_vy = 0;
+						}
+
 					}
 
 					if (this->_moveMent == SimonMove::Moves && normalX != 0)
@@ -675,7 +676,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 					//Object dang di chuyen qua ben trai
 					if (normalX == 1)
 					{
-						this->_pos.x += timeCollision * (deltatime * this->_vx) + 0.5f;
+						
 
 						if (this->_moveMent == SimonMove::Jump)
 						{
@@ -684,16 +685,18 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 
 						if (this->_moveMent == SimonMove::Moves)
 						{
+							this->_pos.x += timeCollision * (deltatime * this->_vx) + 0.5f;
 							this->_moveMent = SimonMove::Idle;
+							this->_vx = 0;
+							this->_CanMoveL = false;
 						}
-						this->_vx = 0;
-						this->_CanMoveL = false;
+						
 					}
 
 					//Object dang di chuyen qua ben phai
 					if (normalX == -1)
 					{
-						this->_pos.x += timeCollision * (deltatime * this->_vx) - 0.5f;
+						
 						if (this->_moveMent == SimonMove::Jump)
 						{
 							this->_moveMent == SimonMove::Free;
@@ -701,20 +704,24 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 
 						if (this->_moveMent == SimonMove::Moves)
 						{
+							this->_pos.x += timeCollision * (deltatime * this->_vx) - 0.5f;
 							this->_moveMent = SimonMove::Idle;
+							this->_vx = 0;
+							this->_CanMoveR = false;
 						}
-
-						this->_vx = 0;
-						this->_CanMoveR = false;
 					}
 
 					//Obj dang roi
 					if (normalY == 1)
 					{
-						this->_pos.y += timeCollision * (deltatime * this->_vy);
-						this->_moveMent = SimonMove::Idle;
-						//this->_vx = 0;
-						this->_vy = 0;
+						if (this->_moveMent == SimonMove::Free)
+						{
+							this->_pos.y += timeCollision * (deltatime * this->_vy);
+							this->_moveMent = SimonMove::Idle;
+							//this->_vx = 0;
+							this->_vy = 0;
+						}
+						
 					}
 
 					//obj dang nhay
@@ -866,6 +873,25 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 										{
 											if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
 											{
+												if (this->_moveMent == SimonMove::Moves || this->_moveMent == SimonMove::Idle)
+												{
+													if (this->_Left)
+													{
+														//dang di qua ben trai
+														if (this->getRect().right <= hideObj->getRect().right)
+														{
+															this->_moveMent = SimonMove::Free;
+														}
+													}
+													else
+													{
+														//dang di qua ben phai
+														if (this->getRect().left >= hideObj->getRect().left)
+														{
+															this->_moveMent = SimonMove::Free;
+														}
+													}
+												}
 												//this->_moveMent = SimonMove::Free;				
 											}
 										}
@@ -881,12 +907,61 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 		}
 
 #pragma endregion
+	
+#pragma region Object = Enemy
+		
+		if (obj->className() == TagClassName::getInstance()->tagEnemy)
+		{
+			timeCollision = this->collision((DynamicObject*)obj, normalX, normalY, deltatime);
+
+			if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
+			{
+				//va cham voi enemy
+				this->_moveMent = SimonMove::CollisionEnemy;
+				this->_collisionEnemy = true;
+			}
+		}
+
+#pragma endregion
+
+		
 	}
 }
 
 //implement method collision
 float Simon::collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime)
 {
+	Box box = this->getBox();
+	Box staticBox = ICollision::getInstance()->getSweptBroadphaseBox(dynamicOject->getBox(), deltaTime);
+
+	Box broadphaseBox = ICollision::getInstance()->getSweptBroadphaseBox(box, deltaTime);
+
+	float moveX = 0;
+	float moveY = 0;
+
+	//kiem tra 2 box hien tai da va cham chua
+	if (ICollision::getInstance()->AABBCheck(box, staticBox))
+	{
+		if (ICollision::getInstance()->AABB(box, staticBox, moveX, moveY))
+		{
+			normalx = moveX;
+			normaly = moveY;
+			return 2.0f;
+		}
+		return 1.0f;
+	}else
+	{
+		//kiem tra 2 object co the va cham ko?
+		if (ICollision::getInstance()->AABBCheck(broadphaseBox, staticBox))
+		{
+			float timeCol = ICollision::getInstance()->sweptAABB(box, staticBox, normalx, normaly, deltaTime);
+			return timeCol;
+		}else
+		{
+			return 1.0;//khong co va cham
+		}
+	}
+
 	return 0.0f;
 }
 
@@ -919,13 +994,6 @@ float Simon::collision(StaticObject* staticObject, float &normalx, float &normal
 		{
 			float timeCol = ICollision::getInstance()->sweptAABB(box, staticBox, normalx, normaly, deltaTime);
 			return timeCol;
-			/*if (timeCol < 1.0f)
-			{
-				return timeCol;
-			}else
-			{
-				return 1.0f;
-			}*/
 		}else
 		{
 			return 1.0;//khong co va cham

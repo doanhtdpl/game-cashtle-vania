@@ -10,7 +10,8 @@ WhiteSkeleton::WhiteSkeleton(std::vector<std::string> arr) : Enemy(arr)
 
 }
 
-void WhiteSkeleton::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
+void WhiteSkeleton::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)
 {
 	//chi va cham voi doi tuong Free
+	//chua biet lam gi ca
 }

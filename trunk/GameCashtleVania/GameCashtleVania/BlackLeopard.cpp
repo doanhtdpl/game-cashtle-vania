@@ -10,7 +10,7 @@ BlackLeopard::BlackLeopard(std::vector<std::string> arr) : Enemy(arr)
 
 }
 
-void BlackLeopard::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
+void BlackLeopard::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)
 {
 	//chi va cham voi doi tuong Free
 }

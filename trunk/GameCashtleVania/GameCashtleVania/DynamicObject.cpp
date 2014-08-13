@@ -75,8 +75,40 @@ void DynamicObject::handleCollision(float deltatime, std::vector<ObjectGame*> _l
 
 }
 
+//implement method collision
 float DynamicObject::collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime)
 {
+	Box box = this->getBox();
+	Box staticBox = ICollision::getInstance()->getSweptBroadphaseBox(dynamicOject->getBox(), deltaTime);
+
+	Box broadphaseBox = ICollision::getInstance()->getSweptBroadphaseBox(box, deltaTime);
+
+	float moveX = 0;
+	float moveY = 0;
+
+	//kiem tra 2 box hien tai da va cham chua
+	if (ICollision::getInstance()->AABBCheck(box, staticBox))
+	{
+		if (ICollision::getInstance()->AABB(box, staticBox, moveX, moveY))
+		{
+			normalx = moveX;
+			normaly = moveY;
+			return 2.0f;
+		}
+		return 1.0f;
+	}else
+	{
+		//kiem tra 2 object co the va cham ko?
+		if (ICollision::getInstance()->AABBCheck(broadphaseBox, staticBox))
+		{
+			float timeCol = ICollision::getInstance()->sweptAABB(box, staticBox, normalx, normaly, deltaTime);
+			return timeCol;
+		}else
+		{
+			return 1.0;//khong co va cham
+		}
+	}
+
 	return 0.0f;
 }
 
@@ -93,12 +125,19 @@ float DynamicObject::collision(StaticObject* staticObject, float &normalx, float
 	//kiem tra 2 box hien tai da va cham chua
 	if (ICollision::getInstance()->AABBCheck(box, staticBox))
 	{
-		//dich chuyen object
-		return 0.0f;
+		if (ICollision::getInstance()->AABB(box, staticBox, moveX, moveY))
+		{
+			normalx = moveX;
+			normaly = moveY;
+			//this->_pos.x += moveX;
+			//this->_pos.y += moveY;
+			return 2.0f;
+		}
+		return 1.0f;
 	}else
 	{
 		//kiem tra 2 object co the va cham ko?
-		if (ICollision::getInstance()->AABB(broadphaseBox, staticBox, moveX, moveY))
+		if (ICollision::getInstance()->AABBCheck(broadphaseBox, staticBox))
 		{
 			float timeCol = ICollision::getInstance()->sweptAABB(box, staticBox, normalx, normaly, deltaTime);
 			return timeCol;
@@ -107,4 +146,6 @@ float DynamicObject::collision(StaticObject* staticObject, float &normalx, float
 			return 1.0;//khong co va cham
 		}
 	}
+
+	return 0.0f;
 }

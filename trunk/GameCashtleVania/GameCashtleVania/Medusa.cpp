@@ -10,7 +10,7 @@ Medusa::Medusa(std::vector<std::string> arr) : Enemy(arr)
 
 }
 
-void Medusa::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
+void Medusa::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)
 {
 	//chi va cham voi doi tuong Free
 }

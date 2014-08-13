@@ -10,7 +10,7 @@ Ghost::Ghost(std::vector<std::string> arr) : Enemy(arr)
 
 }
 
-void Ghost::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
+void Ghost::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)
 {
 	//chi va cham voi doi tuong Free
 }
