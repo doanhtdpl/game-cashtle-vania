@@ -38,6 +38,9 @@ public:
 	StepOnStair _stepOnStair;
 	SimonMove _moveMent;
 	IronRod* ironRod;
+
+	//va cham voi enemy
+	bool _collisionEnemy;
 protected:
 	float HeightDefault;
 	float HeightSit;
@@ -60,6 +63,7 @@ enum SimonMove
 	Moves,//dang di
 	Idle,//dung yen
 	Sit,//dang ngoi
+	CollisionEnemy,
 	//PrepareUpTheStairLeft,//chuan bi len cau thang ben trai
 	//PrepareDownTheStairLeft,//chuan bi xuong cau thang ben trai
 	UpStair,//dang di len cau thang

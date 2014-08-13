@@ -8,7 +8,7 @@ class VampireBat : public Enemy
 public:
 	VampireBat();
 	VampireBat(std::vector<std::string> arr);
-	void handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision);
+	void handleCollisionWithHideObject(float deltatime, HideObject* hideObj);
 protected:
 private:
 };

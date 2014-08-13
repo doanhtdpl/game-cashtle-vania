@@ -10,7 +10,7 @@ DragonSkullCannon::DragonSkullCannon(std::vector<std::string> arr) : Enemy(arr)
 
 }
 
-void DragonSkullCannon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
+void DragonSkullCannon::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)
 {
 	//chi va cham voi doi tuong Free
 }

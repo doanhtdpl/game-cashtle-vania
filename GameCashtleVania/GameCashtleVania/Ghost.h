@@ -8,7 +8,7 @@ class Ghost : public Enemy
 public:
 	Ghost();
 	Ghost(std::vector<std::string> arr);
-	void handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision);
+	void handleCollisionWithHideObject(float deltatime, HideObject* hideObj);
 protected:
 private:
 };

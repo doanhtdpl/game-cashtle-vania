@@ -10,7 +10,7 @@ VampireBat::VampireBat(std::vector<std::string> arr) : Enemy(arr)
 
 }
 
-void VampireBat::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
+void VampireBat::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)
 {
 	//chi va cham voi doi tuong Free
 }

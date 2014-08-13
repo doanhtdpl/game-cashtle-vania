@@ -1,4 +1,6 @@
 #include "AxeMan.h"
+#include "TagClassName.h"
+
 
 AxeMan::AxeMan()
 {
@@ -10,7 +12,8 @@ AxeMan::AxeMan(std::vector<std::string> arr) : Enemy(arr)
 
 }
 
-void AxeMan::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
+void AxeMan::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)
 {
-	//chi va cham voi doi tuong Free
+	//quay dau lai
+	this->_Left = !this->_Left;
 }

@@ -8,7 +8,7 @@ class Medusa : public Enemy
 public:
 	Medusa();
 	Medusa(std::vector<std::string> arr);
-	void handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision);
+	void handleCollisionWithHideObject(float deltatime, HideObject* hideObj);
 	void move(float delta_Time);
 protected:
 private:
