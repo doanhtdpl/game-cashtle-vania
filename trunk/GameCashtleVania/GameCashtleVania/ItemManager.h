@@ -9,10 +9,21 @@
 class ItemManager
 {
 public:
-	Item* appearItem();
-	Item* appearItemEnemyDie();
+	//rot item khi danh vao den
+	Item* appearItem(D3DXVECTOR2 posAppear);
+
+	//rot item khi danh quai
+	Item* appearItemEnemyDie(D3DXVECTOR2 posAppear);
+
+	Item* appearItem(TypeItem type, D3DXVECTOR2 posAppear);
+	//tao item ngau nhien
+	Item* randomItem();
+	static ItemManager* getInstance();
 protected:
-	std::vector<Item*> _listItem;
+	std::vector<TypeItem> _listItemNormal;
+	std::vector<TypeItem> _listItemContainRod;
 private:
+	static ItemManager* _instance;
+	ItemManager();
 };
 #endif // !__ITEM__MANAGER__

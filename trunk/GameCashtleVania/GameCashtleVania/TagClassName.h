@@ -10,10 +10,10 @@ class TagClassName
 {
 public:
 	std::string tagEnemy;
-	const std::string tagSimon;
-	const std::string tagItem;
-	const std::string tagHideObject;
-	const std::string tagWeapon;
+	std::string tagSimon;
+	std::string tagItem;
+	std::string tagHideObject;
+	std::string tagWeapon;
 	std::string tagLight;//roi danh thi roi item
 	std::string tagGroundObject;
 	static TagClassName* getInstance();

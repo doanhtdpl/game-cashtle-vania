@@ -133,6 +133,9 @@
     <Filter Include="Map\QuadTree\QuadTreeBackground">
       <UniqueIdentifier>{4ecabc28-0f27-4e1c-bab4-b81aca48d0ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Config\ItemFactory">
+      <UniqueIdentifier>{034238db-c40e-4f5c-a8db-7a58b99ca9cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -297,6 +300,9 @@
     <ClCompile Include="ItemManager.cpp">
       <Filter>GameObject\DynamicObject\Item</Filter>
     </ClCompile>
+    <ClCompile Include="ItemFactory.cpp">
+      <Filter>Config\ItemFactory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -460,6 +466,9 @@
     </ClInclude>
     <ClInclude Include="ItemManager.h">
       <Filter>GameObject\DynamicObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFactory.h">
+      <Filter>Config\ItemFactory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,7 +9,19 @@ Item::Item()
 
 Item::Item(std::vector<std::string> arr)
 {
+	this->_ID = atoi(arr.at(0).c_str());
+	this->_ID_Image = atoi(arr.at(1).c_str());
+	this->_width = atoi(arr.at(3).c_str());
+	this->_height = atoi(arr.at(4).c_str());
+	this->_Vx_default = atoi(arr.at(5).c_str());
+	this->_Vy_default = atoi(arr.at(6).c_str());
+	this->_coloumn = atoi(arr.at(7).c_str());
+	this->_totalFrames = atoi(arr.at(8).c_str());
 
+	this->disBound = DisBound;
+	this->_typeItem = (TypeItem)this->_ID;
+
+	this->_rect = this->getRect();
 }
 
 void Item::move(float delta_Time)

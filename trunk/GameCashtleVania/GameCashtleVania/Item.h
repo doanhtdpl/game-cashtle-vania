@@ -21,14 +21,15 @@ enum TypeItem
 
 #endif // !__TYPE__ITEM__ENUM__
 
-
 #ifndef __ITEM_H__
 #define __ITEM_H__
 
 #include "DynamicObject.h"
+#include "IAnimatedSprite.h"
 
+#define DisBound 50
 //Va cham voi ground(nen) va va cham voi simon - anh huong toi simon.
-class Item : public DynamicObject
+class Item : public DynamicObject, public IAnimatedSprite
 {
 public:
 	Item();
@@ -53,6 +54,7 @@ protected:
 	float disBound;//do lon cua vung di chuyen
 	bool _idle;//khong di chuyen nua
 	float timeLife;//thoi gian ton tai
+	TypeItem _typeItem;
 private:
 };
 
