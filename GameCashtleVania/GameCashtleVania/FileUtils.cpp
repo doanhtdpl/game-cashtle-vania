@@ -4,6 +4,7 @@
 #include "SimonFactory.h"
 #include "IronRodFac.h"
 #include "LightFactory.h"
+#include "ItemFactory.h"
 
 using namespace std;
 
@@ -73,6 +74,7 @@ void FileUtils::loadCSV()
 	this->readFileCSV(fileSimon, SimonFactory::getInstance());
 	this->readFileCSV(fileIronRod, IronRodFac::getInstance());
 	this->readFileCSV(fileLight, LightFactory::getInstance());
+	this->readFileCSV(fileItem, ItemFactory::getInstance());
 }
 
 void FileUtils::readFileMap()

@@ -201,7 +201,7 @@ void QuadTreeObject::addObjectToNode(QNode* Node, ObjectGame* object, int IDObjI
 		{
 			if (Node->tl != NULL)
 			{
-				if (Node->tl->isBound(Node->tl->rect, object->_rect))
+				if (Node->tl->isBound(Node->tl->rect, object->getRect()))
 				{
 					addObjectToNode(Node->tl, object, IDObjInList);
 					return;
@@ -210,7 +210,7 @@ void QuadTreeObject::addObjectToNode(QNode* Node, ObjectGame* object, int IDObjI
 	
 			if (Node->tr != NULL)
 			{
-				if (Node->tr->isBound(Node->tr->rect, object->_rect))
+				if (Node->tr->isBound(Node->tr->rect, object->getRect()))
 				{
 					addObjectToNode(Node->tr, object, IDObjInList);
 					return;
@@ -219,7 +219,7 @@ void QuadTreeObject::addObjectToNode(QNode* Node, ObjectGame* object, int IDObjI
 	
 			if (Node->bl != NULL)
 			{
-				if (Node->bl->isBound(Node->bl->rect, object->_rect))
+				if (Node->bl->isBound(Node->bl->rect, object->getRect()))
 				{
 					addObjectToNode(Node->bl, object, IDObjInList);
 					return;
@@ -228,14 +228,16 @@ void QuadTreeObject::addObjectToNode(QNode* Node, ObjectGame* object, int IDObjI
 	
 			if (Node->br != NULL)
 			{
-				if (Node->br->isBound(Node->br->rect, object->_rect))
+				if (Node->br->isBound(Node->br->rect, object->getRect()))
 				{
 					addObjectToNode(Node->br, object, IDObjInList);
 					return;
 				}
 			}
+		}else
+		{
+			//add ID cua obj vao node
+			Node->_listID.push_back(IDObjInList);
 		}
 		
-		//add ID cua obj vao node
-		Node->_listID.push_back(IDObjInList);
 }

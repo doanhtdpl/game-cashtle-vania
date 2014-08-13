@@ -97,6 +97,7 @@ int Map::getIDMaxInList()
 		{
 			max = ID;
 		}
+		it++;
 	}
 
 	return max;

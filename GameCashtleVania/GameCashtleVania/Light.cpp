@@ -1,5 +1,6 @@
 #include "Light.h"
 #include "TagClassName.h"
+#include "ItemManager.h"
 
 Light::Light()
 {
@@ -35,7 +36,6 @@ void Light::update(float deltaTime)
 {
 	animated(deltaTime);
 	this->_rectRS = this->updateRectRS(this->_width, this->_height);
-
 }
 
 Item* Light::effectWhenCollisionRod()
@@ -43,9 +43,33 @@ Item* Light::effectWhenCollisionRod()
 	Item* item = NULL;
 	switch (this->_typeLight)
 	{
+	case TypeLight::BigLightDagger:
+		item = ItemManager::getInstance()->appearItem(Dagger, this->_pos);
+		break;
+	case TypeLight::BigLightHeart:
+		item = ItemManager::getInstance()->appearItem(TypeItem::LargeHeart, this->_pos);
+		break;
+	case TypeLight::BigLightRod:
+		item = ItemManager::getInstance()->appearItem(TypeItem::MorningStar, this->_pos);
+		break;
+	case TypeLight::SmallLightAxe:
+		item = ItemManager::getInstance()->appearItem(TypeItem::Axe, this->_pos);
+		break;
+	case TypeLight::SmallLightBoomerang:
+		item = ItemManager::getInstance()->appearItem(TypeItem::Boomerang, this->_pos);
+		break;
+	case TypeLight::SmallLightCross:
+		item = ItemManager::getInstance()->appearItem(TypeItem::Cross, this->_pos);
+		break;
+	case TypeLight::SmallLightFireBomb:
+		item = ItemManager::getInstance()->appearItem(TypeItem::FireBomb, this->_pos);
+		break;
+	case TypeLight::SmallLightRandom:
+		item = ItemManager::getInstance()->appearItem(this->_pos);
+		break;
 	default:
 		break;
-	}
+	};
 
 	return item;
 }
