@@ -14,6 +14,7 @@ public:
 	BackGround mapBG;
 	void loadObjectFromFile(std::string filePath);
 	void draw(RECT Screen);
+	void clearDataQuadtree();
 protected:
 private:
 	static QuadTreeBackground* _instance;

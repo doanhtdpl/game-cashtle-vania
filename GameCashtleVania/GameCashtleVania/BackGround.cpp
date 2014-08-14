@@ -12,6 +12,11 @@ BackGround::BackGround()
 	this->_IDImage = 2001;
 }
 
+BackGround::~BackGround()
+{
+	delete[] _matrix;
+}
+
 void BackGround::readMapFromFile(std::string filePath)
 {
 	this->_column = 17;
@@ -216,6 +221,4 @@ void BackGround::addElement(std::vector<std::string> arr, int rowIndex)
 //	return arr;
 //}
 
-BackGround::~BackGround()
-{
-}
+
