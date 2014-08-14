@@ -29,6 +29,7 @@ ManageGame::ManageGame()
 	//ListObjectOnScenes = new list<ObjectGame*>();
 	//isChangeScene = false;
 	acting = false;
+	this->recentlyChangeScene = false;
 }
 
 ManageGame::~ManageGame(void)
@@ -39,14 +40,21 @@ void ManageGame::gameDraw()
 {
 	//_mapBG->drawBackGround();
 
-
-	quadTreeBG->draw(screen);
-	quadTreeObj->draw(screen);
-
-	ManageSprite::createInstance()->drawObject(simon);
-	if (Simon::getInstance()->ironRod->_isALive)
+	//chuyen scene vua xong thi khong ve
+	if (!recentlyChangeScene)
 	{
-		ManageSprite::createInstance()->drawObject( simon->ironRod );
+		quadTreeBG->draw(screen);
+		quadTreeObj->draw(screen);
+
+		ManageSprite::createInstance()->drawObject(simon);
+
+		if (Simon::getInstance()->ironRod->_isALive)
+		{
+			ManageSprite::createInstance()->drawObject( simon->ironRod );
+		}
+	}else
+	{
+		recentlyChangeScene = false;
 	}
 	//std::hash_map<int, ObjectGame*>::iterator it = _map->listObjectInMap.begin();
 	//while (it != _map->listObjectInMap.end())
@@ -87,26 +95,18 @@ void ManageGame::gameUpdate(float deltaTime)
 			obj->update(deltaTime, arr);
 		}else
 		{
-			if (obj->className() == TagClassName::getInstance()->tagSimon)
-			{
-				//khong co trang thai change scene
-				if (!isChangeScene)
-				{
-					simon->update(deltaTime, arr);
-				}else
-				{
-					changeScene(deltaTime);
-				}
-
-			}else
-			{
-				obj->update(deltaTime);
-			}
+			obj->update(deltaTime);
 		}
 	}
 
-	
-	
+	//khong co trang thai change scene
+	if (!isChangeScene)
+	{
+		simon->update(deltaTime, arr);
+	}else
+	{
+		changeScene(deltaTime);
+	}
 }
 
 void ManageGame::changeScene(float deltaTime)
@@ -136,9 +136,6 @@ void ManageGame::changeScene(float deltaTime)
 			nextScene();
 		}
 	}
-	
-	
-
 }
 
 void ManageGame::nextScene()
@@ -153,6 +150,8 @@ void ManageGame::nextScene()
 		infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
 
 		//dua thong tin file cho quadtree
+		quadTreeBG->clearDataQuadtree();
+		quadTreeObj->clearDataQuadtree();
 
 		quadTreeBG->fileMap = infoScene->bGPath;
 		quadTreeBG->fileQuadtree = infoScene->bGQuadTree;
@@ -163,8 +162,10 @@ void ManageGame::nextScene()
 		quadTreeObj->loadMap();
 
 		quadTreeObj->upDateQuadTree();
-		ManageSprite::createInstance()->_camera->stopScrollScreen = false;
 		simon->_pos = D3DXVECTOR2(60, 64);
+		//quadTreeObj->addObjectToQuadTree(simon);
+		ManageSprite::createInstance()->_camera->stopScrollScreen = false;
+		this->recentlyChangeScene = true;
 	}
 }
 
@@ -199,7 +200,7 @@ void ManageGame::gameInit()
 	quadTreeObj = QuadTreeObject::getInstance();
 	
 	level = 1;
-	scene = 1;
+	scene = 2;
 	InfoScene* infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
 	//dua thong tin file cho quadtree
 
@@ -212,7 +213,8 @@ void ManageGame::gameInit()
 	quadTreeObj->loadMap();
 
 	//add simon vao quad tre
-	quadTreeObj->addObjectToQuadTree(simon);
+	quadTreeObj->upDateQuadTree();
+	//quadTreeObj->addObjectToQuadTree(simon);
 
 	ManageSprite::createInstance()->_camera->setBound(infoScene->getBound());
 	screen = ManageSprite::createInstance()->_camera->getScreen();

@@ -20,6 +20,7 @@ QuadTreeObject::QuadTreeObject() : QuadTree()
 
 QuadTreeObject::~QuadTreeObject()
 {
+	this->mapObject.listObjectInMap.clear();
 }
 
 void QuadTreeObject::loadObjectFromFile(std::string filePath)
@@ -40,13 +41,22 @@ std::vector<ObjectGame*> QuadTreeObject::getObjectInScreen(RECT screen)
 	std::vector<int>::iterator it;
 	it = listID->begin();
 	int ID;
-	ObjectGame* obj;
+	ObjectGame* obj = NULL;
 	while (it != listID->end())
 	{
 		//ID trong list object 
 		ID = *it++;
-		obj = mapObject.listObjectInMap.find(ID)->second;
-		listObj.push_back(obj);
+		std::hash_map< int, ObjectGame*>::iterator itObject = mapObject.listObjectInMap.find(ID);
+		if (itObject != mapObject.listObjectInMap.end())
+		{
+			obj = mapObject.listObjectInMap.find(ID)->second;
+		}
+		 
+		if (obj != NULL)
+		{
+			listObj.push_back(obj);
+		}
+		
 	}
 
 	return listObj;
@@ -63,19 +73,26 @@ void QuadTreeObject::draw(RECT screen)
 	std::vector<int>::iterator it;
 	it = listID->begin();
 	int ID;
-	ObjectGame* obj;
+	ObjectGame* obj = NULL;
 	while (it != listID->end())
 	{
 		//ID trong list object 
 		ID = *it++;
 		//lay object dua vao ID
-		obj = mapObject.listObjectInMap.find(ID)->second;
+		std::hash_map< int, ObjectGame*>::iterator itObject = mapObject.listObjectInMap.find(ID);
+		if (itObject != mapObject.listObjectInMap.end())
+		{
+			obj = mapObject.listObjectInMap.find(ID)->second;
+		}
 
 		//draw
-		if (obj->className() != TagClassName::getInstance()->tagHideObject)
+		if (obj != NULL)
 		{
-			ManageSprite::createInstance()->drawObject(obj);
-		}	
+			if (obj->className() != TagClassName::getInstance()->tagHideObject)
+			{
+				ManageSprite::createInstance()->drawObject(obj);
+			}	
+		}
 	}
 
 	////lay tat ca object game trong man hinh
@@ -130,12 +147,19 @@ void QuadTreeObject::upDateQNode(QNode* Node)
 			{
 				int IDObject = *it;
 				//lay Object bang ID
-				ObjectGame* obj = this->mapObject.listObjectInMap.find(IDObject)->second;
+				std::hash_map< int, ObjectGame*>::iterator itListObj = this->mapObject.listObjectInMap.find(IDObject);
+				if (itListObj == this->mapObject.listObjectInMap.end())
+				{
+					break;
+				}
+				ObjectGame* obj = itListObj->second;
 
 				//kiem tra no con song hay ko?
 				if (obj == NULL)
 				{
 					//xem chung viec xoa
+					//itListObj = this->mapObject.listObjectInMap.erase(itListObj);
+					this->mapObject.eraseObject(IDObject);
 					it = Node->_listID.erase(it);
 					//it--;
 				}
@@ -144,6 +168,7 @@ void QuadTreeObject::upDateQNode(QNode* Node)
 					if (!obj->_isALive)
 					{
 						//chet roi
+						//this->mapObject.listObjectInMap.erase(IDObject);
 						it = Node->_listID.erase(it);
 					}else
 					{
@@ -240,4 +265,10 @@ void QuadTreeObject::addObjectToNode(QNode* Node, ObjectGame* object, int IDObjI
 			Node->_listID.push_back(IDObjInList);
 		}
 		
+}
+
+void QuadTreeObject::clearDataQuadtree()
+{
+	QuadTree::clearDataQuadtree();
+	this->mapObject.listObjectInMap.clear();
 }

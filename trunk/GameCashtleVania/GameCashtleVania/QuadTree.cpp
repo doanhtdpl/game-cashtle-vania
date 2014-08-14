@@ -8,6 +8,8 @@ QuadTree::QuadTree(void)
 
 QuadTree::~QuadTree(void)
 {
+	delete this->root;
+	this->listQNode.clear();
 }
 
 void QuadTree::loadMap()
@@ -83,4 +85,10 @@ void QuadTree::searchIDNodeInList(QNode*& node, int ID)
 void QuadTree::getListIDInScreen(std::vector<int> *listID, RECT Screen)
 {
 	this->root->getListIDInScreen(listID, Screen);
+}
+
+void QuadTree::clearDataQuadtree()
+{
+	delete this->root;
+	this->listQNode.clear();
 }

@@ -33,6 +33,7 @@ public:
 
 	//khi simon va cham Hide Object change scene thi goi thang nay = true. --> ChangeScene()
 	static bool isChangeScene;
+	bool recentlyChangeScene;
 	bool acting;
 
 	void gameUpdate(float DeltaTime);

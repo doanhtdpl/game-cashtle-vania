@@ -18,6 +18,7 @@ public:
 	void upDateQuadTree();
 	void addObjectToQuadTree(ObjectGame* object);
 	void draw(RECT Screen);
+	void clearDataQuadtree();
 protected:
 	void upDateQNode(QNode* Node);
 	void addObjectToNode(QNode* Node, ObjectGame* object, int IDObjInList);

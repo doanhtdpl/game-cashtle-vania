@@ -19,7 +19,7 @@ QuadTreeBackground::QuadTreeBackground()
 
 QuadTreeBackground::~QuadTreeBackground()
 {
-
+	this->mapBG.~BackGround();
 }
 
 void QuadTreeBackground::loadObjectFromFile(std::string filePath)
@@ -45,4 +45,9 @@ void QuadTreeBackground::draw(RECT screen)
 		//draw tile voi ID
 		mapBG.drawTileByID(ID);
 	}
+}
+
+void QuadTreeBackground::clearDataQuadtree()
+{
+	QuadTree::clearDataQuadtree();
 }

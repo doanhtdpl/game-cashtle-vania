@@ -10,6 +10,21 @@ Map::Map(void)
 {
 }
 
+void Map::eraseObject(int IDinMap)
+{
+	std::hash_map<int, ObjectGame*>::iterator it = this->listObjectInMap.begin();
+	while (it != this->listObjectInMap.end())
+	{
+		if (it->first == IDinMap)
+		{
+			it = this->listObjectInMap.erase(it);
+		}else
+		{
+			it++;
+		}
+	}
+}
+
 void Map::readMapFromFile(std::string filePath)
 {
 	std::vector<std::vector<std::string>> info = FileUtils::readFile(filePath, '\t');

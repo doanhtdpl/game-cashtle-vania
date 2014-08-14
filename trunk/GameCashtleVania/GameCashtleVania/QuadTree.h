@@ -35,6 +35,7 @@ public:
 	virtual void draw(RECT Screen) = 0;
 
 	void printQuadTree(QNode* Node);
+	virtual void clearDataQuadtree();
 	
 	~QuadTree();
 };
