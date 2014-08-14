@@ -165,26 +165,29 @@ void IronRod::update(float delta_Time, std::vector<ObjectGame*> _listObjectColli
 		float normalX = 0;
 		float normalY = 0;
 		float timeCollision;
-		while (it != _listObjectCollision.end())
+		if(this->_stateRod == State_Rod::Step3)
 		{
-			obj = *it;
-			//va cham voi den
-			if (obj->className() == TagClassName::getInstance()->tagLight)
+			while (it != _listObjectCollision.end())
 			{
-				timeCollision = this->collision((StaticObject*)obj, normalX, normalY, delta_Time);
-				
-				if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
+				obj = *it;
+				//va cham voi den
+				if (obj->className() == TagClassName::getInstance()->tagLight)
 				{
-					//tao ra hieu ung.
+					timeCollision = this->collision((StaticObject*)obj, normalX, normalY, delta_Time);
 
-					//goi ham effect cua light
-					Light* light = (Light*)obj;
-					light->_isALive = false;
-					item = light->effectWhenCollisionRod();
-					QuadTreeObject::getInstance()->addObjectToQuadTree(item);
+					if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
+					{
+						//tao ra hieu ung.
+
+						//goi ham effect cua light
+						Light* light = (Light*)obj;
+						light->_isALive = false;
+						item = light->effectWhenCollisionRod();
+						QuadTreeObject::getInstance()->addObjectToQuadTree(item);
+					}
 				}
+				it++;
 			}
-			it++;
 		}
 	}
 	

@@ -34,6 +34,11 @@ Simon::Simon() : DynamicObject()
 
 }
 
+std::string Simon::className()
+{
+	return TagClassName::getInstance()->tagSimon;
+}
+
 Simon::Simon(std::vector<std::string> arr)
 {
 	this->_ID = atoi(arr.at(0).c_str());

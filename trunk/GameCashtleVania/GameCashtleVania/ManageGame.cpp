@@ -81,17 +81,31 @@ void ManageGame::gameUpdate(float deltaTime)
 	while(it != arr.end())
 	{
 		obj = *it++;
-		obj->update(deltaTime);
+		if (obj->className() == TagClassName::getInstance()->tagItem || obj->className() == TagClassName::getInstance()->tagWeapon)
+		{
+			DynamicObject* dynamicObject = (DynamicObject*)obj;
+			obj->update(deltaTime, arr);
+		}else
+		{
+			if (obj->className() == TagClassName::getInstance()->tagSimon)
+			{
+				//khong co trang thai change scene
+				if (!isChangeScene)
+				{
+					simon->update(deltaTime, arr);
+				}else
+				{
+					changeScene(deltaTime);
+				}
+
+			}else
+			{
+				obj->update(deltaTime);
+			}
+		}
 	}
 
-	//khong co trang thai change scene
-	if (!isChangeScene)
-	{
-		simon->update(deltaTime, arr);
-	}else
-	{
-		changeScene(deltaTime);
-	}
+	
 	
 }
 
@@ -196,6 +210,9 @@ void ManageGame::gameInit()
 	quadTreeObj->fileMap = infoScene->mapPath;
 	quadTreeObj->fileQuadtree = infoScene->mQuadTree;
 	quadTreeObj->loadMap();
+
+	//add simon vao quad tre
+	quadTreeObj->addObjectToQuadTree(simon);
 
 	ManageSprite::createInstance()->_camera->setBound(infoScene->getBound());
 	screen = ManageSprite::createInstance()->_camera->getScreen();

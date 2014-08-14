@@ -1,6 +1,7 @@
 #include "Item.h"
 #include "TagClassName.h"
 #include "Simon.h"
+#include "HideObject.h"
 
 Item::Item()
 {
@@ -18,10 +19,14 @@ Item::Item(std::vector<std::string> arr)
 	this->_coloumn = atoi(arr.at(7).c_str());
 	this->_totalFrames = atoi(arr.at(8).c_str());
 
+	this->_vx = this->_Vx_default;
+	this->_vy = -this->_Vy_default;
 	this->disBound = DisBound;
 	this->_typeItem = (TypeItem)this->_ID;
 
 	this->_rect = this->getRect();
+
+	this->_idle = false;
 }
 
 void Item::move(float delta_Time)
@@ -40,22 +45,38 @@ void Item::move(float delta_Time)
 
 void Item::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
 {
+	float normalX = 0;
+	float normalY = 0;
+	float timeCollision;
 	for (int i = 0; i < _listObjectCollision.size(); i++)
 	{
 		ObjectGame* obj = _listObjectCollision.at(i);
 		
 		//doi tuong ground(nen)
-		if (obj->className() == TagClassName::getInstance()->tagGroundObject)
+		if (obj->className() == TagClassName::getInstance()->tagHideObject)
 		{
-			//chuyen sang trang thai dung yen.
-			this->_idle = true;
+			HideObject* hideObj = (HideObject*)obj;
+			if (hideObj->getTypeHideObject() == TypeHideObect::Ground)
+			{
+				//chuyen sang trang thai dung yen.
+				timeCollision = this->collision((StaticObject*)obj, normalX, normalY, deltatime);
+				if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
+				{
+					this->_idle = true;
+				}
+			}
 		}
 
 		//neu object la simon thi effect
 		if (obj->className() == TagClassName::getInstance()->tagSimon)
 		{
-			this->_isALive = false;
-			effectSimon();
+			timeCollision = this->collision((StaticObject*)obj, normalX, normalY, deltatime);
+			if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
+			{
+				this->_isALive = false;
+				effectSimon();
+			}
+			
 		}
 	}
 }
@@ -71,7 +92,7 @@ void Item::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollisio
 		this->timeLife -= delta_Time;
 		if (timeLife <= 0)
 		{
-			this->_isALive = false;
+			//this->_isALive = false;
 		}
 	}
 

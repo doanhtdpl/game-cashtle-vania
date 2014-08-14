@@ -12,6 +12,7 @@ class Simon : public DynamicObject, IAnimatedSprite
 {
 public:
 	Simon();
+	std::string className();
 	static Simon* getInstance();
 	static Simon* createInstance(std::vector<std::string> arr);
 	~Simon();
