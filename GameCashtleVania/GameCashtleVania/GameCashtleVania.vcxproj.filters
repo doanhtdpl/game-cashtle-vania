@@ -136,6 +136,24 @@
     <Filter Include="Config\ItemFactory">
       <UniqueIdentifier>{034238db-c40e-4f5c-a8db-7a58b99ca9cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Config\WeaponFactory">
+      <UniqueIdentifier>{ce0d17a1-d1df-4944-92aa-51f1f5908657}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Weapon\Axe">
+      <UniqueIdentifier>{be4d73b8-4051-4a50-a45c-f98e244752cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Weapon\Boomerang">
+      <UniqueIdentifier>{9795bd10-145a-42a2-ba18-8909adbc217a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Weapon\Dagger">
+      <UniqueIdentifier>{1b0cdd7b-4efe-412a-aa99-386bd04661a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Weapon\FireBomb">
+      <UniqueIdentifier>{a7db9991-0a00-4d13-a3c4-953a0f9b7a66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\DynamicObject\Weapon\FireBomb2">
+      <UniqueIdentifier>{7ca27d54-0bba-41dc-bca7-9ebe42cbaccc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -303,6 +321,21 @@
     <ClCompile Include="ItemFactory.cpp">
       <Filter>Config\ItemFactory</Filter>
     </ClCompile>
+    <ClCompile Include="WeaponFactory.cpp">
+      <Filter>Config\WeaponFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Axe.cpp">
+      <Filter>GameObject\DynamicObject\Weapon\Axe</Filter>
+    </ClCompile>
+    <ClCompile Include="Boomerang.cpp">
+      <Filter>GameObject\DynamicObject\Weapon\Boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="Dagger.cpp">
+      <Filter>GameObject\DynamicObject\Weapon\Dagger</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBomb.cpp">
+      <Filter>GameObject\DynamicObject\Weapon\FireBomb</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -469,6 +502,21 @@
     </ClInclude>
     <ClInclude Include="ItemFactory.h">
       <Filter>Config\ItemFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponFactory.h">
+      <Filter>Config\WeaponFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Axe.h">
+      <Filter>GameObject\DynamicObject\Weapon\Axe</Filter>
+    </ClInclude>
+    <ClInclude Include="Boomerang.h">
+      <Filter>GameObject\DynamicObject\Weapon\Boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="Dagger.h">
+      <Filter>GameObject\DynamicObject\Weapon\Dagger</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBomb.h">
+      <Filter>GameObject\DynamicObject\Weapon\FireBomb</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

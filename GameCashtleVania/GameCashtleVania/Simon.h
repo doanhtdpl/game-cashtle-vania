@@ -39,6 +39,8 @@ public:
 	StepOnStair _stepOnStair;
 	SimonMove _moveMent;
 	IronRod* ironRod;
+	Weapon* weaponCurr;
+	TypeWeapon _typeOfWeaponCurr;
 
 	//va cham voi enemy
 	bool _collisionEnemy;
@@ -47,7 +49,7 @@ protected:
 	float HeightSit;
 	float delayJump;
 	float _timeDelayJumpCur;
-	float _attacking;//dang dung item or dung roi.
+	int _attacking;//dang dung item or dung roi.
 	D3DXVECTOR2 posPrepareOnStair; //vi tri len or xuong cau thang. 
 	RECT _rectOfStair;//vung bao cua cau thang. De dung khi di chuyen len xuong cau thang
 private:

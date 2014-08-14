@@ -11,7 +11,7 @@
 #define fileGroundBG "..\\Resource\\file\\GroundBG.csv"
 #define fileLight "..\\Resource\\file\\Light.csv"
 #define fileItem "..\\Resource\\file\\Item.csv"
-
+#define fileWeapon "..\\Resource\\file\\Weapon.csv"
 
 class FileUtils
 {
