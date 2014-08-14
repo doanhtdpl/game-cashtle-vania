@@ -30,6 +30,9 @@ ItemManager::ItemManager()
 	this->_listItemNormal.push_back(TypeItem::SmallHeart);
 	this->_listItemNormal.push_back(TypeItem::SmallHeart);
 	this->_listItemNormal.push_back(TypeItem::SmallHeart);
+	this->_listItemNormal.push_back(TypeItem::SmallHeart);
+	this->_listItemNormal.push_back(TypeItem::SmallHeart);
+	this->_listItemNormal.push_back(TypeItem::SmallHeart);
 	this->_listItemNormal.push_back(TypeItem::TripleShot);
 	this->_listItemNormal.push_back(TypeItem::Watch);
 
