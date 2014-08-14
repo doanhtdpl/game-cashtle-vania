@@ -7,7 +7,7 @@ WhiteSkeleton::WhiteSkeleton()
 
 WhiteSkeleton::WhiteSkeleton(std::vector<std::string> arr) : Enemy(arr)
 {
-
+	
 }
 
 void WhiteSkeleton::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)

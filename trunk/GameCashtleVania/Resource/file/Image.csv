@@ -28,6 +28,9 @@ ID_Image,filename
 1027,..\Resource\image\item\Cross.png
 1028,..\Resource\image\ground\brick.png
 1501,..\Resource\image\ironRod.png
+1505,..\Resource\image\weapon\Axe.png
+1506,..\Resource\image\weapon\Boomerang.png
+1510,..\Resource\image\weapon\FireBomb2.png
 1604,..\Resource\image\ground\BigLight.png
 1605,..\Resource\image\ground\SmallLight.png
 2001,..\Resource\MapBackGround\backGround.png

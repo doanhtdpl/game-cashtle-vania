@@ -26,9 +26,8 @@ enum State_Rod
 
 #include <iostream>
 #include "Weapon.h"
-#include "IAnimatedSprite.h"
 
-class IronRod : public Weapon,IAnimatedSprite
+class IronRod : public Weapon
 {
 public:
 	Type_Rod getTypeRod(); // tra ve loai rod dang duoc su dung
