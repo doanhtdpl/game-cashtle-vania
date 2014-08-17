@@ -38,7 +38,37 @@ void Map::readMapFromFile(std::string filePath)
 		arr = *it++;
 		int ID_Quadtree = atoi(arr.at(0).c_str());
 		int ID = atoi(arr.at(1).c_str());
-		ObjectGame* obj = NULL;
+		
+		//1 so doi tuong la bound cua scene
+		if (ID < 50)
+		{
+			//add bound cho info scene
+			MapLoader::getInstance()->getInfoSceneByKey(ID)->getBoundFromFile(arr);
+		}else
+		{
+			this->listInfoOfObject[ID_Quadtree] = arr;
+		}
+	}
+}
+
+std::vector<ObjectGame*> Map::getListObjectinScreen(std::vector<int> listID)
+{
+	std::vector<ObjectGame*> listObjInScreen;
+
+	std::vector<int>::iterator it = listID.begin();
+	std::vector<std::string> arr;
+	ObjectGame* obj = NULL;
+	int key_HashMap;
+	int ID;
+	while(it != listID.end())
+	{
+		key_HashMap = *it;
+		std::hash_map<int, std::vector<std::string>>::iterator itInfo = this->listInfoOfObject.find(key_HashMap);
+		if (itInfo != listInfoOfObject.end())
+		{
+			arr = itInfo->second;
+		}
+		ID = atoi(arr.at(1).c_str());
 		if (ID > 700 && ID < 800)
 		{
 			//Hide Object
@@ -51,51 +81,14 @@ void Map::readMapFromFile(std::string filePath)
 				obj = LightFactory::getInstance()->createObj(arr);
 			}
 		}
-		
-		//1 so doi tuong la bound cua scene
-		if (ID < 50)
-		{
-			//add bound cho info scene
-			MapLoader::getInstance()->getInfoSceneByKey(ID)->getBoundFromFile(arr);
-		}else
-		{
-			
-		}
 
-		this->listObjectInMap[ID_Quadtree] = obj;
+		if (obj != NULL)
+		{
+			listObjInScreen.push_back(obj);
+		}
 	}
 
-	//std::string line;
-	//std::vector<std::string> arr;
-	//std::ifstream* myfile = new std::ifstream(filePath);
-
-	//if (myfile->is_open())
-	//{
-	//	while ( !myfile->eof()) 
-	//	{
-	//		if (std::getline(*myfile, line))
-	//		{
-	//			arr = FileUtils::split(line, '\t');
-	//			int ID_Quadtree = atoi(arr.at(0).c_str());
-	//			int ID = atoi(arr.at(1).c_str());
-	//			ObjectGame* obj = NULL;
-	//			if (ID > 700 && ID < 800)
-	//			{
-	//				//Hide Object
-	//				obj = HideObjFactory::getInstance()->createObj(arr);
-	//			}else
-	//			{
-	//				//Light
-	//				if (ID > 600 && ID < 700)
-	//				{
-	//					obj = LightFactory::getInstance()->createObj(arr);
-	//				}
-	//			}
-
-	//			this->listObjectInMap[ID_Quadtree] = obj;
-	//		}
-	//	}
-	//}
+	return listObjInScreen;
 }
 
 int Map::getIDMaxInList()

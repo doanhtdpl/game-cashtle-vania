@@ -20,7 +20,7 @@ public:
 	QNode(void);
 	QNode(int _ID, int _x, int _y, int _widht, int _height);
 	void addIDToList(int ID);
-	bool isBound( RECT rect1, RECT rect2);
+	static bool isBound( RECT rect1, RECT rect2);
 	//void getListObInScreen(std::vector<ObjectGame*> listObjectInGame, RECT Screen);
 	void getListIDInScreen(std::vector<int> *listID, RECT Screen);
 	~QNode();
