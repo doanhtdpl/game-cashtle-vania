@@ -143,6 +143,7 @@ void QuadTreeObject::upDateQNode(QNode* Node)
 			
 			std::vector<int>::iterator it;
 			it = Node->_listID.begin();
+
 			while (it != Node->_listID.end())
 			{
 				int IDObject = *it;
@@ -169,6 +170,8 @@ void QuadTreeObject::upDateQNode(QNode* Node)
 					{
 						//chet roi
 						//this->mapObject.listObjectInMap.erase(IDObject);
+						this->mapObject.eraseObject(IDObject);
+						delete obj;
 						it = Node->_listID.erase(it);
 					}else
 					{

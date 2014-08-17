@@ -1,5 +1,6 @@
 #include "Weapon.h"
 #include "TagClassName.h"
+#include "Simon.h"
 
 Weapon::Weapon()
 {
@@ -40,11 +41,20 @@ void Weapon::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollis
 	this->move(delta_Time);
 	this->animated(delta_Time);
 	this->_rectRS = this->updateRectRS(this->_width, this->_height);
+
 }
 
 void Weapon::move(float delta_Time)
 {
 
+}
+
+void Weapon::completeAttack()
+{
+	if (!Simon::getInstance()->_attacking)
+	{
+		Simon::getInstance()->_attacking = true;
+	}
 }
 
 void Weapon::handleCollision(float delta_Time, std::vector<ObjectGame*> _listObjectCollision)

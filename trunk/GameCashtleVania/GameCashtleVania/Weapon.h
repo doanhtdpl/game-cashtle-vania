@@ -35,7 +35,7 @@ public:
 	virtual void move(float delta_Time);
 	virtual void handleCollision(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
 	virtual void handleCollisionWithGround(HideObject* hideObj);
-
+	void completeAttack();
 protected:
 private:
 	TypeWeapon _typeOfWeapon;
