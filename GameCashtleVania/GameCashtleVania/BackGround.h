@@ -27,7 +27,7 @@ public:
 	~BackGround();
 
 	//Truyen vao ID va lay Rect
-	RECT* getRectResouceByIDTile(int IDTIle);
+	RECT getRectResouceByIDTile(int IDTIle);
 
 	//get Rect by ID
 	RECT getRectInHM(int ID);

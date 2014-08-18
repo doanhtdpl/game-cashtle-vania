@@ -45,6 +45,9 @@ void QuadTreeBackground::draw(RECT screen)
 		//draw tile voi ID
 		mapBG.drawTileByID(ID);
 	}
+
+	listID->clear();
+	delete listID;
 }
 
 void QuadTreeBackground::clearDataQuadtree()

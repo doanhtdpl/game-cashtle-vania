@@ -7,6 +7,7 @@
 #include "HideObject.h"
 #include "ManageGame.h"
 #include "WeaponFactory.h"
+#include "Item.h"
 
 Simon* Simon::_instance = NULL;
 
@@ -51,7 +52,7 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_isAnimatedSprite = true;
 
 	//doc tu map
-	this->_pos.x = 60;
+	this->_pos.x = 1200;
 	this->_pos.y = 66;
 	this->z = 1;
 
@@ -90,6 +91,9 @@ Simon::Simon(std::vector<std::string> arr)
 
 	//Onstair
 	this->_onStair = false;
+	this->_count_step_stair = 0;
+	this->_start_MoveStair = false;
+	this->_finish_MoveStair = true;
 	this->_prepareDownStairLeft = false;
 	this->_prepareDownStairRight = false;
 	this->_prepareUpStairLeft = false;
@@ -98,6 +102,8 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_elapseTimeMoveStair = this->_elapseTimeSwitchFrame * 1.2;
 	this->_timeDelayMoveStair = 0.0f;
 
+	this->_canFree = false;
+	this->_belowGround = 0;
 	//Create Axe
 	this->_typeOfWeaponCurr = TypeWeapon::FireBomb;
 }
@@ -105,6 +111,7 @@ Simon::Simon(std::vector<std::string> arr)
 // UPdate trang thai cua simon truoc. Sau do moi tinh cho no Move nhu the nao
 void Simon::updateMovement(float delta_Time)
 {
+	float dir;
 	//reset flag
 	this->_onStair = false;
 	
@@ -161,23 +168,27 @@ void Simon::updateMovement(float delta_Time)
 		this->_vy = 0.0f;
 
 		//chuyen frame va dich chuyen simon len cau thang
-		this->_timeDelayMoveStair += delta_Time;
-		if (_timeDelayMoveStair >= _elapseTimeMoveStair)
+
+		//tinh so lan dich chuyen de chuyen frame
+		_count_step_stair++;
+		if (_count_step_stair >= COUNT_STEP_STAIR)
 		{
-			_timeDelayMoveStair = 0.0f;
+			_count_step_stair = 0;
 			this->_stepOnStair = (StepOnStair)((int)this->_stepOnStair + 1);
 			if (this->_stepOnStair == StepOnStair::Step2)
 			{
 				this->_moveMent = SimonMove::OnStairUp;
+				this->_finish_MoveStair = true;
 			}
-
-			//dich chuyen vi tri
-			this->_pos.y += (this->_rectOfStair.top - this->_rectOfStair.bottom) / 4;
-			float dir = this->_Left ? -1 : 1;
-			this->_pos.x += dir * (this->_rectOfStair.right - this->_rectOfStair.left) / 4;
 		}
+
+		//dich chuyen vi tri
+		this->_pos.y += (this->_rectOfStair.top - this->_rectOfStair.bottom) / 4 / (float)COUNT_STEP_STAIR;
+		dir = this->_Left ? -1 : 1;
+		this->_pos.x += dir * (this->_rectOfStair.right - this->_rectOfStair.left) / 4 / (float)COUNT_STEP_STAIR;
 		break;
-	case DownStair:
+
+	case SimonMove::DownStair:
 		this->_onStair = true;
 		this->_CanMoveL = false;
 		this->_CanMoveR = false;
@@ -186,22 +197,22 @@ void Simon::updateMovement(float delta_Time)
 		this->_vx = 0.0f;
 		this->_vy = 0.0f;
 
-		//chuyen frame va dich chuyen simon len cau thang
-		this->_timeDelayMoveStair += delta_Time;
-		if (_timeDelayMoveStair >= _elapseTimeMoveStair)
+		_count_step_stair++;
+		if (_count_step_stair >= COUNT_STEP_STAIR)
 		{
-			_timeDelayMoveStair = 0.0f;
+			_count_step_stair = 0;
 			this->_stepOnStair = (StepOnStair)((int)this->_stepOnStair + 1);
 			if (this->_stepOnStair == StepOnStair::Step2)
 			{
 				this->_moveMent = SimonMove::OnStairDown;
+				this->_finish_MoveStair = true;
 			}
-
-			//dich chuyen vi tri
-			this->_pos.y += (this->_rectOfStair.bottom - this->_rectOfStair.top) / 4;
-			float dir = this->_Left ? -1 : 1;
-			this->_pos.x += dir * (this->_rectOfStair.right - this->_rectOfStair.left) / 4;
 		}
+
+		this->_pos.y += (this->_rectOfStair.bottom - this->_rectOfStair.top) / 4 / (float)COUNT_STEP_STAIR;
+		dir = this->_Left ? -1 : 1;
+		this->_pos.x += dir * (this->_rectOfStair.right - this->_rectOfStair.left) / 4 / (float)COUNT_STEP_STAIR;
+		
 		break;
 	case OnStairUp:
 		//khong chuyen frame
@@ -246,7 +257,7 @@ void Simon::updateMovement(float delta_Time)
 
 			if (this->_timeDelayJumpCur >= delayJump)
 			{
-				//het thoi gian delay. Roi xuong thoi!!!
+				//het thoi gian delay. Roi xuong thoi!!!...............
 				this->_timeDelayJumpCur = 0.0f;
 				this->_moveMent = SimonMove::Free;
 			}
@@ -302,6 +313,8 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 	//chuyen cac bien prepare stair -> false
 	//khi co va cham thi thay doi lai bien do.
 	//sau do processInput
+	processInput();
+
 	updateMovement(deltatime);
 
 	handleCollision(deltatime, _listObjectCollision);
@@ -309,22 +322,42 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 	
 	move(deltatime);
 
-	processInput();
-
 	animated(deltatime);
 
 	this->_box = this->getBox();
 	
-	ironRod->update(deltatime, _listObjectCollision);
+	//dang tan cong thi update rod
+	if (_attacking)
+	{
+		ironRod->update(deltatime, _listObjectCollision);
 
-	if (!ironRod->_isALive)
-	{
-		this->_attacking = 0;
-	}else
-	{
-		int dir = ironRod->_Left ? 1 : -1;
-		ironRod->_pos.x = this->_pos.x - dir * 28; 
-		ironRod->_pos.y = this->_pos.y;
+		if (!ironRod->_isALive)
+		{
+			//neu roi ko xuat hien -> dung weapon
+			//this->_attacking = false;
+			//dang o trang thai thu 3 -> quang weapon
+			if (ironRod->getStateRod() == Step3)
+			{
+				weaponCurr->Use(this->_pos, !this->_Left);
+
+				weaponCurr = WeaponFactory::getInstance()->createObj(int(_typeOfWeaponCurr));
+				if(this->_typeOfWeaponCurr == TypeWeapon::Dagger)
+				{
+					weaponCurr->Use(this->_pos, !this->_Left);
+					weaponCurr->_can_Use_Weapon = false;
+				}
+				else
+				{
+					weaponCurr->Use(this->_pos, this->_Left);
+					weaponCurr->_can_Use_Weapon = false;
+				}
+			}
+		}else
+		{
+			int dir = ironRod->_Left ? 1 : -1;
+			ironRod->_pos.x = this->_pos.x - dir * 28; 
+			ironRod->_pos.y = this->_pos.y;
+		}
 	}
 }
 
@@ -552,6 +585,7 @@ void Simon::processInput()
 				{
 					//chuyen sang trang thai xuong cau thang va quay mat ve ben trai
 					this->_moveMent = SimonMove::DownStair;
+					this->_finish_MoveStair = false;
 					this->_pos.x = _rectOfStair.left + this->_width / 4;
 					this->_pos.y = _rectOfStair.bottom + this->_height / 2;
 					this->_stepOnStair = StepOnStair::Step0;
@@ -562,6 +596,7 @@ void Simon::processInput()
 					if (this->_prepareDownStairRight && !this->_onStair)
 					{
 						this->_moveMent = SimonMove::DownStair;
+						this->_finish_MoveStair = false;
 						this->_Left = false;
 						this->_pos.x = _rectOfStair.left  - this->_width / 4;
 						this->_pos.y = _rectOfStair.bottom + this->_height / 2;
@@ -576,6 +611,7 @@ void Simon::processInput()
 							}
 
 							this->_moveMent = SimonMove::DownStair;
+							this->_finish_MoveStair = false;
 							this->_stepOnStair = StepOnStair::Step0;
 						}
 					}
@@ -607,6 +643,7 @@ void Simon::processInput()
 		{
 			//chuyen sang trang thai xuong cau thang va quay mat ve ben trai
 			this->_moveMent = SimonMove::UpStair;
+			this->_finish_MoveStair = false;
 			this->_pos.x = _rectOfStair.left;
 			this->_pos.y = _rectOfStair.bottom + this->_height / 2;
 			this->_stepOnStair = StepOnStair::Step0;
@@ -617,6 +654,7 @@ void Simon::processInput()
 			if (this->_prepareUpStairRight && !this->_onStair)
 			{
 				this->_moveMent = SimonMove::UpStair;
+				this->_finish_MoveStair = false;
 				this->_Left = false;
 				this->_pos.x = _rectOfStair.left;// + (_rectOfStair.right - _rectOfStair.left) / 2
 				this->_pos.y = _rectOfStair.bottom + this->_height / 2;
@@ -631,6 +669,7 @@ void Simon::processInput()
 					}
 
 					this->_moveMent = SimonMove::UpStair;
+					this->_finish_MoveStair = false;
 					this->_stepOnStair = StepOnStair::Step0;
 					
 				}
@@ -652,17 +691,33 @@ void Simon::processInput()
 #pragma region Xu Ly Phim Z
 	if (key == DIK_Z)
 	{
-		//chua su dung roi
-		if (!this->_attacking && this->_moveMent != SimonMove::DownStair && this->_moveMent != SimonMove::UpStair)
+		if (Input::CreateInstance()->IsKeyDown(DIK_UP))
 		{
-			this->_attacking = true;
-			IronRod::getInstance()->Use(this->_pos, this->_Left);
+			if (!this->_attacking && this->_moveMent != SimonMove::DownStair && this->_moveMent != SimonMove::UpStair)
+			{
+				if (weaponCurr->_can_Use_Weapon)
+				{
+					this->_attacking = true;
+				}
+				
+				
+				//weaponCurr->_High_Jumped = this->_High_Jumped;
+				//QuadTreeObject::getInstance()->addObjectToQuadTree(weapon);
+			}
+		}else
+		{
+			//chua su dung roi
+			if (!this->_attacking && this->_moveMent != SimonMove::DownStair && this->_moveMent != SimonMove::UpStair)
+			{
+				this->_attacking = true;
+				IronRod::getInstance()->Use(this->_pos, this->_Left);
+			}
 		}
 	}
 #pragma endregion
 
 #pragma region Xu ly phim X + Up
-	if(Input::CreateInstance()->IsKeyDown(DIK_UP) && key == DIK_X)
+	if(Input::CreateInstance()->IsKeyDown(DIK_UP) && key == DIK_Z)
 	{
 		if (!this->_attacking && this->_moveMent != SimonMove::DownStair && this->_moveMent != SimonMove::UpStair)
 		{
@@ -677,7 +732,7 @@ void Simon::processInput()
 				weapon->Use(this->_pos, this->_Left);
 			}
 			//weaponCurr->_High_Jumped = this->_High_Jumped;
-			QuadTreeObject::getInstance()->addObjectToQuadTree(weapon);
+			//QuadTreeObject::getInstance()->addObjectToQuadTree(weapon);
 		}
 	}
 #pragma endregion
@@ -690,6 +745,8 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 	this->_box = this->getBox();
 	float normalX = 0;
 	float normalY = 0;
+	this->_belowGround = 0;
+	//this->_canFree = false;
 	float timeCollision;
 	for (int i = 0; i < _listObjectCollision.size(); i++)
 	{
@@ -701,18 +758,14 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 			HideObject* hideObj = (HideObject*)obj;
 			//va cham voi doi tuong nen
 			timeCollision = this->collision((StaticObject*)obj, normalX, normalY, deltatime);
-			//if ( !((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f))
-			//{
-			//	//khong co va cham
-			//	break;
-			//}
+		
 #pragma region HideObject = Ground
 			if (hideObj->getTypeHideObject() == TypeHideObect::Ground)
 			{
 				if (timeCollision == 2.0f)
 				{
 					// bi va cham theo AABBCheck
-					if (this->_moveMent == SimonMove::Free && normalY > 0)
+					if (this->_moveMent == SimonMove::Free && normalY > 0 && !this->_canFree)
 					{
 						//dang roi va dung' tren hide obj
 						if (this->getRect().bottom > hideObj->getRect().bottom)
@@ -722,6 +775,9 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 							this->_pos.y += normalY;
 							//this->_vx = 0;
 							this->_vy = 0;
+							
+							//co 1 doi tuog ground o duoi chan
+							_belowGround ++;
 						}
 					}
 
@@ -775,12 +831,13 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 					}
 
 					//Obj dang roi
-					if (normalY == 1)
+					if (normalY == 1 && !this->_canFree)
 					{
 						this->_pos.y += timeCollision * (deltatime * this->_vy);
 						this->_moveMent = SimonMove::Idle;
 						//this->_vx = 0;
 						this->_vy = 0;
+						this->_belowGround ++;
 					}
 
 					//obj dang nhay
@@ -838,7 +895,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 								if (this->_moveMent == SimonMove::Moves || this->_moveMent == SimonMove::Idle || this->_onStair)
 								{
 									//chenh lech khong qua 5 pixel -- chuan bi ra khoi cau thang
-									if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 5 )
+									if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 5  && this->_finish_MoveStair)
 									{
 										this->_prepareUpStairLeft = true;
 										//this->_moveMent = SimonMove::PrepareUpTheStairLeft;
@@ -866,9 +923,9 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 							{
 								if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
 								{
-									if (this->_moveMent == SimonMove::Moves || this->_moveMent == SimonMove::Idle || this->_onStair)
+									if (this->_moveMent == SimonMove::Moves || this->_moveMent == SimonMove::Idle || this->_onStair )
 									{
-										if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 5 )
+										if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 5 && this->_finish_MoveStair)
 										{
 											this->_prepareDownStairLeft = true;
 											//this->_moveMent = SimonMove::PrepareDownTheStairLeft;
@@ -896,8 +953,8 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 									{
 										if (this->_moveMent == SimonMove::Moves || this->_moveMent == SimonMove::Idle || this->_onStair)
 										{
-											//chenh lech khong qua 5 pixel
-											if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 5 )
+											//chenh lech khong qua 5 pixel. Dang o buoc chan so dau tien
+											if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 5 && this->_finish_MoveStair)
 											{
 												this->_prepareUpStairRight = true;
 												//this->_moveMent = SimonMove::PrepareUpTheStairRight;
@@ -925,7 +982,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 											if (this->_moveMent == SimonMove::Moves || this->_moveMent == SimonMove::Idle || this->_onStair)
 											{
 												//chenh lech khong qua 5 pixel -- ra khoi cau thang
-												if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 5 )
+												if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 5 && this->_finish_MoveStair)
 												{
 													this->_prepareDownStairRight = true;
 													//this->_moveMent = SimonMove::PrepareDownTheStairRight;
@@ -948,11 +1005,29 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 #pragma region HideObject = Free
 										if (hideObj->getTypeHideObject() == TypeHideObect::Free)
 										{
-											if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
+											if ((timeCollision > 0.0f && timeCollision < 1.0f)|| timeCollision == 2.0f)// 
 											{
-												if (this->_moveMent == SimonMove::Idle || this->_moveMent == SimonMove::Moves)
+												if ((this->_moveMent == SimonMove::Idle || this->_moveMent == SimonMove::Moves) && !this->_onStair)
 												{
-													this->_moveMent = SimonMove::Free;
+													if ( abs(this->_pos.x - hideObj->_pos.x) < 5)
+													{
+														this->_canFree = true;
+														this->_moveMent = SimonMove::Free;
+													}else
+													{
+														this->_canFree = false;
+													}
+													////va cham theo chieu x
+													//if (normalX != 0)
+													//{
+													//	_canFree = true;
+													//	//this->_moveMent = SimonMove::Free;
+													//}
+												}
+												//
+												if (this->_pos.y < hideObj->getRect().bottom)
+												{
+													this->_canFree = false;
 												}
 															
 											}
@@ -968,56 +1043,81 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 			}	
 		}
 #pragma endregion
-	}
-}
+	
+#pragma region Object Game la Item
 
-//implement method collision
-float Simon::collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime)
-{
-	return 0.0f;
-}
-
-float Simon::collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime)
-{
-	Box box = this->getBox();
-	Box staticBox = staticObject->getBox();
-
-	Box broadphaseBox = ICollision::getInstance()->getSweptBroadphaseBox(box, deltaTime);
-
-	float moveX = 0;
-	float moveY = 0;
-
-	//kiem tra 2 box hien tai da va cham chua
-	if (ICollision::getInstance()->AABBCheck(box, staticBox))
-	{
-		if (ICollision::getInstance()->AABB(box, staticBox, moveX, moveY))
+		if (obj->className() == TagClassName::getInstance()->tagItem)
 		{
-			normalx = moveX;
-			normaly = moveY;
-			//this->_pos.x += moveX;
-			//this->_pos.y += moveY;
-			return 2.0f;
-		}
-		return 1.0f;
-	}else
-	{
-		//kiem tra 2 object co the va cham ko?
-		if (ICollision::getInstance()->AABBCheck(broadphaseBox, staticBox))
-		{
-			float timeCol = ICollision::getInstance()->sweptAABB(box, staticBox, normalx, normaly, deltaTime);
-			return timeCol;
-			/*if (timeCol < 1.0f)
+			Item* item = (Item*)obj;
+			timeCollision = this->collision(item, normalX, normalY, deltatime);
+			if ((timeCollision > 0 && timeCollision < 1.0f) || timeCollision == 2.0f)
 			{
-				return timeCol;
-			}else
-			{
-				return 1.0f;
-			}*/
-		}else
-		{
-			return 1.0;//khong co va cham
+				item->effectSimon();
+				item->_isALive = false;
+			}
+
 		}
+
+#pragma endregion
+
 	}
 
-	return 0.0f;
+	//if (this->_canFree)
+	//{
+	//	if (this->_belowGround == 0)
+	//	{
+	//		this->_moveMent = SimonMove::Free;
+	//	}
+	//}
 }
+
+////implement method collision
+//float Simon::collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime)
+//{
+//	return 0.0f;
+//}
+//
+//float Simon::collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime)
+//{
+//	Box box = this->getBox();
+//	Box staticBox = staticObject->getBox();
+//
+//	Box broadphaseBox = ICollision::getInstance()->getSweptBroadphaseBox(box, deltaTime);
+//
+//	float moveX = 0;
+//	float moveY = 0;
+//
+//	//kiem tra 2 box hien tai da va cham chua
+//	if (ICollision::getInstance()->AABBCheck(box, staticBox))
+//	{
+//		if (ICollision::getInstance()->AABB(box, staticBox, moveX, moveY))
+//		{
+//			normalx = moveX;
+//			normaly = moveY;
+//			//this->_pos.x += moveX;
+//			//this->_pos.y += moveY;
+//			return 2.0f;
+//		}
+//		return 1.0f;
+//	}else
+//	{
+//		//kiem tra 2 object co the va cham ko?
+//		if (ICollision::getInstance()->AABBCheck(broadphaseBox, staticBox))
+//		{
+//			float timeCol = ICollision::getInstance()->sweptAABB(box, staticBox, normalx, normaly, deltaTime);
+//			return timeCol;
+//			/*if (timeCol < 1.0f)
+//			{
+//				return timeCol;
+//			}else
+//			{
+//				return 1.0f;
+//			}*/
+//		}else
+//		{
+//			return 1.0;//khong co va cham
+//		}
+//	}
+//
+//	return 0.0f;
+//}

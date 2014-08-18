@@ -31,6 +31,39 @@ void QNode::addIDToList(int ID)
 	this->_listID.push_back(ID);
 }
 
+bool QNode::eraseIDObj(int _IDObj)
+{
+	for (std::vector<int>::iterator it = this->_listID.begin(); it != _listID.end(); )
+	{
+		if (_IDObj == *it)
+		{
+			_listID.erase(it);
+			return true;
+		}else
+		{
+			it++;
+		}
+	}
+
+	return false;
+}
+
+bool QNode::findIDObj(int IDObj)
+{
+	for (std::vector<int>::iterator it = this->_listID.begin(); it != _listID.end(); )
+	{
+		if (IDObj == *it)
+		{
+			return true;
+		}else
+		{
+			it++;
+		}
+	}
+
+	return false;
+}
+
 void QNode::getListIDInScreen(std::vector<int>* listIDInScreen, RECT Screen)
 {
 	//std::vector<int> listIDInScreen;

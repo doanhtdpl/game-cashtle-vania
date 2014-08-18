@@ -20,6 +20,7 @@ Weapon::Weapon(std::vector<std::string> arr)
 	this->_isAnimatedSprite = true;
 
 	this->_beforeTimeOld = 0.0f;
+	_can_Use_Weapon = true;
 }
 
 std::string Weapon::className()
@@ -49,12 +50,11 @@ void Weapon::move(float delta_Time)
 
 }
 
-void Weapon::completeAttack()
+
+bool Weapon::completeAttack()
 {
-	if (!Simon::getInstance()->_attacking)
-	{
-		Simon::getInstance()->_attacking = true;
-	}
+
+	return true;
 }
 
 void Weapon::handleCollision(float delta_Time, std::vector<ObjectGame*> _listObjectCollision)

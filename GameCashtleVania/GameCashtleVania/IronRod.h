@@ -38,6 +38,7 @@ public:
 	Box getBox();// box de va cham
 	void animated(float deltaTime);
 	void update(float delta_Time, std::vector<ObjectGame*> _ListObjectCollision);
+	virtual bool completeAttack();
 
 	static IronRod* getInstance();
 	static IronRod* createInstance(std::vector<std::string> arr);

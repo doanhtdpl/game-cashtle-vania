@@ -15,7 +15,8 @@ public:
 	std::vector<ObjectGame*> getObjectInScreen(RECT screen);
 	void loadObjectFromFile(std::string filePath);
 
-	void upDateQuadTree();
+	void eraseObject(int IDinMap);
+	void upDateQuadTree(RECT screen);
 	void addObjectToQuadTree(ObjectGame* object);
 	void draw(RECT Screen);
 	void clearDataQuadtree();

@@ -3,6 +3,7 @@
 #include "TagClassName.h"
 #include "Light.h"
 #include "QuadTreeObject.h"
+#include "Simon.h"
 
 IronRod* IronRod::_instance = NULL;
 
@@ -87,6 +88,7 @@ void IronRod::ChangeState()
 		break;
 	case State_Rod::Step3:
 		this->_isALive = false;
+		completeAttack();
 		//chuyen ve state 1
 		this->_stateRod = State_Rod::Step1;
 		this->timeChangeState = _elapseTimeState1;
@@ -126,6 +128,17 @@ void IronRod::Use(D3DXVECTOR2 posSimon, bool Left)
 	this->_pos.x -= 28 * dir;
 	this->_stateRod = State_Rod::Step1;
 	this->_Left = Left;
+}
+
+bool IronRod::completeAttack()
+{
+	if (Simon::getInstance()->_attacking)
+	{
+		//ket thuc tan cong
+		Simon::getInstance()->_attacking = false;
+	}
+
+	return true;
 }
 
 //pos: pos dung de ve Rod.
