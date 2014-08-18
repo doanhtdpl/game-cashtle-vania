@@ -41,6 +41,7 @@ void Light::update(float deltaTime)
 Item* Light::effectWhenCollisionRod()
 {
 	Item* item = NULL;
+	this->_isALive = false;
 	switch (this->_typeLight)
 	{
 	case TypeLight::BigLightDagger:

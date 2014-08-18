@@ -70,7 +70,6 @@ void ManageGame::gameDraw()
 	//}
 }
 
-
 void ManageGame::processInput()
 {
 	//Simon::getInstance()->processInput();
@@ -80,12 +79,12 @@ void ManageGame::gameUpdate(float deltaTime)
 {
 	ManageSprite::createInstance()->update_Camera(Simon::getInstance()->_pos.x, deltaTime);
 	screen = ManageSprite::createInstance()->_camera->getScreen();
-	quadTreeObj->upDateQuadTree();
+	quadTreeObj->upDateQuadTree(screen);
 
 	std::vector<ObjectGame*> arr;
 	arr = quadTreeObj->getObjectInScreen(screen);
 	std::vector<ObjectGame*>::iterator it = arr.begin();
-	ObjectGame* obj;
+	ObjectGame* obj = NULL;
 	while(it != arr.end())
 	{
 		obj = *it++;
@@ -99,6 +98,8 @@ void ManageGame::gameUpdate(float deltaTime)
 		}
 	}
 
+	
+
 	//khong co trang thai change scene
 	if (!isChangeScene)
 	{
@@ -107,6 +108,9 @@ void ManageGame::gameUpdate(float deltaTime)
 	{
 		changeScene(deltaTime);
 	}
+
+	//delete obj;
+	arr.clear();
 }
 
 void ManageGame::changeScene(float deltaTime)
@@ -161,7 +165,11 @@ void ManageGame::nextScene()
 		quadTreeObj->fileQuadtree = infoScene->mQuadTree;
 		quadTreeObj->loadMap();
 
-		quadTreeObj->upDateQuadTree();
+		//xet lai bound cho camera
+		ManageSprite::createInstance()->_camera->setBound(infoScene->getBound());
+		
+
+		quadTreeObj->upDateQuadTree(this->screen);
 		simon->_pos = D3DXVECTOR2(60, 64);
 		//quadTreeObj->addObjectToQuadTree(simon);
 		ManageSprite::createInstance()->_camera->stopScrollScreen = false;
@@ -213,11 +221,13 @@ void ManageGame::gameInit()
 	quadTreeObj->loadMap();
 
 	//add simon vao quad tre
-	quadTreeObj->upDateQuadTree();
+	
 	//quadTreeObj->addObjectToQuadTree(simon);
 
 	ManageSprite::createInstance()->_camera->setBound(infoScene->getBound());
 	screen = ManageSprite::createInstance()->_camera->getScreen();
+
+	quadTreeObj->upDateQuadTree(screen);
 }
 
 void ManageGame::delete_Memory_Game()

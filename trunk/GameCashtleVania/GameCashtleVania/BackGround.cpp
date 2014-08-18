@@ -113,17 +113,17 @@ void BackGround::readMapFromFile(std::string filePath)
 }
 
 // lay rectResource cua IDTile tren background
-RECT* BackGround::getRectResouceByIDTile(int IDTile)
+RECT BackGround::getRectResouceByIDTile(int IDTile)
 {
-	RECT* rectRS = new RECT();
+	RECT rectRS;
 
 	int x = (IDTile % this->_column) * this->_tileWidth;
 	int y = (IDTile / this->_column) * this->_tileHeight;
 
-	rectRS->left = x;
-	rectRS->right = x + this->_tileWidth;
-	rectRS->top = y;
-	rectRS->bottom = y + this->_tileHeight;
+	rectRS.left = x;
+	rectRS.right = x + this->_tileWidth;
+	rectRS.top = y;
+	rectRS.bottom = y + this->_tileHeight;
 
 	return rectRS;
 }
@@ -149,7 +149,7 @@ void BackGround::drawBackGround()
 				// vi tri top left cua tile hien tai tren the gioi game
 				D3DXVECTOR2 pos = D3DXVECTOR2( (j + 1) * _tileWidth, (_mapWidth - i + 1) * _tileHeight);
 				D3DXVECTOR3 posCenter = D3DXVECTOR3(pos.x - _tileWidth / 2, pos.y - _tileWidth / 2 , 0);
-				ManageSprite::createInstance()->draw(this->_IDImage, getRectResouceByIDTile(IDTile), posCenter);
+				ManageSprite::createInstance()->draw(this->_IDImage, &getRectResouceByIDTile(IDTile), posCenter);
 			}
 		}
 	}
@@ -164,7 +164,8 @@ void BackGround::drawTileByID(int ID)
 
 	D3DXVECTOR2 pos = D3DXVECTOR2( (col + 1) * _tileWidth, (_mapWidth - row) * _tileHeight);
 	D3DXVECTOR3 posCenter = D3DXVECTOR3(pos.x - _tileWidth / 2, pos.y - _tileWidth / 2 , 0);
-	ManageSprite::createInstance()->draw(this->_IDImage, getRectResouceByIDTile(IDTile), posCenter);
+	//RECT* rectRS = &getRectResouceByIDTile(IDTile);
+	ManageSprite::createInstance()->draw(this->_IDImage, &getRectResouceByIDTile(IDTile), posCenter);
 }
 
 // luu 1 dong vao matran

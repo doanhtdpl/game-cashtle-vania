@@ -14,7 +14,7 @@ void Sprite::draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transc
 {
 	if (isCenter)
 	{
-		D3DXVECTOR3* center;
+		D3DXVECTOR3* center = NULL;
 		if (RectRS == NULL)
 		{
 			center = NULL;
@@ -26,10 +26,13 @@ void Sprite::draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transc
 				0);
 		}
 		this->_SpriteHandel->Draw(image->getTexture(), RectRS, center, &pos, transcolor);
+		delete center;
 	}else {
 		
 		this->_SpriteHandel->Draw(image->getTexture(), RectRS, NULL, &pos, transcolor);
-	}	
+	}
+
+	
 }
 
 void Sprite::draw(Texture* image, RECT *RectRS, D3DXVECTOR3 pos, D3DXVECTOR2 scale, D3DCOLOR transcolor /* = 0xFFFFFFFF */, bool isCenter /* = true */)

@@ -7,6 +7,8 @@
 
 enum SimonMove;
 enum class StepOnStair;
+#define DIS_MOVE_STAIR 16/10
+#define COUNT_STEP_STAIR 6
 
 class Simon : public DynamicObject, IAnimatedSprite
 {
@@ -26,20 +28,29 @@ public:
 	
 	//xu ly collision
 	void handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision);
-	float collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime);
-	float collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime);
+	//float collision(DynamicObject* dynamicOject, float &normalx, float &normaly, float deltaTime);
+	//float collision(StaticObject* staticObject, float &normalx, float &normaly, float deltaTime);
 
 	bool _onStair;//dang o tren cau thang
+	int  _count_step_stair;
+
+	bool _start_MoveStair;
+	bool _finish_MoveStair;
 	bool _prepareUpStairLeft;
 	bool _prepareUpStairRight;
 	bool _prepareDownStairLeft;
 	bool _prepareDownStairRight;
+
+	//co the roi hay ko
+	bool _canFree;
+	int _belowGround;
+
 	float _elapseTimeMoveStair;
 	float _timeDelayMoveStair;
 	StepOnStair _stepOnStair;
 	SimonMove _moveMent;
 	IronRod* ironRod;
-	//Weapon* weaponCurr;
+	Weapon* weaponCurr;//vu khi thu 2
 	TypeWeapon _typeOfWeaponCurr;
 
 	//va cham voi enemy

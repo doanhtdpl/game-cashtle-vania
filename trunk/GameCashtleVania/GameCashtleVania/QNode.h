@@ -20,6 +20,13 @@ public:
 	QNode(void);
 	QNode(int _ID, int _x, int _y, int _widht, int _height);
 	void addIDToList(int ID);
+	
+	//xoa ID ra khoi list
+	bool eraseIDObj(int IDObj);
+
+	//tim 1 IDObj co trong node hay ko
+	bool findIDObj(int IDObj);
+
 	static bool isBound( RECT rect1, RECT rect2);
 	//void getListObInScreen(std::vector<ObjectGame*> listObjectInGame, RECT Screen);
 	void getListIDInScreen(std::vector<int> *listID, RECT Screen);

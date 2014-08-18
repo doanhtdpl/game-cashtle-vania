@@ -27,7 +27,7 @@ enum TypeItem
 #include "DynamicObject.h"
 #include "IAnimatedSprite.h"
 
-#define DisBound 50
+#define DisBound 20
 //Va cham voi ground(nen) va va cham voi simon - anh huong toi simon.
 class Item : public DynamicObject, public IAnimatedSprite
 {
@@ -37,7 +37,8 @@ public:
 	std::string className();
 	void handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision);
 	void update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
-	
+	Box getBox();
+
 	//di chuyen theo hinh zich zac
 	void move(float delta_Time);
 	

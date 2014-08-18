@@ -12,6 +12,8 @@ enum class TypeWeapon
 };
 #endif __TYPE_OF_WEAPON__
 
+
+
 #ifndef __WEAPON__H__
 #define __WEAPON__H__
 
@@ -35,7 +37,9 @@ public:
 	virtual void move(float delta_Time);
 	virtual void handleCollision(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
 	virtual void handleCollisionWithGround(HideObject* hideObj);
-	void completeAttack();
+	virtual bool completeAttack();
+	
+	bool _can_Use_Weapon;
 protected:
 private:
 	TypeWeapon _typeOfWeapon;

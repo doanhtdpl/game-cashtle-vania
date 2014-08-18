@@ -1,6 +1,7 @@
 #include "QuadTreeObject.h"
 #include "ManageSprite.h"
 #include "TagClassName.h"
+#include "ManageGame.h"
 
 QuadTreeObject* QuadTreeObject::_instance = NULL;
 
@@ -35,29 +36,32 @@ std::vector<ObjectGame*> QuadTreeObject::getObjectInScreen(RECT screen)
 	std::vector<int>* listID = new std::vector<int>();
 	getListIDInScreen(listID, screen);
 
-	std::vector<ObjectGame*> listObj;
+	//dua vao listID thi vao mapObject de lay list Object thuoc sceen
+	std::vector<ObjectGame*> listObj = this->mapObject.getListObjectinScreen(*listID);
 
-	//duyet list ID
-	std::vector<int>::iterator it;
-	it = listID->begin();
-	int ID;
-	ObjectGame* obj = NULL;
-	while (it != listID->end())
-	{
-		//ID trong list object 
-		ID = *it++;
-		std::hash_map< int, ObjectGame*>::iterator itObject = mapObject.listObjectInMap.find(ID);
-		if (itObject != mapObject.listObjectInMap.end())
-		{
-			obj = mapObject.listObjectInMap.find(ID)->second;
-		}
-		 
-		if (obj != NULL)
-		{
-			listObj.push_back(obj);
-		}
-		
-	}
+	listID->clear();
+	delete listID;
+	////duyet list ID
+	//std::vector<int>::iterator it;
+	//it = listID->begin();
+	//int ID;
+	//ObjectGame* obj = NULL;
+	//while (it != listID->end())
+	//{
+	//	//ID trong list object 
+	//	ID = *it++;
+	//	std::hash_map< int, ObjectGame*>::iterator itObject = mapObject.listObjectInMap.find(ID);
+	//	if (itObject != mapObject.listObjectInMap.end())
+	//	{
+	//		obj = mapObject.listObjectInMap.find(ID)->second;
+	//	}
+	//	 
+	//	if (obj != NULL)
+	//	{
+	//		listObj.push_back(obj);
+	//	}
+	//	
+	//}
 
 	return listObj;
 }
@@ -83,17 +87,20 @@ void QuadTreeObject::draw(RECT screen)
 		if (itObject != mapObject.listObjectInMap.end())
 		{
 			obj = mapObject.listObjectInMap.find(ID)->second;
-		}
-
-		//draw
-		if (obj != NULL)
-		{
-			if (obj->className() != TagClassName::getInstance()->tagHideObject)
+			//draw
+			if (obj != NULL)
 			{
-				ManageSprite::createInstance()->drawObject(obj);
-			}	
+				if (obj->className() != TagClassName::getInstance()->tagHideObject)
+				{
+					ManageSprite::createInstance()->drawObject(obj);
+				}	
+			}
 		}
 	}
+
+	//delete obj;
+	listID->clear();
+	delete listID;
 
 	////lay tat ca object game trong man hinh
 	//std::vector<ObjectGame*> listObj = this->getObjectInScreen(Screen);
@@ -143,42 +150,40 @@ void QuadTreeObject::upDateQNode(QNode* Node)
 			
 			std::vector<int>::iterator it;
 			it = Node->_listID.begin();
-
+			ObjectGame* obj;
 			while (it != Node->_listID.end())
 			{
-				int IDObject = *it;
+				int IDObject = *it++;
 				//lay Object bang ID
 				std::hash_map< int, ObjectGame*>::iterator itListObj = this->mapObject.listObjectInMap.find(IDObject);
-				if (itListObj == this->mapObject.listObjectInMap.end())
+				if (itListObj != this->mapObject.listObjectInMap.end())
 				{
-					break;
-				}
-				ObjectGame* obj = itListObj->second;
+					obj = itListObj->second;
 
-				//kiem tra no con song hay ko?
-				if (obj == NULL)
-				{
-					//xem chung viec xoa
-					//itListObj = this->mapObject.listObjectInMap.erase(itListObj);
-					this->mapObject.eraseObject(IDObject);
-					it = Node->_listID.erase(it);
-					//it--;
-				}
-				else
-				{
-					if (!obj->_isALive)
+					//kiem tra no con song hay ko?
+					if (obj == NULL)
 					{
-						//chet roi
-						//this->mapObject.listObjectInMap.erase(IDObject);
-						this->mapObject.eraseObject(IDObject);
-						delete obj;
+						//xem chung viec xoa
+						//itListObj = this->mapObject.listObjectInMap.erase(itListObj);
+						//this->mapObject.eraseObject(IDObject);
 						it = Node->_listID.erase(it);
-					}else
+						//it--;
+					}
+					else
 					{
-						++it;
+						if (!obj->_isALive)
+						{
+							//chet roi
+							//this->mapObject.listObjectInMap.erase(IDObject);
+							this->mapObject.eraseObject(IDObject);
+							delete obj;
+							it = Node->_listID.erase(it);
+						}else
+						{
+							++it;
+						}
 					}
 				}
-				
 			}
 
 			//for (; t != Node->ListObject->end();)
@@ -206,9 +211,102 @@ void QuadTreeObject::upDateQNode(QNode* Node)
 	}
 }
 
-void QuadTreeObject::upDateQuadTree()
+void QuadTreeObject::upDateQuadTree(RECT screen)
 {
-	this->upDateQNode(this->root);
+	//this->upDateQNode(this->root);
+
+	//duyet listObjectInMap. Nhung Object nao ko ton tai thi xoa di
+	std::hash_map< int, ObjectGame*>::iterator it = this->mapObject.listObjectInMap.begin();
+	ObjectGame* obj = NULL;
+	while (it != this->mapObject.listObjectInMap.end())
+	{
+		obj = it->second;
+		if (!obj->_isALive)
+		{
+			//xoa object ra khoi quadtree
+			this->eraseObject(it->first);
+
+			//xoa khoi listObj
+			it = this->mapObject.listObjectInMap.erase(it);
+			//xoa IDHashMap cua Object ra khoi Quadtree
+			//it++;
+		
+		}else
+		{
+			//kiem tra no nam ngoai man hinh thi xoa khoi list Object
+			//RECT screen = ManageGame::getInstance()->screen;
+			if (!QNode::isBound(screen, obj->getRect()))
+			{
+				//object nam ngoai man hinh
+				if (obj->className() == TagClassName::getInstance()->tagEnemy || 
+						obj->className() == TagClassName::getInstance()->tagItem || 
+							obj->className() == TagClassName::getInstance()->tagWeapon)
+				{
+					//xoa luon
+					//xoa object ra khoi quadtree
+					this->eraseObject(it->first);
+
+					//xoa khoi listObj
+					it = this->mapObject.listObjectInMap.erase(it);
+					//xoa IDHashMap cua Object ra khoi Quadtree
+				}else
+				{
+					it ++;
+				}
+			}else
+			{
+				//neu van thuoc trong man hinh ma la enemy thi kiem tra no con va cham voi node chua no ko
+				if (obj->className() == TagClassName::getInstance()->tagEnemy)
+				{
+					//tim nhung node co chua no
+					QNode* node = NULL;
+					//duyet tat ca node. 
+					for (std::hash_map< int, QNode*>::iterator it = this->listQNode.begin(); it != listQNode.end();)
+					{
+						node = it->second;
+						if (node->findIDObj(it->first))
+						{
+							//neu node co chua enemy thi kiem tra enemy co con nam trong do ko? neu ko thi xoa va add vao lai
+							if (!QNode::isBound(node->rect, obj->_rect))
+							{
+								//neu node ko con chua obj nua
+								this->eraseObject(it->first);
+								
+								//sau do add vao lai node root
+								this->addObjectToNode(this->root, obj, it->first);
+
+							}else
+							{
+								it++;
+							}
+						}
+					}
+				}else
+				{
+					it ++;
+				}
+			}
+		}
+
+	}
+}
+
+void QuadTreeObject::eraseObject(int IDinMap)
+{
+	QNode* node = NULL;
+	//duyet tat ca node. 
+	for (std::hash_map< int, QNode*>::iterator it = this->listQNode.begin(); it != listQNode.end();)
+	{
+		node = it->second;
+		if (node->eraseIDObj(IDinMap))
+		{
+			//xoa thanh cong
+		}
+		it ++;
+	}
+	
+	//xoa trong list Object
+	//this->mapObject.eraseObject(IDinMap);
 }
 
 void QuadTreeObject::addObjectToQuadTree(ObjectGame* object)
