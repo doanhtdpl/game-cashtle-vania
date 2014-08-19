@@ -23,6 +23,7 @@ enum class TypeWeapon
 #include "DynamicObject.h"
 #include "IAnimatedSprite.h"
 #include "HideObject.h"
+#include "Enemy.h"
 
 class Weapon : public DynamicObject,public IAnimatedSprite
 {
@@ -37,12 +38,13 @@ public:
 	virtual void move(float delta_Time);
 	virtual void handleCollision(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
 	virtual void handleCollisionWithGround(HideObject* hideObj);
+	virtual void handleCollisionWithEnemy(Enemy* enemy);
 	virtual bool completeAttack();
 	
 	bool _can_Use_Weapon;
 protected:
-private:
 	TypeWeapon _typeOfWeapon;
+private:
 };
 
 #endif // !__WEAPON__H__

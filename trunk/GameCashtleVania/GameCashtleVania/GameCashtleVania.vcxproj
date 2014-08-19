@@ -96,6 +96,7 @@
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="FileUtils.cpp" />
     <ClCompile Include="FireBomb.cpp" />
+    <ClCompile Include="FireBomb2.cpp" />
     <ClCompile Include="FishMan.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Ghost.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="FileUtils.h" />
     <ClInclude Include="FireBomb.h" />
+    <ClInclude Include="FireBomb2.h" />
     <ClInclude Include="FishMan.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Ghost.h" />

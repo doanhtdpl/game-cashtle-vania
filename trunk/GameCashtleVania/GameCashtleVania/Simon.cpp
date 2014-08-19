@@ -60,12 +60,13 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_Vx_default = atoi(arr.at(5).c_str());
 	this->_Vy_default = atoi(arr.at(6).c_str());
 	this->_JumH_Max = atoi(arr.at(7).c_str());
+	this->_ay = atoi(arr.at(7).c_str());
 
 	//IAnimated
 	this->_curFrame = 0;
 	this->_coloumn = atoi(arr.at(8).c_str());
 	this->_totalFrames = atoi(arr.at(9).c_str());
-	this->_elapseTimeSwitchFrame = EslapseTimeSwitchFrame;
+	this->_elapseTimeSwitchFrame = atof(arr.at(10).c_str());
 	this->_beforeTimeOld = 0.0f;
 
 	this->_rectRS = this->updateRectRS(this->_width, this->_height);
@@ -106,6 +107,7 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_belowGround = 0;
 	//Create Axe
 	this->_typeOfWeaponCurr = TypeWeapon::FireBomb;
+	this->weaponCurr = WeaponFactory::getInstance()->createObj((int)this->_typeOfWeaponCurr);
 }
 
 // UPdate trang thai cua simon truoc. Sau do moi tinh cho no Move nhu the nao
@@ -235,7 +237,7 @@ void Simon::updateMovement(float delta_Time)
 		this->_vy = 0.0f;
 		break;
 	case Jump:
-		this->_vy = this->_Vy_default;
+		this->_vy += this->_ay * delta_Time;
 		this->_High_Jumped += this->_vy * delta_Time;
 		this->_CanJum = false;
 
@@ -249,22 +251,28 @@ void Simon::updateMovement(float delta_Time)
 			this->_pos.x += delta_Time * this->_vx;
 		}
 
-		//da dat toi nguong --> delay. rot xuong
-		if (this->_High_Jumped >= this->_JumH_Max)
+		if (this->_vy <= 0)
 		{
-			this->_vy = 0.0f;
-			this->_timeDelayJumpCur += delta_Time;
-
-			if (this->_timeDelayJumpCur >= delayJump)
-			{
-				//het thoi gian delay. Roi xuong thoi!!!...............
-				this->_timeDelayJumpCur = 0.0f;
-				this->_moveMent = SimonMove::Free;
-			}
+			this->_moveMent = SimonMove::Free;
 		}
+
+		////da dat toi nguong --> delay. rot xuong
+		//if (this->_High_Jumped >= this->_JumH_Max)
+		//{
+		//	this->_vy = 0.0f;
+		//	this->_timeDelayJumpCur += delta_Time;
+
+		//	if (this->_timeDelayJumpCur >= delayJump)
+		//	{
+		//		//het thoi gian delay. Roi xuong thoi!!!...............
+		//		this->_timeDelayJumpCur = 0.0f;
+		//		this->_moveMent = SimonMove::Free;
+		//	}
+		//}
 		break;
 	case Free:
-		this->_vy = -this->_Vy_default * 2;
+		//this->_vy = -this->_Vy_default * 2;
+		this->_vy += this->_ay * delta_Time * 2;
 		this->_High_Jumped = 0;
 		this->_CanJum = false;
 
@@ -275,7 +283,7 @@ void Simon::updateMovement(float delta_Time)
 		if (this->_vx != 0)
 		{
 			//co nen giam toc do cua vx ko?
-			this->_pos.x += delta_Time * this->_vx * 2;
+			this->_pos.x += delta_Time * this->_vx;
 		}
 
 		break;
@@ -296,13 +304,22 @@ void Simon::move(float delta_Time)
 {
 	if ((this->_CanMoveL && this->_vx < 0) || (this->_CanMoveR && this->_vx > 0))
 	{
-		if (this->_pos.x >= 1250.5)
+		if (!this->_canFree)
 		{
-			int x = 10;
+			if (this->_pos.x >= 1250.5)
+			{
+				int x = 10;
+			}
+			this->_pos.x += this->_vx * delta_Time;
 		}
+		
 		//co the di qua ben trai va v
-		this->_pos.x += this->_vx * delta_Time;
-		this->_moveMent = SimonMove::Idle;
+		
+		if (this->_moveMent == SimonMove::Moves)
+		{
+			this->_moveMent = SimonMove::Idle;
+		}
+		
 	}
 	
 	this->_pos.y += this->_vy * delta_Time;
@@ -319,10 +336,9 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 
 	handleCollision(deltatime, _listObjectCollision);
 
-	
-	move(deltatime);
-
 	animated(deltatime);
+
+	move(deltatime);
 
 	this->_box = this->getBox();
 	
@@ -338,19 +354,14 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 			//dang o trang thai thu 3 -> quang weapon
 			if (ironRod->getStateRod() == Step3)
 			{
-				weaponCurr->Use(this->_pos, !this->_Left);
-
 				weaponCurr = WeaponFactory::getInstance()->createObj(int(_typeOfWeaponCurr));
-				if(this->_typeOfWeaponCurr == TypeWeapon::Dagger)
-				{
-					weaponCurr->Use(this->_pos, !this->_Left);
-					weaponCurr->_can_Use_Weapon = false;
-				}
-				else
-				{
-					weaponCurr->Use(this->_pos, this->_Left);
-					weaponCurr->_can_Use_Weapon = false;
-				}
+				
+				weaponCurr->Use(this->_pos, this->_Left);
+				weaponCurr->_isALive = true;
+				weaponCurr->_can_Use_Weapon = false;
+
+				this->_attacking = false;
+				ironRod->setStateRod(State_Rod::Step1);
 			}
 		}else
 		{
@@ -359,6 +370,11 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 			ironRod->_pos.y = this->_pos.y;
 		}
 	}
+
+	if (weaponCurr->_isALive)
+	{
+		weaponCurr->update(deltatime, _listObjectCollision);
+	}
 }
 
 void Simon::animated(float deltatime)
@@ -366,7 +382,7 @@ void Simon::animated(float deltatime)
 #pragma region Dang su dung vu khi
 
 	//Dang su dung roi
-	if (_attacking == 1)
+	if (_attacking)
 	{
 		switch (_moveMent)
 		{
@@ -400,39 +416,39 @@ void Simon::animated(float deltatime)
 		return;
 	}
 
-	if(_attacking == 2)
-	{
-		switch (_moveMent)
-		{
-		case None:
-			break;
-		case Moves:
-			this->_curFrame = 4 + ironRod->getStateRod();
-			break;
-		case Idle:
-			this->_curFrame = 4 + ironRod->getStateRod();
-			break;
-		case Sit:
-			this->_curFrame = 14 + ironRod->getStateRod();
-			break;
-		case OnStairUp:
-			this->_curFrame = 20 + ironRod->getStateRod();
-			break;
-		case OnStairDown:
-			this->_curFrame = 17 + ironRod->getStateRod();
-			break;
-		case Jump:
-			this->_curFrame = 4 + ironRod->getStateRod();
-			break;
-		case Free:
-			this->_curFrame = 4 + ironRod->getStateRod();
-			break;
-		default:
-			break;
-		}
-		this->_rectRS = this->updateRectRS(this->_width, this->_height);
-		return;
-	}
+	//if(_attacking == 2)
+	//{
+	//	switch (_moveMent)
+	//	{
+	//	case None:
+	//		break;
+	//	case Moves:
+	//		this->_curFrame = 4 + ironRod->getStateRod();
+	//		break;
+	//	case Idle:
+	//		this->_curFrame = 4 + ironRod->getStateRod();
+	//		break;
+	//	case Sit:
+	//		this->_curFrame = 14 + ironRod->getStateRod();
+	//		break;
+	//	case OnStairUp:
+	//		this->_curFrame = 20 + ironRod->getStateRod();
+	//		break;
+	//	case OnStairDown:
+	//		this->_curFrame = 17 + ironRod->getStateRod();
+	//		break;
+	//	case Jump:
+	//		this->_curFrame = 4 + ironRod->getStateRod();
+	//		break;
+	//	case Free:
+	//		this->_curFrame = 4 + ironRod->getStateRod();
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//	this->_rectRS = this->updateRectRS(this->_width, this->_height);
+	//	return;
+	//}
 
 #pragma endregion
 
@@ -684,6 +700,7 @@ void Simon::processInput()
 		if (this->_CanJum)
 		{
 			this->_moveMent = SimonMove::Jump;
+			this->_vy = this->_Vy_default;
 		}
 	}
 #pragma endregion
@@ -698,11 +715,8 @@ void Simon::processInput()
 				if (weaponCurr->_can_Use_Weapon)
 				{
 					this->_attacking = true;
+					weaponCurr->_isALive = false;
 				}
-				
-				
-				//weaponCurr->_High_Jumped = this->_High_Jumped;
-				//QuadTreeObject::getInstance()->addObjectToQuadTree(weapon);
 			}
 		}else
 		{
@@ -717,24 +731,24 @@ void Simon::processInput()
 #pragma endregion
 
 #pragma region Xu ly phim X + Up
-	if(Input::CreateInstance()->IsKeyDown(DIK_UP) && key == DIK_Z)
-	{
-		if (!this->_attacking && this->_moveMent != SimonMove::DownStair && this->_moveMent != SimonMove::UpStair)
-		{
-			this->_attacking = true;
-			Weapon* weapon = WeaponFactory::getInstance()->createObj(int(_typeOfWeaponCurr));
-			if(this->_typeOfWeaponCurr == TypeWeapon::Dagger)
-			{
-				weapon->Use(this->_pos, !this->_Left);
-			}
-			else
-			{
-				weapon->Use(this->_pos, this->_Left);
-			}
-			//weaponCurr->_High_Jumped = this->_High_Jumped;
-			//QuadTreeObject::getInstance()->addObjectToQuadTree(weapon);
-		}
-	}
+	//if(Input::CreateInstance()->IsKeyDown(DIK_UP) && key == DIK_Z)
+	//{
+	//	if (!this->_attacking && this->_moveMent != SimonMove::DownStair && this->_moveMent != SimonMove::UpStair)
+	//	{
+	//		this->_attacking = true;
+	//		this->weaponCurr = WeaponFactory::getInstance()->createObj(int(_typeOfWeaponCurr));
+	//		//if(this->_typeOfWeaponCurr == TypeWeapon::Dagger)
+	//		//{
+	//		//	this->weaponCurr->Use(this->_pos, !this->_Left);
+	//		//}
+	//		//else
+	//		//{
+	//		//	this->weaponCurr->Use(this->_pos, this->_Left);
+	//		//}
+	//		//weaponCurr->_High_Jumped = this->_High_Jumped;
+	//		//QuadTreeObject::getInstance()->addObjectToQuadTree(weapon);
+	//	}
+	//}
 #pragma endregion
 
 }
@@ -1013,6 +1027,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 													{
 														this->_canFree = true;
 														this->_moveMent = SimonMove::Free;
+														this->_vx = 0;
 													}else
 													{
 														this->_canFree = false;
@@ -1061,14 +1076,21 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 #pragma endregion
 
 	}
+}
 
-	//if (this->_canFree)
-	//{
-	//	if (this->_belowGround == 0)
-	//	{
-	//		this->_moveMent = SimonMove::Free;
-	//	}
-	//}
+void Simon::draw()
+{
+	ManageSprite::createInstance()->drawObject(this);
+
+	if (this->ironRod->_isALive)
+	{
+		ManageSprite::createInstance()->drawObject( this->ironRod );
+	}
+
+	if (this->weaponCurr->_isALive)
+	{
+		ManageSprite::createInstance()->drawObject( this->weaponCurr );
+	}
 }
 
 ////implement method collision

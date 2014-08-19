@@ -25,6 +25,7 @@ public:
 	RECT* updateRectRS(int width, int height);
 	void animated(float deltatime);
 	void processInput();
+	void draw();
 	
 	//xu ly collision
 	void handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision);

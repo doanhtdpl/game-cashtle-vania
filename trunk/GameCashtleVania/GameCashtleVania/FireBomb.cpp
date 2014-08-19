@@ -1,5 +1,8 @@
 #include "FireBomb.h"
 #include "Simon.h"
+#include "FireBomb2.h"
+#include "QuadTreeObject.h"
+#include "WeaponFactory.h"
 
 FireBomb::FireBomb()
 {
@@ -35,5 +38,11 @@ void FireBomb::move(float delta_Time)
 
 void FireBomb::handleCollisionWithGround(HideObject* hideObj)
 {
-	//this->_isALive = false;
+	this->completeAttack();
+	Weapon* fireBomb2 =  WeaponFactory::getInstance()->createObj((int)TypeWeapon::FireBomb2);
+	fireBomb2->_isALive = true;
+	fireBomb2->_pos = this->_pos;
+	fireBomb2->_rect = this->getRect();
+	fireBomb2->_rectRS = fireBomb2->updateRectRS(fireBomb2->_width, fireBomb2->_height);
+	QuadTreeObject::getInstance()->addObjectToQuadTree(fireBomb2);
 }

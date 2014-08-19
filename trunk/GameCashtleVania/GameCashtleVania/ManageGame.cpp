@@ -46,12 +46,7 @@ void ManageGame::gameDraw()
 		quadTreeBG->draw(screen);
 		quadTreeObj->draw(screen);
 
-		ManageSprite::createInstance()->drawObject(simon);
-
-		if (Simon::getInstance()->ironRod->_isALive)
-		{
-			ManageSprite::createInstance()->drawObject( simon->ironRod );
-		}
+		simon->draw();
 	}else
 	{
 		recentlyChangeScene = false;

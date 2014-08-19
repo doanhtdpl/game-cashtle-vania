@@ -99,6 +99,11 @@ void IronRod::ChangeState()
 	}
 }
 
+void IronRod::setStateRod(State_Rod state_rod)
+{
+	this->_stateRod = state_rod;
+}
+
 void IronRod::ChangeTypeRod()
 {
 	//thay doi chieu dai cua roi
@@ -162,13 +167,14 @@ Box IronRod::getBox()
 
 void IronRod::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision)
 {
-	if (this->_isALive)
+	timeChangeState -= delta_Time;
+	if (timeChangeState <= 0)
 	{
-		timeChangeState -= delta_Time;
-		if (timeChangeState <= 0)
-		{
-			ChangeState();
-		}
+		ChangeState();
+	}
+
+	if (this->_isALive)
+	{	
 		animated(delta_Time);
 		this->_rectRS = this->updateRectRS(this->_width, this->_height);
 		

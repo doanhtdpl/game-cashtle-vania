@@ -3,6 +3,7 @@
 #include "Boomerang.h"
 #include "Dagger.h"
 #include "FireBomb.h"
+#include "FireBomb2.h"
 
 WeaponFactory* WeaponFactory::_instance = NULL;
 
@@ -40,6 +41,8 @@ Weapon* WeaponFactory::createObj(int ID)
 	case TypeWeapon::FireBomb:
 		weapon = new FireBomb(arr);
 		break;
+	case TypeWeapon::FireBomb2:
+		weapon = new FireBomb2(arr);
 	default:
 		break;
 	}
