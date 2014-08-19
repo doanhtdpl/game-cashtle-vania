@@ -27,7 +27,7 @@ enum TypeItem
 #include "DynamicObject.h"
 #include "IAnimatedSprite.h"
 
-#define DisBound 20
+#define DisBound 16
 //Va cham voi ground(nen) va va cham voi simon - anh huong toi simon.
 class Item : public DynamicObject, public IAnimatedSprite
 {

@@ -29,6 +29,12 @@ void Dagger::move(float delta_Time)
 
 }
 
+void Dagger::Use(D3DXVECTOR2 posSimon, bool Left)
+{
+	this->_isALive = true;
+	this->_pos = posSimon;
+	this->_Left = !Left;
+}
 
 void Dagger::handleCollisionWithGround(HideObject* hideObj)
 {

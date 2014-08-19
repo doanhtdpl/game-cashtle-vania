@@ -30,6 +30,7 @@ enum State_Rod
 class IronRod : public Weapon
 {
 public:
+	void setStateRod(State_Rod state_rod);
 	Type_Rod getTypeRod(); // tra ve loai rod dang duoc su dung
 	State_Rod getStateRod(); // tra ve trang thai hien tai cua rod
 	void ChangeState();//thay doi trang thai 

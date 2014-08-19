@@ -28,25 +28,26 @@ void Camera::update(float x, float deltaTime)
 	float distance = x_target - _pos.x;
 	if (!stopScrollScreen)
 	{
-		if (distance > 0)
-		{//di chuyen cau thang qua ben phai
-			if (distance > speedX * deltaTime)
-			{
-				_pos.x += speedX * deltaTime;
-			}else
-			{
-				_pos.x = x_target;
-			}
-		}else
-		{//di chuyen cau thang qua ben trai
-			if (abs(distance) > abs(speedX) * deltaTime)
-			{
-				_pos.x += -speedX * deltaTime;
-			}else
-			{
-				_pos.x = x_target;
-			}
-		}
+		//if (distance > 0)
+		//{//di chuyen cau thang qua ben phai
+		//	if (distance > speedX * deltaTime)
+		//	{
+		//		_pos.x += speedX * deltaTime;
+		//	}else
+		//	{
+		//		_pos.x = x_target;
+		//	}
+		//}else
+		//{//di chuyen cau thang qua ben trai
+		//	if (abs(distance) > abs(speedX) * deltaTime)
+		//	{
+		//		_pos.x += -speedX * deltaTime;
+		//	}else
+		//	{
+		//		_pos.x = x_target;
+		//	}
+		//}
+		_pos.x = x_target;
 		
 		//kiem tra pos khi vuot qua bound.
 		//pos la vi tri top left

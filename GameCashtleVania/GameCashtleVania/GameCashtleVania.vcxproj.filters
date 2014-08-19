@@ -336,6 +336,9 @@
     <ClCompile Include="FireBomb.cpp">
       <Filter>GameObject\DynamicObject\Weapon\FireBomb</Filter>
     </ClCompile>
+    <ClCompile Include="FireBomb2.cpp">
+      <Filter>GameObject\DynamicObject\Weapon\FireBomb2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -517,6 +520,9 @@
     </ClInclude>
     <ClInclude Include="FireBomb.h">
       <Filter>GameObject\DynamicObject\Weapon\FireBomb</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBomb2.h">
+      <Filter>GameObject\DynamicObject\Weapon\FireBomb2</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
