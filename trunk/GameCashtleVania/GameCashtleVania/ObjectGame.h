@@ -32,7 +32,7 @@ public:
 	virtual void update(float deltaTime);
 	virtual void update(float deltaTime, std::vector<ObjectGame*> listObjectCollision);
 	virtual Box getBox();
-	RECT getRect();
+	virtual RECT getRect();
 	~ObjectGame(void);
 };
 

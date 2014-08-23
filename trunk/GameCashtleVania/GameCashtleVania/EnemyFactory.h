@@ -7,10 +7,12 @@
 class EnemyFactory : public ObjectFactory
 {
 public:
-	EnemyFactory* getInstance();
+	static EnemyFactory* getInstance();
 	EnemyFactory();
 	Enemy* createObj(int ID);
+	Enemy* createObj(std::vector<std::string> arr);
 	std::vector<std::string> getInfoByID(int ID);
+
 protected:
 private:
 	static EnemyFactory* _instance;

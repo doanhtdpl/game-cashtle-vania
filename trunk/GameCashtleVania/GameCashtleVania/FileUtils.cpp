@@ -6,6 +6,7 @@
 #include "LightFactory.h"
 #include "WeaponFactory.h"
 #include "ItemFactory.h"
+#include "EnemyFactory.h"
 
 using namespace std;
 
@@ -77,6 +78,7 @@ void FileUtils::loadCSV()
 	this->readFileCSV(fileLight, LightFactory::getInstance());
     this->readFileCSV(fileWeapon, WeaponFactory::getInstance());
     this->readFileCSV(fileItem, ItemFactory::getInstance());
+	this->readFileCSV(fileEnemy, EnemyFactory::getInstance());
 }
 
 void FileUtils::readFileMap()

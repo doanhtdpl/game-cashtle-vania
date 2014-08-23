@@ -26,9 +26,10 @@ ItemManager::ItemManager()
 	this->_listItemNormal.push_back(TypeItem::FireBomb);
 	this->_listItemNormal.push_back(TypeItem::LargeHeart);
 	this->_listItemNormal.push_back(TypeItem::MoneyBag);
+	this->_listItemNormal.push_back(TypeItem::MoneyBag);
+	this->_listItemNormal.push_back(TypeItem::MoneyBag);
+	this->_listItemNormal.push_back(TypeItem::MoneyBag);
 	this->_listItemNormal.push_back(TypeItem::PorkChop);
-	this->_listItemNormal.push_back(TypeItem::SmallHeart);
-	this->_listItemNormal.push_back(TypeItem::SmallHeart);
 	this->_listItemNormal.push_back(TypeItem::SmallHeart);
 	this->_listItemNormal.push_back(TypeItem::SmallHeart);
 	this->_listItemNormal.push_back(TypeItem::SmallHeart);
@@ -83,7 +84,7 @@ Item* ItemManager::randomItem()
 		listItem = _listItemNormal;
 	}else
 	{
-		listItem = _listItemNormal;
+		listItem = this->_listItemContainRod;
 	}
 
 	//lay ngau nhien nhung item trong list

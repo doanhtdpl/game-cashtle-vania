@@ -2,6 +2,8 @@
 #include "TagClassName.h"
 #include "Simon.h"
 #include "HideObject.h"
+#include <stdlib.h>
+#include <time.h> 
 
 Item::Item()
 {
@@ -10,6 +12,8 @@ Item::Item()
 
 Item::Item(std::vector<std::string> arr)
 {
+	std::srand(time(0));
+
 	this->_isALive = true;
 	this->_ID = atoi(arr.at(0).c_str());
 	this->_ID_Image = atoi(arr.at(1).c_str());
@@ -24,6 +28,15 @@ Item::Item(std::vector<std::string> arr)
 	this->_vy = -this->_Vy_default;
 	this->disBound = DisBound;
 	this->_typeItem = (TypeItem)this->_ID;
+
+	if (this->_typeItem == TypeItem::MoneyBag)
+	{
+		//co 3 loai money bag.
+		this->_curFrame = (rand() % 3);
+		this->_typeItem = (TypeItem)(this->_ID * this->_curFrame);
+		this->_isAnimatedSprite = true;
+		this->_rectRS = this->updateRectRS(this->_width, this->_height);	
+	}
 
 	this->_rect = this->getRect();
 
@@ -96,18 +109,6 @@ void Item::handleCollision(float deltatime, std::vector<ObjectGame*> _listObject
 				}
 			}
 		}
-
-		////neu object la simon thi effect
-		//if (obj->className() == TagClassName::getInstance()->tagSimon)
-		//{
-		//	timeCollision = this->collision((StaticObject*)obj, normalX, normalY, deltatime);
-		//	if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
-		//	{
-		//		this->_isALive = false;
-		//		effectSimon();
-		//	}
-
-		//}
 	}
 }
 
@@ -146,4 +147,48 @@ void Item::appear(D3DXVECTOR2 posAppear)
 void Item::effectSimon()
 {
 	//thay doi vai gia tri cua simon
+	switch (this->_typeItem)
+	{
+	case TypeItem::Axe:
+		Simon::getInstance()->_typeOfWeaponCurr = TypeWeapon::Axe;
+		break;
+	case TypeItem::Boomerang:
+		Simon::getInstance()->_typeOfWeaponCurr = TypeWeapon::Boomerang;
+		break;
+	case TypeItem::Dagger:
+		Simon::getInstance()->_typeOfWeaponCurr = TypeWeapon::Dagger;
+		break;
+	case TypeItem::Watch:
+		Simon::getInstance()->_typeOfWeaponCurr = TypeWeapon::Watch;
+		break;
+	case TypeItem::FireBomb:
+		Simon::getInstance()->_typeOfWeaponCurr = TypeWeapon::FireBomb;
+		break;
+	case TypeItem::MorningStar:
+		Simon::getInstance()->ironRod->ChangeTypeRod();
+		break;
+	case TypeItem::SmallHeart:
+		Simon::getInstance()->addHeart(1);
+		break;
+	case TypeItem::LargeHeart:
+		Simon::getInstance()->addHeart(5);
+		break;
+	case TypeItem::MoneyBag1:
+		Simon::getInstance()->addCoin(100);
+		break;
+	case TypeItem::MoneyBag2:
+		Simon::getInstance()->addCoin(400);
+		break;
+	case TypeItem::MoneyBag3:
+		Simon::getInstance()->addCoin(700);
+		break;
+	case TypeItem::PorkChop:
+		//add mau
+		break;
+	case TypeItem::Cross:
+		//huy diet
+		break;
+	default:
+		break;
+	}
 }

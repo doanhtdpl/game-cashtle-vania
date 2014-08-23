@@ -92,6 +92,13 @@ std::vector<ObjectGame*> Map::getListObjectinScreen(std::vector<int> listID)
 					if (ID > 600 && ID < 700)
 					{
 						obj = LightFactory::getInstance()->createObj(arr);
+					}else
+					{
+						if (ID > 200 && ID < 300)
+						{
+							obj = EnemyFactory::getInstance()->createObj(arr);
+							//xoa no khoi quad tree va add lai voi rect la vung bound
+						}
 					}
 				}
 
@@ -116,10 +123,13 @@ int Map::getIDMaxInList()
 {
 	int max = 0;
 	//lay ID lon nhat hien tai co trong hash map
-	std::hash_map<int, ObjectGame*>::iterator it;
-	it = this->listObjectInMap.begin();
+	/*std::hash_map<int, ObjectGame*>::iterator it;
+	it = this->listObjectInMap.begin();*/
+
+	std::hash_map<int, std::vector<std::string>>::iterator it;
+	it = this->listInfoOfObject.begin();
 	
-	while(it != this->listObjectInMap.end())
+	while(it != this->listInfoOfObject.end())
 	{
 		int ID = it->first;
 		if (ID > max)

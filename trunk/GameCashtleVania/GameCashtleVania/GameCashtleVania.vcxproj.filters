@@ -31,9 +31,6 @@
     <Filter Include="Map">
       <UniqueIdentifier>{5528ad25-69b2-46a0-bf78-72d62340c32c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Map\Level">
-      <UniqueIdentifier>{7d6464ad-2eb1-4009-98f8-c42edaea887b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\DynamicObject\Weapon">
       <UniqueIdentifier>{cf44e945-5cdd-4943-a50d-acd21455623f}</UniqueIdentifier>
     </Filter>
@@ -154,6 +151,9 @@
     <Filter Include="GameObject\DynamicObject\Weapon\FireBomb2">
       <UniqueIdentifier>{7ca27d54-0bba-41dc-bca7-9ebe42cbaccc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map\MapLoader">
+      <UniqueIdentifier>{7d6464ad-2eb1-4009-98f8-c42edaea887b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -211,7 +211,7 @@
       <Filter>GameObject\StaticObject</Filter>
     </ClCompile>
     <ClCompile Include="MapLoader.cpp">
-      <Filter>Map\Level</Filter>
+      <Filter>Map\MapLoader</Filter>
     </ClCompile>
     <ClCompile Include="IronRod.cpp">
       <Filter>GameObject\DynamicObject\Weapon\IronRod</Filter>
@@ -396,7 +396,7 @@
       <Filter>GameObject\StaticObject</Filter>
     </ClInclude>
     <ClInclude Include="MapLoader.h">
-      <Filter>Map\Level</Filter>
+      <Filter>Map\MapLoader</Filter>
     </ClInclude>
     <ClInclude Include="IronRod.h">
       <Filter>GameObject\DynamicObject\Weapon\IronRod</Filter>

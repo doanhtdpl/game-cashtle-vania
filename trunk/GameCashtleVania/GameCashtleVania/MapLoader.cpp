@@ -18,6 +18,8 @@ InfoScene::InfoScene(std::vector<std::string> arr)
 	this->bGQuadTree = arr.at(6);
 	this->mapPath = arr.at(7);
 	this->mQuadTree = arr.at(8);
+	this->_posSimon.x = atoi(arr.at(9).c_str());
+	this->_posSimon.y = atoi(arr.at(10).c_str());
 	this->_bound = RECT();
 }
 

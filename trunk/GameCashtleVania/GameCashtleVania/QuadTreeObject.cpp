@@ -233,59 +233,33 @@ void QuadTreeObject::upDateQuadTree(RECT screen)
 		
 		}else
 		{
-			//kiem tra no nam ngoai man hinh thi xoa khoi list Object
-			//RECT screen = ManageGame::getInstance()->screen;
-			if (!QNode::isBound(screen, obj->getRect()))
+			//neu van thuoc trong man hinh ma la enemy thi kiem tra no con va cham voi node chua no ko
+			if (obj->className() == TagClassName::getInstance()->tagEnemy)
 			{
-				//object nam ngoai man hinh
-				if (obj->className() == TagClassName::getInstance()->tagEnemy || 
-						obj->className() == TagClassName::getInstance()->tagItem || 
-							obj->className() == TagClassName::getInstance()->tagWeapon)
+				//tim nhung node co chua no
+				QNode* node = NULL;
+				//duyet tat ca node. 
+				for (std::hash_map< int, QNode*>::iterator itNode = this->listQNode.begin(); itNode != listQNode.end();)
 				{
-					//xoa luon
-					//xoa object ra khoi quadtree
-					this->eraseObject(it->first);
-
-					//xoa khoi listObj
-					it = this->mapObject.listObjectInMap.erase(it);
-					//xoa IDHashMap cua Object ra khoi Quadtree
-				}else
-				{
-					it ++;
-				}
-			}else
-			{
-				//neu van thuoc trong man hinh ma la enemy thi kiem tra no con va cham voi node chua no ko
-				if (obj->className() == TagClassName::getInstance()->tagEnemy)
-				{
-					//tim nhung node co chua no
-					QNode* node = NULL;
-					//duyet tat ca node. 
-					for (std::hash_map< int, QNode*>::iterator it = this->listQNode.begin(); it != listQNode.end();)
+					node = itNode->second;
+					int ID_HashMapOfObj = it->first;
+					if (node->findIDObj(it->first))
 					{
-						node = it->second;
-						if (node->findIDObj(it->first))
+						//neu node co chua enemy thi kiem tra enemy co con nam trong do ko? neu ko thi xoa va add vao lai
+						if (!QNode::isBound(node->rect, obj->getRect()))
 						{
-							//neu node co chua enemy thi kiem tra enemy co con nam trong do ko? neu ko thi xoa va add vao lai
-							if (!QNode::isBound(node->rect, obj->_rect))
-							{
-								//neu node ko con chua obj nua
-								this->eraseObject(it->first);
-								
-								//sau do add vao lai node root
-								this->addObjectToNode(this->root, obj, it->first);
-
-							}else
-							{
-								it++;
-							}
+							//neu node ko con chua obj nua
+							this->eraseObject(it->first);
+							
+							//sau do add vao lai node root
+							this->addObjectToNode(this->root, obj, it->first);
 						}
 					}
-				}else
-				{
-					it ++;
+					itNode++;
 				}
 			}
+
+			it ++;
 		}
 
 	}
@@ -371,5 +345,12 @@ void QuadTreeObject::addObjectToNode(QNode* Node, ObjectGame* object, int IDObjI
 void QuadTreeObject::clearDataQuadtree()
 {
 	QuadTree::clearDataQuadtree();
+
+	for (hash_map<int, ObjectGame*>::iterator it = this->mapObject.listObjectInMap.begin(); it != this->mapObject.listObjectInMap.end(); )
+	{
+		this->eraseObject(it->first);
+		it++;
+	}
+
 	this->mapObject.listObjectInMap.clear();
 }

@@ -1,4 +1,14 @@
 #include "EnemyFactory.h"
+#include "Zombie.h"
+#include "BlackKnight.h"
+#include "BlackLeopard.h"
+#include "DragonSkullCannon.h"
+#include "FishMan.h"
+#include "AxeMan.h"
+#include "Ghost.h"
+#include "VampireBat.h"
+#include "Medusa.h"
+#include "WhiteSkeleton.h"
 
 EnemyFactory* EnemyFactory::_instance = NULL;
 
@@ -20,33 +30,60 @@ Enemy* EnemyFactory::createObj(int ID)
 {
 	std::vector<std::string> arr = getInfoByID(ID);
 	//int ID = atoi(arr.at(0).c_str());
-	switch (ID)
+	Enemy* enemy = NULL;
+	TypeEnemy _typeEnemy = TypeEnemy(ID);
+	switch (_typeEnemy)
 	{
-	case 201:
+	case TypeEnemy::ZOMBIE:
+		enemy = new Zombie(arr);
 		break;
-	case 202:
+	case TypeEnemy::AXE_MAN:
+		enemy = new AxeMan(arr);
 		break;
-	case 203:
+	case TypeEnemy::BLACK_KNIGHT:
+		enemy = new BlackKnight(arr);
 		break;
-	case 204:
+	case TypeEnemy::BLACK_LEOPARD:
+		enemy = new BlackLeopard(arr);
 		break;
-	case 205:
+	case TypeEnemy::DRAGON_SKULL_CANNON:
+		enemy = new DragonSkullCannon(arr);
 		break;
-	case 206:
+	case TypeEnemy::FISH_MAN:
+		enemy = new FishMan(arr);
 		break;
-	case 207:
+	case TypeEnemy::GHOST:
+		enemy = new Ghost(arr);
 		break;
-	case 208:
+	case TypeEnemy::MEDUSA:
+		enemy = new Medusa(arr);
 		break;
-	case 209:
+	case TypeEnemy::VAMPIRE_BAT:
+		enemy = new VampireBat(arr);
 		break;
-	case 210:
+	case TypeEnemy::WHITE_SKELETON:
+		enemy = new WhiteSkeleton(arr);
 		break;
 	default:
 		break;
 	}
 
-	return NULL;
+	return enemy;
+}
+
+Enemy* EnemyFactory::createObj(std::vector<std::string> arr)
+{
+	int ID = atoi(arr.at(1).c_str());
+
+	//lay thong tin tu info
+	Enemy* obj = createObj(ID);
+
+	//them vao thong tin pos
+	int x = atoi(arr.at(2).c_str());
+	int y = atoi(arr.at(3).c_str());
+	obj->_pos.x = x;
+	obj->_pos.y = y;
+	return obj;
 }
 
 std::vector<std::string> EnemyFactory::getInfoByID(int _ID)

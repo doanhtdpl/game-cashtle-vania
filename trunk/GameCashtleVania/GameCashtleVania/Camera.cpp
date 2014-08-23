@@ -56,9 +56,9 @@ void Camera::update(float x, float deltaTime)
 			this->_pos.x = this->_boundScene.left;
 		}else
 		{
-			if (this->_pos.x > this->_boundScene.right - Screen_Height)
+			if (this->_pos.x > this->_boundScene.right - Screen_Width)
 			{
-				this->_pos.x = this->_boundScene.right - Screen_Height;
+				this->_pos.x = this->_boundScene.right - Screen_Width;
 			}
 		}
 	}

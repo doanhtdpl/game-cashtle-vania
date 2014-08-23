@@ -7,7 +7,7 @@ Zombie::Zombie()
 
 Zombie::Zombie(std::vector<std::string> arr) : Enemy(arr)
 {
-
+	this->_moveMent = EnemyMovement::Moves;
 }
 
 void Zombie::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)
