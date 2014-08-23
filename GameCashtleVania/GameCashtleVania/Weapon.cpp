@@ -88,7 +88,12 @@ void Weapon::handleCollision(float delta_Time, std::vector<ObjectGame*> _listObj
 			timeCollision = this->collision((DynamicObject*)obj, normalX, normalY, delta_Time);
 			if((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
 			{
-				handleCollisionWithEnemy(enemy);
+				enemy->isAttack();
+				if (this->_typeOfWeapon == TypeWeapon::Dagger)
+				{
+					this->_isALive = false;
+				}
+				//handleCollisionWithEnemy(enemy);
 			}
 		}
 		else if(obj->className() == TagClassName::getInstance()->tagHideObject)

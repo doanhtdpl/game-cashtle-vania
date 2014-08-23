@@ -49,7 +49,7 @@ IronRod::IronRod(std::vector<std::string> arr)
 	this->_totalFrames = atoi(arr.at(12).c_str());
 
 	this->realWidth = this->_realWidthType12;//loai ra so 1 va so 2// state 3
-	this->_typeRod = Type_Rod::Rod3;
+	this->_typeRod = Type_Rod::Rod1;
 	this->_stateRod = State_Rod::Step1;
 	
 	//demo
@@ -203,6 +203,17 @@ void IronRod::update(float delta_Time, std::vector<ObjectGame*> _listObjectColli
 						light->_isALive = false;
 						item = light->effectWhenCollisionRod();
 						QuadTreeObject::getInstance()->addObjectToQuadTree(item);
+					}
+				}else
+				{
+					if (obj->className() == TagClassName::getInstance()->tagEnemy)
+					{
+						Enemy* enemy = (Enemy*)obj;
+						timeCollision = this->collision((DynamicObject*)obj, normalX, normalY, delta_Time);
+						if((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
+						{
+							enemy->isAttack();
+						}
 					}
 				}
 				it++;

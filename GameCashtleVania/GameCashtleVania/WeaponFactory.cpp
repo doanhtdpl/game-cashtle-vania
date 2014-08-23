@@ -43,6 +43,10 @@ Weapon* WeaponFactory::createObj(int ID)
 		break;
 	case TypeWeapon::FireBomb2:
 		weapon = new FireBomb2(arr);
+		break;
+	case TypeWeapon::Watch:
+		//
+		break;
 	default:
 		break;
 	}

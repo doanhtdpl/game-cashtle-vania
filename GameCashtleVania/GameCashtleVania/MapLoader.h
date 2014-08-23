@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <d3d9.h>
+#include <d3dx9.h>
 //#include <d3dx9.h>
 //Luu thong tin cua tung scene trong cac level.
 //thong tin nay duoc doc len tu file
@@ -17,6 +18,7 @@ public:
 	int iD_Scene;//ID cua scene. Vi du. level1 scene 1: ID = 1
 	int iD_Scene_Restart;//lay ID cua level duoc restart khi dang choi level nay
 	int iD_Scene_Next;//lay ID cua scene tiep theo
+	D3DXVECTOR2 _posSimon;
 	bool finalScene;//scene cuoi cung cua level do
 	RECT _bound;
 	std::string bGPath;//duong dan toi background

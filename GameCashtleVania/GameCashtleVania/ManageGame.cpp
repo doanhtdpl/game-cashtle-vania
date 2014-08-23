@@ -8,7 +8,7 @@
 #include "TagClassName.h"
 #include "Itween.h"
 
-int ManageGame::_count_LifeMario = 4;
+
 int ManageGame::_score = 0;
 bool ManageGame::isChangeScene = false;
 
@@ -38,7 +38,6 @@ ManageGame::~ManageGame(void)
 
 void ManageGame::gameDraw()
 {
-	//_mapBG->drawBackGround();
 
 	//chuyen scene vua xong thi khong ve
 	if (!recentlyChangeScene)
@@ -51,18 +50,6 @@ void ManageGame::gameDraw()
 	{
 		recentlyChangeScene = false;
 	}
-	//std::hash_map<int, ObjectGame*>::iterator it = _map->listObjectInMap.begin();
-	//while (it != _map->listObjectInMap.end())
-	//{
-	//	//draw
-	//	ObjectGame* obj = it->second;
-	//	if (obj->className() != TagClassName::getInstance()->tagHideObject)
-	//	{
-	//		ManageSprite::createInstance()->drawObject(obj);
-	//	}
-	//	
-	//	++it;
-	//}
 }
 
 void ManageGame::processInput()
@@ -83,7 +70,9 @@ void ManageGame::gameUpdate(float deltaTime)
 	while(it != arr.end())
 	{
 		obj = *it++;
-		if (obj->className() == TagClassName::getInstance()->tagItem || obj->className() == TagClassName::getInstance()->tagWeapon)
+		if (obj->className() == TagClassName::getInstance()->tagItem 
+			|| obj->className() == TagClassName::getInstance()->tagWeapon
+				|| obj->className() == TagClassName::getInstance()->tagEnemy)
 		{
 			DynamicObject* dynamicObject = (DynamicObject*)obj;
 			obj->update(deltaTime, arr);
@@ -92,8 +81,6 @@ void ManageGame::gameUpdate(float deltaTime)
 			obj->update(deltaTime);
 		}
 	}
-
-	
 
 	//khong co trang thai change scene
 	if (!isChangeScene)
@@ -162,10 +149,10 @@ void ManageGame::nextScene()
 
 		//xet lai bound cho camera
 		ManageSprite::createInstance()->_camera->setBound(infoScene->getBound());
-		
+		simon->_boundScene = infoScene->getBound();
 
 		quadTreeObj->upDateQuadTree(this->screen);
-		simon->_pos = D3DXVECTOR2(60, 64);
+		simon->_pos = infoScene->_posSimon;
 		//quadTreeObj->addObjectToQuadTree(simon);
 		ManageSprite::createInstance()->_camera->stopScrollScreen = false;
 		this->recentlyChangeScene = true;
@@ -203,7 +190,7 @@ void ManageGame::gameInit()
 	quadTreeObj = QuadTreeObject::getInstance();
 	
 	level = 1;
-	scene = 2;
+	scene = 3;
 	InfoScene* infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
 	//dua thong tin file cho quadtree
 
@@ -221,6 +208,8 @@ void ManageGame::gameInit()
 
 	ManageSprite::createInstance()->_camera->setBound(infoScene->getBound());
 	screen = ManageSprite::createInstance()->_camera->getScreen();
+	simon->_boundScene = infoScene->getBound();
+	simon->_pos = infoScene->_posSimon;
 
 	quadTreeObj->upDateQuadTree(screen);
 }

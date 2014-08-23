@@ -26,6 +26,11 @@ public:
 	void animated(float deltatime);
 	void processInput();
 	void draw();
+	Box getBox();
+
+	//add Heart
+	void addHeart(int numberHeart);
+	void addCoin(int coin);
 	
 	//xu ly collision
 	void handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision);
@@ -56,8 +61,18 @@ public:
 
 	//va cham voi enemy
 	bool _collisionEnemy;
+	float _timeDelayColEnemy;
+	float Time_Delay_ColEnemy;
 
 	bool _attacking;//dang dung item or dung roi.
+
+	//bound scene
+	RECT _boundScene;
+
+	//item
+	int count_Heart;
+	int HP;
+	int coin;
 protected:
 	float HeightDefault;
 	float HeightSit;

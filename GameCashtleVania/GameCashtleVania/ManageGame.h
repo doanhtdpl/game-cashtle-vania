@@ -21,7 +21,6 @@ private:
 	void nextLevel();
 	void changeScene(float deltaTime);
 public:
-	static int _count_LifeMario;
 	static int _score;
 	
 	QuadTreeBackground* quadTreeBG;

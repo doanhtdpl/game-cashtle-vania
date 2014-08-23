@@ -16,7 +16,10 @@ enum TypeItem
 	FireBomb = 313,
 	Boomerang = 314,
 	Axe = 315,
-	Cross = 316
+	Cross = 316,
+	MoneyBag1 = 3040,
+	MoneyBag2 = 3041,
+	MoneyBag3 = 3042
 };
 
 #endif // !__TYPE__ITEM__ENUM__
