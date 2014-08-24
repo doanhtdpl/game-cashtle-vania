@@ -49,6 +49,7 @@ public:
 	bool _prepareDownStairRight;
 
 	//co the roi hay ko
+	float distanceFree;
 	bool _canFree;
 	int _belowGround;
 
