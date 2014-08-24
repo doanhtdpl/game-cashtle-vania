@@ -8,6 +8,7 @@
 #include "ManageGame.h"
 #include "WeaponFactory.h"
 #include "Item.h"
+#include "ManageAudio.h"
 
 Simon* Simon::_instance = NULL;
 
@@ -735,6 +736,7 @@ void Simon::processInput()
 					//
 					if (count_Heart > 0)
 					{
+						ManageAudio::getInstance()->playSound(TypeAudio::Hit);
 						this->_attacking = true;
 						weaponCurr->_isALive = false;
 						count_Heart --;
@@ -747,6 +749,7 @@ void Simon::processInput()
 			//chua su dung roi
 			if (!this->_attacking && this->_moveMent != SimonMove::DownStair && this->_moveMent != SimonMove::UpStair && !this->_collisionEnemy)
 			{
+				ManageAudio::getInstance()->playSound(TypeAudio::Hit);
 				this->_attacking = true;
 				IronRod::getInstance()->Use(this->_pos, this->_Left);
 			}

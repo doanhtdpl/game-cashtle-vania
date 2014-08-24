@@ -8,7 +8,7 @@ class AxeMan : public Enemy
 public:
 	AxeMan();
 	AxeMan(std::vector<std::string> arr);
-	void handleCollisionWithHideObject(float deltatime, HideObject* hideObj);
+	void handleCollisionWithFreeObject(float deltatime, HideObject* hideObj);
 protected:
 private:
 };

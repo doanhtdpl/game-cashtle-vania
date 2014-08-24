@@ -37,6 +37,8 @@ enum class TypeEnemy
 #include "IAnimatedSprite.h"
 #include "HideObject.h"
 
+#define PI 3.14159265358979323846
+
 class Enemy : public DynamicObject,public IAnimatedSprite
 {
 public:
@@ -52,6 +54,7 @@ public:
 	
 	//implement lai ham get rect cho tung enemy. Day se la vung di chuyen cua enemy.
 	virtual RECT getRect();
+	D3DXVECTOR2 posDefault;//vi tri xuat hien dau tien cua enemy
 
 	//bi tan cong
 	void isAttack();
@@ -63,7 +66,7 @@ protected:
 	bool _canFree;
 	float _hp;
 	RECT _bound;//vung di chuyen cua enemy
-	virtual void handleCollisionWithHideObject(float deltatime, HideObject* hideObj);
+	virtual void handleCollisionWithFreeObject(float deltatime, HideObject* hideObj);
 	//virtual void handleColWithGround(float deltatime, HideObject* hideObj);
 private:
 };

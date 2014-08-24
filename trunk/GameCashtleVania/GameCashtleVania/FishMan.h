@@ -9,7 +9,7 @@ class FishMan : public Enemy
 public:
 	FishMan();
 	FishMan(std::vector<std::string> arr);
-	void handleCollisionWithHideObject(float deltatime, HideObject* hideObj);
+	void handleCollisionWithFreeObject(float deltatime, HideObject* hideObj);
 protected:
 private:
 };

@@ -42,7 +42,7 @@ void BlackLeopard::animated(float deltaTime)
 	}
 }
 
-void BlackLeopard::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)
+void BlackLeopard::handleCollisionWithFreeObject(float deltatime, HideObject* hideObj)
 {
 	//chi va cham voi doi tuong Free
 	if (this->_moveMent == EnemyMovement::Moves)
