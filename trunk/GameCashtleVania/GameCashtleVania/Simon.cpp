@@ -947,7 +947,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 			timeCollision = this->collision((StaticObject*)obj, normalX, normalY, deltatime);
 		
 #pragma region HideObject = Ground
-			if (hideObj->getTypeHideObject() == TypeHideObect::Ground && !this->_canFree)
+			if ((hideObj->getTypeHideObject() == TypeHideObect::Ground || hideObj->getTypeHideObject() == TypeHideObect::GroundVertical) && !this->_canFree)
 			{
 				if (timeCollision == 2.0f)
 				{
@@ -991,7 +991,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 						{
 							if (this->_moveMent == SimonMove::Jump || this->_moveMent == SimonMove::Free)
 							{
-								if (hideObj->_height > 64)
+								if (hideObj->getTypeHideObject() == TypeHideObect::GroundVertical)
 								{
 									this->_moveMent = SimonMove::Free;
 									this->_pos.x += normalX;
@@ -1078,7 +1078,14 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 					//obj dang nhay
 					if (normalY == -1)
 					{
-						//ko lam gi ca
+						if (hideObj->getTypeHideObject() == TypeHideObect::GroundVertical)
+						{
+							this->_moveMent = SimonMove::Free;
+							this->_pos.x += normalX;
+							this->_pos.y += normalY;
+							this->_vx = 0;
+							this->_vy = 0;
+						}
 					}
 				}
 			}
@@ -1244,25 +1251,42 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 											{
 												if ((this->_moveMent == SimonMove::Idle || this->_moveMent == SimonMove::Moves) && !this->_onStair)
 												{
-													//vi tri tuong doi khong cach nhau qua 5 pixel
-													if ( abs(this->_pos.x - hideObj->_pos.x) < 5 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 5)
+													//
+													if (this->_Left)
+													{
+														if ( abs(this->getRect().left - hideObj->_pos.x) < 5 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
+														{
+															this->_canFree = true;
+															this->_moveMent = SimonMove::Free;
+															this->_vx = 0;
+														}else
+														{
+															this->_canFree = false;
+														}
+													}else
+													{
+														if ( abs(this->getRect().right - hideObj->_pos.x) < 5 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
+														{
+															this->_canFree = true;
+															this->_moveMent = SimonMove::Free;
+															this->_vx = 0;
+														}else
+														{
+															this->_canFree = false;
+														}
+													}
+													if ( abs(this->_pos.x - hideObj->_pos.x) < 5 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
 													{
 														this->_canFree = true;
 														this->_moveMent = SimonMove::Free;
 														this->_vx = 0;
 													}else
 													{
-														this->_canFree = false;
+														//this->_canFree = false;
 													}
-													////va cham theo chieu x
-													//if (normalX != 0)
-													//{
-													//	_canFree = true;
-													//	//this->_moveMent = SimonMove::Free;
-													//}
 												}
 												//
-												if (this->_pos.y < hideObj->getRect().bottom)
+												if (this->getRect().top < hideObj->getRect().bottom + 20)
 												{
 													this->_canFree = false;
 												}
