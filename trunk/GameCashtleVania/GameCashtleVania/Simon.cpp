@@ -103,6 +103,7 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_timeDelayMoveStair = 0.0f;
 
 	this->_canFree = false;
+	this->distanceFree = 0;
 	this->_belowGround = 0;
 
 	//Create Axe
@@ -120,7 +121,14 @@ Simon::Simon(std::vector<std::string> arr)
 
 Box Simon::getBox()
 {
-	this->_box = Box(this->_pos.x, this->_pos.y, this->_width - 6, this->_height - 8, this->_vx, this->_vy);
+	if (this->_moveMent == SimonMove::Idle || this->_moveMent == SimonMove::Free || this->_moveMent == SimonMove::Moves || SimonMove::Jump)
+	{
+		this->_box = Box(this->_pos.x, this->_pos.y, 35, this->_height - 8, this->_vx, this->_vy);
+	}else
+	{
+		this->_box = Box(this->_pos.x, this->_pos.y, this->_width - 6, this->_height - 8, this->_vx, this->_vy);
+	}
+	
 	return _box;
 }
 
@@ -364,6 +372,19 @@ void Simon::move(float delta_Time)
 	}
 	
 	this->_pos.y += this->_vy * delta_Time;
+	if (this->_moveMent == SimonMove::Free)
+	{
+		distanceFree -= this->_vy * delta_Time;
+		if (distanceFree >= 64)
+		{
+			distanceFree = 0;
+			_canFree = false;
+		}
+	}else
+	{
+		distanceFree = 0;
+		_canFree = false;
+	}
 }
 
 void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
@@ -1251,42 +1272,42 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 											{
 												if ((this->_moveMent == SimonMove::Idle || this->_moveMent == SimonMove::Moves) && !this->_onStair)
 												{
-													//
-													if (this->_Left)
-													{
-														if ( abs(this->getRect().left - hideObj->_pos.x) < 5 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
-														{
-															this->_canFree = true;
-															this->_moveMent = SimonMove::Free;
-															this->_vx = 0;
-														}else
-														{
-															this->_canFree = false;
-														}
-													}else
-													{
-														if ( abs(this->getRect().right - hideObj->_pos.x) < 5 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
-														{
-															this->_canFree = true;
-															this->_moveMent = SimonMove::Free;
-															this->_vx = 0;
-														}else
-														{
-															this->_canFree = false;
-														}
-													}
-													if ( abs(this->_pos.x - hideObj->_pos.x) < 5 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
+													////
+													//if (this->_Left)
+													//{
+													//	if ( abs(this->getRect().left - hideObj->_pos.x) < 5 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
+													//	{
+													//		this->_canFree = true;
+													//		this->_moveMent = SimonMove::Free;
+													//		this->_vx = 0;
+													//	}else
+													//	{
+													//		this->_canFree = false;
+													//	}
+													//}else
+													//{
+													//	if ( abs(this->getRect().right - hideObj->_pos.x) < 5 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
+													//	{
+													//		this->_canFree = true;
+													//		this->_moveMent = SimonMove::Free;
+													//		this->_vx = 0;
+													//	}else
+													//	{
+													//		this->_canFree = false;
+													//	}
+													//}
+													if ( abs(this->_pos.x - hideObj->_pos.x) < 25 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
 													{
 														this->_canFree = true;
 														this->_moveMent = SimonMove::Free;
 														this->_vx = 0;
 													}else
 													{
-														//this->_canFree = false;
+														this->_canFree = false;
 													}
 												}
-												//
-												if (this->getRect().top < hideObj->getRect().bottom + 20)
+												////
+												if (this->_pos.y < hideObj->getRect().bottom)
 												{
 													this->_canFree = false;
 												}
