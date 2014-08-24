@@ -183,27 +183,53 @@ void Simon::updateMovement(float delta_Time)
 		this->_vx = 0.0f;
 		this->_vy = 0.0f;
 
-		//chuyen frame va dich chuyen simon len cau thang
-
-		//tinh so lan dich chuyen de chuyen frame
-		_count_step_stair++;
-		if (_count_step_stair >= COUNT_STEP_STAIR)
+		//neu chua chuan bi xong. Simon phai di chuyen lai dung vi tri cau thang thi moi buoc len duoc
+		if (!this->_start_MoveStair)
 		{
-			_count_step_stair = 0;
-			this->_stepOnStair = (StepOnStair)((int)this->_stepOnStair + 1);
-			if (this->_stepOnStair == StepOnStair::Step2)
+			//dang o ben phai cau thang. Can di chuyen lai cau thang
+			if ((this->_pos.x - posStartMoveStair.x) > this->_Vx_default * delta_Time)
 			{
-				this->_moveMent = SimonMove::OnStairUp;
-				this->_finish_MoveStair = true;
+				this->_Left = true;
+				this->_pos.x -= this->_Vx_default * delta_Time;
+			}else
+			{
+				//ban o ben trai cau thang - di chuyen qua phai nao?
+				if ((posStartMoveStair.x - this->_pos.x) > this->_Vx_default * delta_Time)
+				{
+					this->_Left = false;
+					this->_pos.x += this->_Vx_default * delta_Time;
+				}else
+				{
+					this->_pos.x = posStartMoveStair.x;
+					this->_pos.y = posStartMoveStair.y;
+					this->_start_MoveStair = true;
+				}
 			}
+		}else
+		{
+			//co the len cau thang roi
+
+			//chuyen frame va dich chuyen simon len cau thang
+
+			//tinh so lan dich chuyen de chuyen frame
+			_count_step_stair++;
+			if (_count_step_stair >= COUNT_STEP_STAIR)
+			{
+				_count_step_stair = 0;
+				this->_stepOnStair = (StepOnStair)((int)this->_stepOnStair + 1);
+				if (this->_stepOnStair == StepOnStair::Step2)
+				{
+					this->_moveMent = SimonMove::OnStairUp;
+					this->_finish_MoveStair = true;
+				}
+			}
+
+			//dich chuyen vi tri
+			this->_pos.y += (this->_rectOfStair.top - this->_rectOfStair.bottom) / 4 / (float)COUNT_STEP_STAIR;
+			dir = this->_Left ? -1 : 1;
+			this->_pos.x += dir * (this->_rectOfStair.right - this->_rectOfStair.left) / 4 / (float)COUNT_STEP_STAIR;
 		}
-
-		//dich chuyen vi tri
-		this->_pos.y += (this->_rectOfStair.top - this->_rectOfStair.bottom) / 4 / (float)COUNT_STEP_STAIR;
-		dir = this->_Left ? -1 : 1;
-		this->_pos.x += dir * (this->_rectOfStair.right - this->_rectOfStair.left) / 4 / (float)COUNT_STEP_STAIR;
 		break;
-
 	case SimonMove::DownStair:
 		this->_onStair = true;
 		this->_CanMoveL = false;
@@ -489,6 +515,10 @@ void Simon::animated(float deltatime)
 			this->_curFrame = 4;
 			break;
 		case UpStair:
+			if (this->_start_MoveStair)
+			{
+
+			}
 			switch (this->_stepOnStair)
 			{
 			case StepOnStair::Step0:
@@ -678,9 +708,13 @@ void Simon::processInput()
 		{
 			//chuyen sang trang thai xuong cau thang va quay mat ve ben trai
 			this->_moveMent = SimonMove::UpStair;
+			
 			this->_finish_MoveStair = false;
-			this->_pos.x = _rectOfStair.right;
-			this->_pos.y = _rectOfStair.bottom + this->_height / 2;
+			this->_start_MoveStair = false;
+			posStartMoveStair.x = _rectOfStair.right;
+			posStartMoveStair.y = _rectOfStair.bottom + this->_height / 2;
+			//this->_pos.x = _rectOfStair.right;
+			//this->_pos.y = _rectOfStair.bottom + this->_height / 2;
 			this->_stepOnStair = StepOnStair::Step0;
 			this->_Left = true;
 		}else

@@ -40,6 +40,7 @@ public:
 	bool _onStair;//dang o tren cau thang
 	int  _count_step_stair;
 
+	D3DXVECTOR2 posStartMoveStair;
 	bool _start_MoveStair;
 	bool _finish_MoveStair;
 	bool _prepareUpStairLeft;
