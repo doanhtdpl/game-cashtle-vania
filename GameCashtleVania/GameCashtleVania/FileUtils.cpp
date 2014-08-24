@@ -7,6 +7,7 @@
 #include "WeaponFactory.h"
 #include "ItemFactory.h"
 #include "EnemyFactory.h"
+#include "EffectFactory.h"
 
 using namespace std;
 
@@ -79,6 +80,7 @@ void FileUtils::loadCSV()
     this->readFileCSV(fileWeapon, WeaponFactory::getInstance());
     this->readFileCSV(fileItem, ItemFactory::getInstance());
 	this->readFileCSV(fileEnemy, EnemyFactory::getInstance());
+	this->readFileCSV(fileEffect, EffectFactory::getInstance());
 }
 
 void FileUtils::readFileMap()

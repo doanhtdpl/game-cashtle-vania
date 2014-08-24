@@ -21,4 +21,5 @@ TagClassName::TagClassName()
 	this->tagHideObject = "HideObject";
 	this->tagSimon = "Simon";
 	this->tagWeapon = "Weapon";
+	this->tagEffect = "Effect";
 }

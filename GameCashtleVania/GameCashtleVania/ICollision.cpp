@@ -148,6 +148,7 @@ float ICollision::sweptAABB(Box b1, Box b2, float& normalx, float& normaly, floa
 
 	// find the earliest/latest times of collision
 	// 
+	//std::min
 	float entryTime = std::max(xEntry, yEntry);
 	float exitTime = std::min(xExit, yExit);
 

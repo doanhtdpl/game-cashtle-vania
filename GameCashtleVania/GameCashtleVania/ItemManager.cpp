@@ -59,7 +59,7 @@ Item* ItemManager::appearItemEnemyDie(D3DXVECTOR2 posAppear)
 {
 	srand(time(0));
 	//khoang 5 lan se xuat hien 1 con enemy co item
-	int x = rand() % 5;
+	int x = rand() % 3;
 	if (x == 0)
 	{
 		Item* item = this->randomItem();

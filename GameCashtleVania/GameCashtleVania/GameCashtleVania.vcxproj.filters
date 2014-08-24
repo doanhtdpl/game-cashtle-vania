@@ -154,6 +154,12 @@
     <Filter Include="Map\MapLoader">
       <UniqueIdentifier>{7d6464ad-2eb1-4009-98f8-c42edaea887b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\StaticObject\Effect">
+      <UniqueIdentifier>{f7d76017-2360-48b3-a2bf-7ab7fb943e87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config\Effect">
+      <UniqueIdentifier>{5448f254-25e0-4b10-b054-1b897098451d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input.cpp">
@@ -339,6 +345,12 @@
     <ClCompile Include="FireBomb2.cpp">
       <Filter>GameObject\DynamicObject\Weapon\FireBomb2</Filter>
     </ClCompile>
+    <ClCompile Include="EffectFactory.cpp">
+      <Filter>Config\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>GameObject\StaticObject\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -523,6 +535,12 @@
     </ClInclude>
     <ClInclude Include="FireBomb2.h">
       <Filter>GameObject\DynamicObject\Weapon\FireBomb2</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectFactory.h">
+      <Filter>Config\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>GameObject\StaticObject\Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

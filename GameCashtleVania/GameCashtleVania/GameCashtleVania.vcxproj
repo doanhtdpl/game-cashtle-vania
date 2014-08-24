@@ -92,6 +92,8 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="DragonSkullCannon.cpp" />
     <ClCompile Include="DynamicObject.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectFactory.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="FileUtils.cpp" />
@@ -155,6 +157,8 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="DragonSkullCannon.h" />
     <ClInclude Include="DynamicObject.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectFactory.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="FileUtils.h" />

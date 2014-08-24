@@ -105,11 +105,11 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_belowGround = 0;
 
 	//Create Axe
-	this->_typeOfWeaponCurr = TypeWeapon::None;
+	this->_typeOfWeaponCurr = TypeWeapon::FireBomb;
 	this->count_Heart = 10;
 	this->coin = 0;
 	this->HP = 10;
-	this->weaponCurr = WeaponFactory::getInstance()->createObj((int)TypeWeapon::Dagger);
+	this->weaponCurr = WeaponFactory::getInstance()->createObj((int)TypeWeapon::FireBomb);
 
 	//collision enemy
 	this->_collisionEnemy = false;
@@ -1140,8 +1140,11 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 			timeCollision = this->collision(item, normalX, normalY, deltatime);
 			if ((timeCollision > 0 && timeCollision < 1.0f) || timeCollision == 2.0f)
 			{
-				item->effectSimon();
-				item->_isALive = false;
+				if (item->canCollionSimon)
+				{
+					item->effectSimon();
+					item->_isALive = false;
+				}
 			}
 
 		}

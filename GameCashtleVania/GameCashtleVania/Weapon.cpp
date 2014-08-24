@@ -5,6 +5,7 @@
 #include "QNode.h"
 #include "Light.h"
 #include "QuadTreeObject.h"
+#include "EffectFactory.h"
 
 Weapon::Weapon()
 {
@@ -62,12 +63,24 @@ void Weapon::move(float delta_Time)
 
 }
 
-
 bool Weapon::completeAttack()
 {
 	this->_isALive = false;
 	this->_can_Use_Weapon = true;
 	return true;
+}
+
+void Weapon::effectWhenAttack(D3DXVECTOR2 pos)
+{
+	//tao 2 doi tuong effect va add vao quadtree
+	Effect* effect0 = EffectFactory::getInstance()->createObj((int)TypeEffect::typeEffect0);
+	effect0->_pos = D3DXVECTOR2(pos.x - 5, pos.y + 2);
+
+	Effect* effect1 = EffectFactory::getInstance()->createObj((int)TypeEffect::typeEffect1);
+	effect1->_pos = D3DXVECTOR2(pos.x, pos.y - 2);
+
+	QuadTreeObject::getInstance()->addObjectToQuadTree(effect0);
+	QuadTreeObject::getInstance()->addObjectToQuadTree(effect1);
 }
 
 void Weapon::handleCollision(float delta_Time, std::vector<ObjectGame*> _listObjectCollision)
@@ -92,7 +105,11 @@ void Weapon::handleCollision(float delta_Time, std::vector<ObjectGame*> _listObj
 				if (this->_typeOfWeapon == TypeWeapon::Dagger)
 				{
 					this->_isALive = false;
+					this->_can_Use_Weapon = true;
 				}
+
+				D3DXVECTOR2 posEffect = D3DXVECTOR2(enemy->_pos.x, this->_pos.y);
+				this->effectWhenAttack(posEffect);
 				//handleCollisionWithEnemy(enemy);
 			}
 		}
@@ -116,6 +133,11 @@ void Weapon::handleCollision(float delta_Time, std::vector<ObjectGame*> _listObj
 
 			if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
 			{
+				if (this->_typeOfWeapon == TypeWeapon::Dagger)
+				{
+					this->_isALive = false;
+					this->_can_Use_Weapon = true;
+				}
 				//tao ra hieu ung.
 
 				//goi ham effect cua light
@@ -123,6 +145,9 @@ void Weapon::handleCollision(float delta_Time, std::vector<ObjectGame*> _listObj
 				light->_isALive = false;
 				Item* item = light->effectWhenCollisionRod();
 				QuadTreeObject::getInstance()->addObjectToQuadTree(item);
+
+				D3DXVECTOR2 posEffect = D3DXVECTOR2(light->_pos.x, this->_pos.y);
+				this->effectWhenAttack(posEffect);
 			}
 		}
 		++it;
