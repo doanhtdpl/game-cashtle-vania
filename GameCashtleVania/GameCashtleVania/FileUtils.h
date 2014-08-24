@@ -6,6 +6,8 @@
 #include <hash_map>
 
 #define fileImage "..\\Resource\\file\\Image.csv"
+#define fileAudio "..\\Resource\\file\\Audio.csv"
+
 #define fileSimon "..\\Resource\\file\\Simon.csv"
 #define fileIronRod "..\\Resource\\file\\IronRod.csv"
 #define fileGroundBG "..\\Resource\\file\\GroundBG.csv"
@@ -22,6 +24,7 @@ public:
 	void readFileCSV(char* fileName, ObjectFactory* objFactory);
 	void readFileMap();
 	void readFileImage();
+	void readFileAudio();
 	void loadCSV();
 	
 	//doc tu file va luu vao 1 dong du lieu. Cac dong chuyen thanh cac mang string. 

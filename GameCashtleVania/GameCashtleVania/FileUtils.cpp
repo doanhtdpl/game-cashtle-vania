@@ -8,6 +8,7 @@
 #include "ItemFactory.h"
 #include "EnemyFactory.h"
 #include "EffectFactory.h"
+#include "ManageAudio.h"
 
 using namespace std;
 
@@ -81,6 +82,9 @@ void FileUtils::loadCSV()
     this->readFileCSV(fileItem, ItemFactory::getInstance());
 	this->readFileCSV(fileEnemy, EnemyFactory::getInstance());
 	this->readFileCSV(fileEffect, EffectFactory::getInstance());
+
+	this->readFileImage();
+	this->readFileAudio();
 }
 
 void FileUtils::readFileMap()
@@ -90,27 +94,6 @@ void FileUtils::readFileMap()
 
 void FileUtils::readFileImage()
 {
-	//string line;
-	//ifstream* myfile = new ifstream(fileImage);
-	//if (myfile->is_open())
-	//{
-	//	//lay dong dau tien: key (idimage,link)
-	//	getline(*myfile, line);
-
-	//	while ( !myfile->eof() ) 
-	//	{
-	//		if (getline(*myfile, line))
-	//		{
-	//			//IDImage - Link
-
-	//			vector<string> arr = split(line, ',');
-	//			int ID_Image = atoi(arr[0].c_str());
-	//			string linkResource = arr[1];
-	//			ManageTexture::getInstance()->createTextureByFileName(ID_Image, linkResource);
-	//		}
-	//	}
-	//}
-
 	vector<vector<string>> info = readFile(fileImage, ',');
 	
 	vector<vector<string>>::iterator it;
@@ -122,9 +105,30 @@ void FileUtils::readFileImage()
 	while (it != info.end())
 	{
 		arr = *it;
-		int ID_Image = atoi(arr[0].c_str());
-		string linkResource = arr[1];
+		int ID_Image = atoi(arr.at(0).c_str());
+		string linkResource = arr.at(1);
 		ManageTexture::getInstance()->createTextureByFileName(ID_Image, linkResource);
+		it++;//tang bien it len.
+	}
+}
+
+void FileUtils::readFileAudio()
+{
+	vector<vector<string>> info = readFile(fileAudio, ',');
+
+	vector<vector<string>>::iterator it;
+	vector<string> arr;
+	it = info.begin();
+
+	//bo dong dau tien. nen chay tu 1 - >
+	it++;
+	while (it != info.end())
+	{
+		arr = *it;
+		int ID_Audio = atoi(arr.at(0).c_str());
+		bool loop = (bool)atoi(arr.at(1).c_str());
+		std::string linkResource = arr.at(3);
+		ManageAudio::getInstance()->addSound(ID_Audio, loop, linkResource);
 		it++;//tang bien it len.
 	}
 }

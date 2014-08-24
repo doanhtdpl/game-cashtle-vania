@@ -7,6 +7,7 @@
 #include "MapLoader.h"
 #include "TagClassName.h"
 #include "Itween.h"
+#include "ManageAudio.h"
 
 
 int ManageGame::_score = 0;
@@ -93,6 +94,7 @@ void ManageGame::gameUpdate(float deltaTime)
 
 	//delete obj;
 	arr.clear();
+	
 }
 
 void ManageGame::changeScene(float deltaTime)
@@ -179,8 +181,12 @@ void ManageGame::gameInit()
 	MapLoader::getInstance()->readInfoSceneFromFile();
 	ManageSprite::createInstance()->init_Sprite(this->SpriteHandle);
 	ManageTexture::createInstance(this->_d3ddv);
+
+	if (!ManageAudio::getInstance()->init_DirectSound(this->_hWnd))
+	{
+		return;
+	}
 	
-	FileUtils::getInstance()->readFileImage();
 	FileUtils::getInstance()->loadCSV();
 	
 	//tao Simon
@@ -190,7 +196,9 @@ void ManageGame::gameInit()
 	quadTreeObj = QuadTreeObject::getInstance();
 	
 	level = 1;
-	scene = 1;
+	scene = 3;
+	ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
+
 	InfoScene* infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
 	//dua thong tin file cho quadtree
 

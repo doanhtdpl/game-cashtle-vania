@@ -10,7 +10,7 @@ Zombie::Zombie(std::vector<std::string> arr) : Enemy(arr)
 	this->_moveMent = EnemyMovement::Moves;
 }
 
-void Zombie::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)
+void Zombie::handleCollisionWithFreeObject(float deltatime, HideObject* hideObj)
 {
 	//chi va cham voi doi tuong Free
 	if (this->_moveMent == EnemyMovement::Moves || this->_moveMent == EnemyMovement::Idle)

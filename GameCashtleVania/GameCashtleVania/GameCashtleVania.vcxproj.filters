@@ -160,11 +160,23 @@
     <Filter Include="Config\Effect">
       <UniqueIdentifier>{5448f254-25e0-4b10-b054-1b897098451d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DirectX\Sprite">
+      <UniqueIdentifier>{136f7c5a-e4a8-4242-bfcf-30c063ae6d39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX\Input">
+      <UniqueIdentifier>{4a86a3c1-2acb-4d29-8df8-7d81cc20a15e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX\TagClassName">
+      <UniqueIdentifier>{3934db8b-2948-4904-acd8-9ca2ec1dc66f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX\Camera">
+      <UniqueIdentifier>{47e49c12-0d77-49f4-a766-9b769e03098f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX\Audio">
+      <UniqueIdentifier>{e8e39e28-46b5-4280-a862-8e5fc356c6fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Input.cpp">
-      <Filter>DirectX</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>MainGame</Filter>
     </ClCompile>
@@ -173,15 +185,6 @@
     </ClCompile>
     <ClCompile Include="ManageGame.cpp">
       <Filter>MainGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>DirectX</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>DirectX</Filter>
-    </ClCompile>
-    <ClCompile Include="ManageSprite.cpp">
-      <Filter>DirectX</Filter>
     </ClCompile>
     <ClCompile Include="ObjectGame.cpp">
       <Filter>GameObject</Filter>
@@ -242,9 +245,6 @@
     </ClCompile>
     <ClCompile Include="GroundBGFac.cpp">
       <Filter>Config\GroundBGFactory</Filter>
-    </ClCompile>
-    <ClCompile Include="TagClassName.cpp">
-      <Filter>DirectX</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>GameObject\DynamicObject\Enemy</Filter>
@@ -351,11 +351,29 @@
     <ClCompile Include="Effect.cpp">
       <Filter>GameObject\StaticObject\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="ManageSprite.cpp">
+      <Filter>DirectX\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>DirectX\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>DirectX\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="TagClassName.cpp">
+      <Filter>DirectX\TagClassName</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>DirectX\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="DSUtil.cpp">
+      <Filter>DirectX\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageAudio.cpp">
+      <Filter>DirectX\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Input.h">
-      <Filter>DirectX</Filter>
-    </ClInclude>
     <ClInclude Include="utils.h">
       <Filter>DirectX</Filter>
     </ClInclude>
@@ -364,15 +382,6 @@
     </ClInclude>
     <ClInclude Include="ManageGame.h">
       <Filter>MainGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>DirectX</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>DirectX</Filter>
-    </ClInclude>
-    <ClInclude Include="ManageSprite.h">
-      <Filter>DirectX</Filter>
     </ClInclude>
     <ClInclude Include="ObjectFactoty.h">
       <Filter>Config</Filter>
@@ -415,9 +424,6 @@
     </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>GameObject\DynamicObject\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="TagClassName.h">
-      <Filter>DirectX</Filter>
     </ClInclude>
     <ClInclude Include="SimonFactory.h">
       <Filter>Config\SimonFactoty</Filter>
@@ -541,6 +547,27 @@
     </ClInclude>
     <ClInclude Include="Effect.h">
       <Filter>GameObject\StaticObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="ManageSprite.h">
+      <Filter>DirectX\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>DirectX\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>DirectX\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="TagClassName.h">
+      <Filter>DirectX\TagClassName</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>DirectX\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="DSUtil.h">
+      <Filter>DirectX\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="ManageAudio.h">
+      <Filter>DirectX\Audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

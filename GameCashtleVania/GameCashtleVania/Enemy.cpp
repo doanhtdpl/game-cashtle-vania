@@ -92,13 +92,13 @@ void Enemy::updateMovement(float delta_Time)
 			this->_moveMent = EnemyMovement::Free;
 		}
 		
-		if (this->_Left)//dang di chuyen qua ben trai
-		{
-			this->_vx = -this->_Vx_default;
-		}else
-		{
-			this->_vx = this->_Vx_default;
-		}
+		//if (this->_Left)//dang di chuyen qua ben trai
+		//{
+		//	this->_vx = -this->_Vx_default;
+		//}else
+		//{
+		//	this->_vx = this->_Vx_default;
+		//}
 		break;
 	case EnemyMovement::Free:
 		this->_vy = -this->_Vy_default * 2;
@@ -236,7 +236,7 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
 				{
 					//xu ly voi doi tuong hide object = Free
-					handleCollisionWithHideObject(deltatime, hideObj);
+					handleCollisionWithFreeObject(deltatime, hideObj);
 				}
 			}
 		}
@@ -265,7 +265,7 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 	}
 }
 
-void Enemy::handleCollisionWithHideObject(float deltatime, HideObject* hideObj)
+void Enemy::handleCollisionWithFreeObject(float deltatime, HideObject* hideObj)
 {
 	if (this->_moveMent == EnemyMovement::Moves)
 	{
