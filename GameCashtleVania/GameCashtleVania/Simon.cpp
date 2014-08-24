@@ -176,8 +176,8 @@ void Simon::updateMovement(float delta_Time)
 		break;
 	case UpStair:
 		this->_onStair = true;
-		this->_CanMoveL = false;
-		this->_CanMoveR = false;
+		//this->_CanMoveL = false;
+		//this->_CanMoveR = false;
 		this->_High_Jumped = 0;
 		this->_CanJum = false;
 		this->_vx = 0.0f;
@@ -233,8 +233,8 @@ void Simon::updateMovement(float delta_Time)
 		break;
 	case SimonMove::DownStair:
 		this->_onStair = true;
-		this->_CanMoveL = false;
-		this->_CanMoveR = false;
+		//this->_CanMoveL = false;
+		//this->_CanMoveR = false;
 		this->_High_Jumped = 0;
 		this->_CanJum = false;
 		this->_vx = 0.0f;
@@ -285,8 +285,8 @@ void Simon::updateMovement(float delta_Time)
 	case OnStairUp:
 		//khong chuyen frame
 		this->_onStair = true;
-		this->_CanMoveL = false;
-		this->_CanMoveR = false;
+		//this->_CanMoveL = false;
+		//this->_CanMoveR = false;
 		this->_High_Jumped = 0;
 		this->_CanJum = false;
 		this->_vx = 0.0f;
@@ -295,8 +295,8 @@ void Simon::updateMovement(float delta_Time)
 	case OnStairDown:
 		//khong chuyen frame
 		this->_onStair = true;
-		this->_CanMoveL = false;
-		this->_CanMoveR = false;
+		//this->_CanMoveL = false;
+		//this->_CanMoveR = false;
 		this->_High_Jumped = 0;
 		this->_CanJum = false;
 		this->_vx = 0.0f;
@@ -659,6 +659,7 @@ void Simon::processInput()
 			}else
 			{
 				this->_moveMent = SimonMove::DownStair;
+				this->_Left = false;
 			}
 			
 			this->_finish_MoveStair = false;
@@ -667,8 +668,9 @@ void Simon::processInput()
 
 		if (this->_moveMent == SimonMove::OnStairDown)
 		{
-			if (!this->_Left)
+			if (this->_Left)
 			{
+				this->_Left = false;
 				this->_moveMent = SimonMove::UpStair;
 			}else
 			{
@@ -687,6 +689,36 @@ void Simon::processInput()
 			{
 				this->_moveMent = SimonMove::Moves;
 				this->_Left = true;
+			}
+
+			if (this->_moveMent == SimonMove::OnStairUp)
+			{
+				if (this->_Left)
+				{
+					this->_moveMent = SimonMove::UpStair;
+				}else
+				{
+					this->_moveMent = SimonMove::DownStair;
+					this->_Left = true;
+				}
+
+				this->_finish_MoveStair = false;
+				this->_stepOnStair = StepOnStair::Step0;
+			}
+
+			if (this->_moveMent == SimonMove::OnStairDown)
+			{
+				if (!this->_Left)
+				{
+					this->_Left = true;
+					this->_moveMent = SimonMove::UpStair;
+				}else
+				{
+					this->_moveMent = SimonMove::DownStair;
+				}
+
+				this->_finish_MoveStair = false;
+				this->_stepOnStair = StepOnStair::Step0;
 			}
 		}
 	}
