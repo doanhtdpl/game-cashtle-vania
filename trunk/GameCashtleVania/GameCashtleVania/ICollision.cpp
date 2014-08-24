@@ -1,6 +1,6 @@
 #include "ICollision.h"
 #include <iostream>
-
+#include <algorithm>
 ICollision* ICollision::_instance = NULL;
 
 ICollision* ICollision::getInstance()
