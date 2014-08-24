@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "TagClassName.h"
 #include "QuadTreeObject.h"
+#include "ItemManager.h"
 
 Enemy::Enemy()
 {
@@ -301,6 +302,11 @@ void Enemy::isAttack()
 		{
 			//chet roi
 			this->_isALive = false;
+			Item* item = ItemManager::getInstance()->appearItemEnemyDie(this->_pos);
+			if (item != NULL)
+			{
+				QuadTreeObject::getInstance()->addObjectToQuadTree(item);
+			}
 		}
 
 		_timeDelayCur =  TimeDelay;

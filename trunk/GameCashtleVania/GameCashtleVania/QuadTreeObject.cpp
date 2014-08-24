@@ -286,7 +286,7 @@ void QuadTreeObject::eraseObject(int IDinMap)
 void QuadTreeObject::addObjectToQuadTree(ObjectGame* object)
 {
 	//add objet vao hash map trong mapObject. Sau do add id vao node
-	int IDMax = mapObject.getIDMaxInList() + 1;
+	int IDMax = ++ this->mapObject.ID_Max;
 	mapObject.listObjectInMap[IDMax] = object;
 	this->addObjectToNode(this->root, object, IDMax);
 }

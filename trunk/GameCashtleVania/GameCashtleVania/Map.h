@@ -8,6 +8,7 @@ class Map
 public:
 	std::hash_map< int, ObjectGame*> listObjectInMap;
 	std::hash_map<int, std::vector<std::string>> listInfoOfObject;
+	int ID_Max;
 public:
 	void eraseObject(int IDinMap);
 	void readMapFromFile(std::string filePath);

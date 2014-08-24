@@ -51,7 +51,9 @@ public:
 	//tac dung vao simon khi va cham voi no
 	//moi item se khac nhau o diem nay
 	void effectSimon();
+	bool canCollionSimon;
 protected:
+	float timeColSimon;//sau khoang thoi gian nay thi simon co the va cham item
 	//item se roi va dy chuyen theo hinh zich zac quanh vi tri
 	float maxX;
 	float minX;

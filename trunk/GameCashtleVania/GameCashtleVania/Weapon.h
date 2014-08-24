@@ -7,7 +7,7 @@ enum class TypeWeapon
 	Dagger = 507,
 	FireBomb = 508,
 	Watch = 509,
-	FireBomb2 = 510,
+	FireBomb2 = 511,
 	None = 0
 };
 #endif __TYPE_OF_WEAPON__
@@ -40,6 +40,7 @@ public:
 	virtual void handleCollisionWithGround(HideObject* hideObj);
 	virtual void handleCollisionWithEnemy(Enemy* enemy);
 	virtual bool completeAttack();
+	void effectWhenAttack(D3DXVECTOR2 pos);
 	
 	bool _can_Use_Weapon;
 protected:

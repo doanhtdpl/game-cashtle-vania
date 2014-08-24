@@ -190,7 +190,7 @@ void ManageGame::gameInit()
 	quadTreeObj = QuadTreeObject::getInstance();
 	
 	level = 1;
-	scene = 3;
+	scene = 1;
 	InfoScene* infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
 	//dua thong tin file cho quadtree
 

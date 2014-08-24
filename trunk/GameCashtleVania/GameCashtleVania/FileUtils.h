@@ -13,6 +13,7 @@
 #define fileItem "..\\Resource\\file\\Item.csv"
 #define fileWeapon "..\\Resource\\file\\Weapon.csv"
 #define fileEnemy "..\\Resource\\file\\Enemy.csv"
+#define fileEffect "..\\Resource\\file\\Effect.csv"
 
 class FileUtils
 {

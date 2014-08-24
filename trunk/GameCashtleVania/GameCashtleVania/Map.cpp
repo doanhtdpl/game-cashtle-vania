@@ -8,6 +8,7 @@
 
 Map::Map(void)
 {
+	this->ID_Max = 0;
 }
 
 void Map::eraseObject(int IDinMap)
@@ -47,6 +48,7 @@ void Map::readMapFromFile(std::string filePath)
 		}else
 		{
 			this->listInfoOfObject[ID_Quadtree] = arr;
+			this->ID_Max ++;
 		}
 	}
 }

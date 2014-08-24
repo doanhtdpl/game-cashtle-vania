@@ -42,6 +42,9 @@ Item::Item(std::vector<std::string> arr)
 
 	this->_idle = false;
 	this->timeLife = 3.0f;
+
+	this->canCollionSimon = false;
+	this->timeColSimon = 0.5f;
 }
 
 Box Item::getBox()
@@ -114,6 +117,12 @@ void Item::handleCollision(float deltatime, std::vector<ObjectGame*> _listObject
 
 void Item::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision)
 {
+	timeColSimon -= delta_Time;
+	if (timeColSimon <= 0)
+	{
+		canCollionSimon = true;
+	}
+
 	if (!this->_idle)
 	{
 		move(delta_Time);

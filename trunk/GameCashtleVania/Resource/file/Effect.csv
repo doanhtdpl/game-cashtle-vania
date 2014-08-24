@@ -1,0 +1,4 @@
+ID,ID_Image,Name,Width,Height,Coloumn,TotalFrame,elapsTime,LifeTime
+350,1350,Effect1,16,20,1,1,0.2,0.3
+351,1351,Effect2,43,44,3,3,0.15,0.45
+352,1352,Effect3,14,28,1,1,0.2,0.2

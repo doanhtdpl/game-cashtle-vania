@@ -203,6 +203,9 @@ void IronRod::update(float delta_Time, std::vector<ObjectGame*> _listObjectColli
 						light->_isALive = false;
 						item = light->effectWhenCollisionRod();
 						QuadTreeObject::getInstance()->addObjectToQuadTree(item);
+
+						D3DXVECTOR2 posEffect = D3DXVECTOR2(light->_pos.x, this->_pos.y);
+						this->effectWhenAttack(posEffect);
 					}
 				}else
 				{
@@ -213,7 +216,10 @@ void IronRod::update(float delta_Time, std::vector<ObjectGame*> _listObjectColli
 						if((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
 						{
 							enemy->isAttack();
+							D3DXVECTOR2 posEffect = D3DXVECTOR2(enemy->_pos.x, this->_pos.y);
+							this->effectWhenAttack(posEffect);
 						}
+						
 					}
 				}
 				it++;

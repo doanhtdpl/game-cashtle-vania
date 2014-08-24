@@ -16,6 +16,7 @@ public:
 	std::string tagWeapon;
 	std::string tagLight;//roi danh thi roi item
 	std::string tagGroundObject;
+	std::string tagEffect;
 	static TagClassName* getInstance();
 	TagClassName();
 protected:
