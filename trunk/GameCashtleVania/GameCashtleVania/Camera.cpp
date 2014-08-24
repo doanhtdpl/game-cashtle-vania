@@ -49,18 +49,22 @@ void Camera::update(float x, float deltaTime)
 		//}
 		_pos.x = x_target;
 		
+		if (_pos.x < 0)
+		{
+			_pos.x = 0;
+		}
 		//kiem tra pos khi vuot qua bound.
 		//pos la vi tri top left
-		if (this->_pos.x < this->_boundScene.left)
-		{
-			this->_pos.x = this->_boundScene.left;
-		}else
-		{
-			if (this->_pos.x > this->_boundScene.right - Screen_Width)
-			{
-				this->_pos.x = this->_boundScene.right - Screen_Width;
-			}
-		}
+		//if (this->_pos.x < this->_boundScene.left)
+		//{
+		//	this->_pos.x = this->_boundScene.left;
+		//}else
+		//{
+		//	if (this->_pos.x > this->_boundScene.right - Screen_Width)
+		//	{
+		//		this->_pos.x = this->_boundScene.right - Screen_Width;
+		//	}
+		//}
 	}
 }
 

@@ -53,7 +53,7 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_isAnimatedSprite = true;
 
 	//doc tu map
-	this->_pos.x = 1200;
+	this->_pos.x = 60;
 	this->_pos.y = 66;
 	this->z = 1;
 
@@ -317,16 +317,16 @@ void Simon::move(float delta_Time)
 	{
 		this->_pos.x += this->_vx * delta_Time;
 		
-		if (this->_pos.x < this->_boundScene.left)
-		{
-			this->_pos.x = this->_boundScene.left;
-		}else
-		{
-			if (this->_pos.x > this->_boundScene.right)
-			{
-				this->_pos.x = this->_boundScene.right;
-			}
-		}
+		//if (this->_pos.x < this->_boundScene.left)
+		//{
+		//	this->_pos.x = this->_boundScene.left;
+		//}else
+		//{
+		//	if (this->_pos.x > this->_boundScene.right)
+		//	{
+		//		this->_pos.x = this->_boundScene.right;
+		//	}
+		//}
 
 		//co the di qua ben trai va v
 		
@@ -355,6 +355,11 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 	animated(deltatime);
 
 	move(deltatime);
+	
+	if (this->_pos.x < this->_width / 2)
+	{
+		this->_pos.x = this->_width / 2;
+	}
 
 	this->_box = this->getBox();
 	
