@@ -53,7 +53,7 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_isAnimatedSprite = true;
 
 	//doc tu map
-	this->_pos.x = 60;
+	this->_pos.x = 2000;
 	this->_pos.y = 66;
 	this->z = 1;
 
@@ -120,7 +120,7 @@ Simon::Simon(std::vector<std::string> arr)
 
 Box Simon::getBox()
 {
-	this->_box = Box(this->_pos.x, this->_pos.y, this->_width - 6, this->_height - 2, this->_vx, this->_vy);
+	this->_box = Box(this->_pos.x, this->_pos.y, this->_width - 6, this->_height - 8, this->_vx, this->_vy);
 	return _box;
 }
 
@@ -187,21 +187,22 @@ void Simon::updateMovement(float delta_Time)
 		if (!this->_start_MoveStair)
 		{
 			//dang o ben phai cau thang. Can di chuyen lai cau thang
-			if ((this->_pos.x - posStartMoveStair.x) > this->_Vx_default * delta_Time)
+			if ((this->_pos.x - posPrepareOnStair.x) > this->_Vx_default * delta_Time)
 			{
 				this->_Left = true;
 				this->_pos.x -= this->_Vx_default * delta_Time;
 			}else
 			{
 				//ban o ben trai cau thang - di chuyen qua phai nao?
-				if ((posStartMoveStair.x - this->_pos.x) > this->_Vx_default * delta_Time)
+				if ((posPrepareOnStair.x - this->_pos.x) > this->_Vx_default * delta_Time)
 				{
 					this->_Left = false;
 					this->_pos.x += this->_Vx_default * delta_Time;
 				}else
 				{
-					this->_pos.x = posStartMoveStair.x;
-					this->_pos.y = posStartMoveStair.y;
+					this->_Left = this->_dirMoveStair;
+					this->_pos.x = posPrepareOnStair.x;
+					this->_pos.y = posPrepareOnStair.y;
 					this->_start_MoveStair = true;
 				}
 			}
@@ -239,21 +240,46 @@ void Simon::updateMovement(float delta_Time)
 		this->_vx = 0.0f;
 		this->_vy = 0.0f;
 
-		_count_step_stair++;
-		if (_count_step_stair >= COUNT_STEP_STAIR)
+		if (!this->_start_MoveStair)
 		{
-			_count_step_stair = 0;
-			this->_stepOnStair = (StepOnStair)((int)this->_stepOnStair + 1);
-			if (this->_stepOnStair == StepOnStair::Step2)
+			//dang o ben phai cau thang. Can di chuyen lai cau thang
+			if ((this->_pos.x - posPrepareOnStair.x) > this->_Vx_default * delta_Time)
 			{
-				this->_moveMent = SimonMove::OnStairDown;
-				this->_finish_MoveStair = true;
+				this->_Left = true;
+				this->_pos.x -= this->_Vx_default * delta_Time;
+			}else
+			{
+				//ban o ben trai cau thang - di chuyen qua phai nao?
+				if ((posPrepareOnStair.x - this->_pos.x) > this->_Vx_default * delta_Time)
+				{
+					this->_Left = false;
+					this->_pos.x += this->_Vx_default * delta_Time;
+				}else
+				{
+					this->_Left = this->_dirMoveStair;
+					this->_pos.x = posPrepareOnStair.x;
+					this->_pos.y = posPrepareOnStair.y;
+					this->_start_MoveStair = true;
+				}
 			}
-		}
+		}else
+		{
+			_count_step_stair++;
+			if (_count_step_stair >= COUNT_STEP_STAIR)
+			{
+				_count_step_stair = 0;
+				this->_stepOnStair = (StepOnStair)((int)this->_stepOnStair + 1);
+				if (this->_stepOnStair == StepOnStair::Step2)
+				{
+					this->_moveMent = SimonMove::OnStairDown;
+					this->_finish_MoveStair = true;
+				}
+			}
 
-		this->_pos.y += (this->_rectOfStair.bottom - this->_rectOfStair.top) / 4 / (float)COUNT_STEP_STAIR;
-		dir = this->_Left ? -1 : 1;
-		this->_pos.x += dir * (this->_rectOfStair.right - this->_rectOfStair.left) / 4 / (float)COUNT_STEP_STAIR;
+			this->_pos.y += (this->_rectOfStair.bottom - this->_rectOfStair.top) / 4 / (float)COUNT_STEP_STAIR;
+			dir = this->_Left ? -1 : 1;
+			this->_pos.x += dir * (this->_rectOfStair.right - this->_rectOfStair.left) / 4 / (float)COUNT_STEP_STAIR;
+		}
 		
 		break;
 	case OnStairUp:
@@ -425,6 +451,7 @@ void Simon::animated(float deltatime)
 {
 #pragma region Dang su dung vu khi
 
+#pragma region ATTACKing
 	//Dang su dung roi
 	if (_attacking)
 	{
@@ -459,6 +486,7 @@ void Simon::animated(float deltatime)
 		this->_rectRS = this->updateRectRS(this->_width, this->_height);
 		return;
 	}
+#pragma endregion
 
 	//if(_attacking == 2)
 	//{
@@ -520,24 +548,31 @@ void Simon::animated(float deltatime)
 			this->_curFrame = 4;
 			break;
 		case UpStair:
-			if (this->_start_MoveStair)
+			if (!this->_start_MoveStair)
 			{
-
-			}
-			switch (this->_stepOnStair)
+				this->_curFrame ++;
+				if (_curFrame > 3 )
+				{
+					_curFrame = 0;
+				}
+			}else
 			{
-			case StepOnStair::Step0:
-				this->_curFrame = 12;
-				break;
-			case StepOnStair::Step1:
-				this->_curFrame = 13;
-				break;
-			case StepOnStair::Step2:
-				this->_curFrame = 12;
-				break;
-			default:
-				break;
+				switch (this->_stepOnStair)
+				{
+				case StepOnStair::Step0:
+					this->_curFrame = 12;
+					break;
+				case StepOnStair::Step1:
+					this->_curFrame = 13;
+					break;
+				case StepOnStair::Step2:
+					this->_curFrame = 12;
+					break;
+				default:
+					break;
+				}
 			}
+			
 			break;
 		case DownStair:
 			switch (this->_stepOnStair)
@@ -615,6 +650,35 @@ void Simon::processInput()
 			this->_moveMent = SimonMove::Moves;
 			this->_Left = false;
 		}
+
+		if (this->_moveMent == SimonMove::OnStairUp)
+		{
+			if (!this->_Left)
+			{
+				this->_moveMent = SimonMove::UpStair;
+			}else
+			{
+				this->_moveMent = SimonMove::DownStair;
+			}
+			
+			this->_finish_MoveStair = false;
+			this->_stepOnStair = StepOnStair::Step0;
+		}
+
+		if (this->_moveMent == SimonMove::OnStairDown)
+		{
+			if (!this->_Left)
+			{
+				this->_moveMent = SimonMove::UpStair;
+			}else
+			{
+				this->_moveMent = SimonMove::DownStair;
+			}
+
+			this->_finish_MoveStair = false;
+			this->_stepOnStair = StepOnStair::Step0;
+		}
+
 	}else
 	{
 		if (Input::CreateInstance()->IsKeyDown(DIK_LEFT) && this->_CanMoveL && !this->_attacking)
@@ -656,10 +720,12 @@ void Simon::processInput()
 					//chuyen sang trang thai xuong cau thang va quay mat ve ben trai
 					this->_moveMent = SimonMove::DownStair;
 					this->_finish_MoveStair = false;
-					this->_pos.x = _rectOfStair.right;// + this->_width / 4;
-					this->_pos.y = _rectOfStair.bottom + this->_height / 2;
+					this->_start_MoveStair = false;
+
+					this->posPrepareOnStair.x = (_rectOfStair.right - _rectOfStair.left) / 2 + _rectOfStair.left;// + this->_width / 4;
+					this->posPrepareOnStair.y = _rectOfStair.bottom + this->_height / 2 - 4;
 					this->_stepOnStair = StepOnStair::Step0;
-					this->_Left = true;
+					this->_dirMoveStair = true;
 				}else
 				{
 					//if (this->_moveMent == SimonMove::PrepareDownTheStairRight)
@@ -667,10 +733,12 @@ void Simon::processInput()
 					{
 						this->_moveMent = SimonMove::DownStair;
 						this->_finish_MoveStair = false;
-						this->_Left = false;
-						this->_pos.x = _rectOfStair.left;//  - this->_width / 4;
-						this->_pos.y = _rectOfStair.bottom + this->_height / 2;
+						this->_start_MoveStair = false;
+
+						this->posPrepareOnStair.x = _rectOfStair.right - (_rectOfStair.right - _rectOfStair.left) / 2 ;// + this->_width / 4;
+						this->posPrepareOnStair.y = _rectOfStair.bottom + this->_height / 2 - 4;
 						this->_stepOnStair = StepOnStair::Step0;
+						this->_dirMoveStair = false;
 					}else
 					{
 						if (this->_moveMent == SimonMove::OnStairUp || this->_moveMent == SimonMove::OnStairDown)
@@ -716,22 +784,30 @@ void Simon::processInput()
 			
 			this->_finish_MoveStair = false;
 			this->_start_MoveStair = false;
-			posStartMoveStair.x = _rectOfStair.right;
-			posStartMoveStair.y = _rectOfStair.bottom + this->_height / 2;
+
+			this->_dirMoveStair = true;
+			posPrepareOnStair.x = _rectOfStair.right - 4;
+			posPrepareOnStair.y = _rectOfStair.bottom + this->_height / 2 - 4;
 			//this->_pos.x = _rectOfStair.right;
 			//this->_pos.y = _rectOfStair.bottom + this->_height / 2;
 			this->_stepOnStair = StepOnStair::Step0;
-			this->_Left = true;
+			//this->_Left = true;
 		}else
 		{
 			//if (this->_moveMent == SimonMove::PrepareDownTheStairRight)
-			if (this->_prepareUpStairRight && !this->_onStair)
+			if (this->_prepareUpStairRight && !this->_onStair && !this->_collisionEnemy)
 			{
 				this->_moveMent = SimonMove::UpStair;
 				this->_finish_MoveStair = false;
-				this->_Left = false;
-				this->_pos.x = _rectOfStair.left;// + (_rectOfStair.right - _rectOfStair.left) / 2
-				this->_pos.y = _rectOfStair.bottom + this->_height / 2;
+				this->_start_MoveStair = false;
+				//this->_Left = false;
+				//this->_pos.x = _rectOfStair.left;// + (_rectOfStair.right - _rectOfStair.left) / 2
+				//this->_pos.y = _rectOfStair.bottom + this->_height / 2;
+				
+				this->_dirMoveStair = false;
+
+				this->posPrepareOnStair.x = _rectOfStair.left + 4;
+				this->posPrepareOnStair.y = _rectOfStair.bottom + this->_height / 2 - 4;
 				this->_stepOnStair = StepOnStair::Step0;
 			}else
 			{
@@ -745,7 +821,6 @@ void Simon::processInput()
 					this->_moveMent = SimonMove::UpStair;
 					this->_finish_MoveStair = false;
 					this->_stepOnStair = StepOnStair::Step0;
-					
 				}
 			}
 		}
@@ -1023,7 +1098,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 								if (this->_moveMent == SimonMove::Moves || this->_moveMent == SimonMove::Idle || this->_onStair)
 								{
 									//chenh lech khong qua 5 pixel -- chuan bi ra khoi cau thang
-									if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 5  && this->_finish_MoveStair)
+									if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 10  && this->_finish_MoveStair)
 									{
 										this->_prepareUpStairLeft = true;
 										//this->_moveMent = SimonMove::PrepareUpTheStairLeft;
@@ -1035,7 +1110,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 										{
 											{
 												this->_moveMent = SimonMove::Idle;
-												this->_pos.y = _rectOfStair.bottom + this->_height / 2;
+												this->_pos.y = _rectOfStair.bottom + this->_height / 2 - 4;
 											}
 										}
 									}
@@ -1053,7 +1128,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 								{
 									if (this->_moveMent == SimonMove::Moves || this->_moveMent == SimonMove::Idle || this->_onStair )
 									{
-										if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 5 && this->_finish_MoveStair)
+										if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 10 && this->_finish_MoveStair)
 										{
 											this->_prepareDownStairLeft = true;
 											//this->_moveMent = SimonMove::PrepareDownTheStairLeft;
@@ -1064,7 +1139,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 											if (this->_onStair)
 											{
 												this->_moveMent = SimonMove::Idle;
-												this->_pos.y = _rectOfStair.bottom + this->_height / 2;
+												this->_pos.y = _rectOfStair.bottom + this->_height / 2 - 4;
 											}
 										}
 										
@@ -1082,7 +1157,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 										if (this->_moveMent == SimonMove::Moves || this->_moveMent == SimonMove::Idle || this->_onStair)
 										{
 											//chenh lech khong qua 5 pixel. Dang o buoc chan so dau tien
-											if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 5 && this->_finish_MoveStair)
+											if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 10 && this->_finish_MoveStair)
 											{
 												this->_prepareUpStairRight = true;
 												//this->_moveMent = SimonMove::PrepareUpTheStairRight;
@@ -1093,7 +1168,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 												if (this->_onStair)
 												{
 													this->_moveMent = SimonMove::Idle;
-													this->_pos.y = _rectOfStair.bottom + this->_height / 2;
+													this->_pos.y = _rectOfStair.bottom + this->_height / 2 - 4;
 												}
 											}
 										}
@@ -1110,7 +1185,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 											if (this->_moveMent == SimonMove::Moves || this->_moveMent == SimonMove::Idle || this->_onStair)
 											{
 												//chenh lech khong qua 5 pixel -- ra khoi cau thang
-												if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 5 && this->_finish_MoveStair)
+												if ( abs(this->getRect().bottom - hideObj->getRect().bottom) < 10 && this->_finish_MoveStair)
 												{
 													this->_prepareDownStairRight = true;
 													//this->_moveMent = SimonMove::PrepareDownTheStairRight;
@@ -1121,7 +1196,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 													if (this->_onStair)
 													{
 														this->_moveMent = SimonMove::Idle;
-														this->_pos.y = _rectOfStair.bottom + this->_height / 2;
+														this->_pos.y = _rectOfStair.bottom + this->_height / 2 - 4;
 													}
 												}
 											}
