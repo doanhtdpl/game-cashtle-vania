@@ -24,9 +24,9 @@ private:
 	bool openGate;
 public:
 	//bien co cho khi simon dung item watch
-  static	bool isUseWatchItem;
-   int maxNumberSecondEffect;
- 	int currentNumberSecondEffect;
+	static bool isUseWatchItem;
+	float maxNumberSecondEffect;
+ 	float currentNumberSecondEffect;
 	
  
    static int _score;
