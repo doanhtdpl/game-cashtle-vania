@@ -88,16 +88,24 @@ void ManageGame::gameUpdate(float deltaTime)
 		}
 		else if (obj->className() == TagClassName::getInstance()->tagEnemy)
 		{
+			Enemy* enemy = (Enemy*)obj;
 			//kiem tra simon co su dung item watch
 			if (this->isUseWatchItem == true)
 			{
-
-			}
+				this->currentNumberSecondEffect += deltaTime;
+				if (currentNumberSecondEffect >= this->maxNumberSecondEffect)
+				{
+					currentNumberSecondEffect = 0;
+					isUseWatchItem = false;
+				}
+				enemy->pause = true;
+			}						
 			else
 			{
-				DynamicObject* dynamicObject = (DynamicObject*)obj;
-				obj->update(deltaTime, arr);
-			}				
+				enemy->pause = false;
+			}
+
+			enemy->update(deltaTime, arr);							
 		}
 		else
 		{

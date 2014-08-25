@@ -36,6 +36,7 @@ Enemy::Enemy(std::vector<std::string> arr)
 
 	this->_canFree = false;
 	//QuadTreeObject::eraseObject()
+	this->pause = false;
 }
 
 std::string Enemy::className()
@@ -336,15 +337,20 @@ void Enemy::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollisi
 	if (_timeDelayCur >= 0)
 	{
 		_timeDelayCur -= delta_Time;
-	}else
+	}
+	else
 	{
-		animated(delta_Time);
+		if (this->pause == false)
+		{
+			animated(delta_Time);
+
+			updateMovement(delta_Time);
+
+			handleCollision(delta_Time, _listObjectCollision);
+
+			move(delta_Time);
+		}
 		
-		updateMovement(delta_Time);
-
-		handleCollision(delta_Time, _listObjectCollision);
-
-		move(delta_Time);
 	}
 	this->_rectRS = this->updateRectRS(this->_width, this->_height);
 }

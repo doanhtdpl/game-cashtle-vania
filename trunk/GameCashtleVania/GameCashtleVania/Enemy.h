@@ -42,6 +42,7 @@ enum class TypeEnemy
 class Enemy : public DynamicObject,public IAnimatedSprite
 {
 public:
+	bool pause;
 	virtual std::string className();
 	virtual void move(float delta_Time);
 	virtual void animated(float deltaTime);
