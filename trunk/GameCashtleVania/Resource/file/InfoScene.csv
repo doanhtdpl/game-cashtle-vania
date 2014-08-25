@@ -3,4 +3,4 @@ Level,IDScene,iD_Scene_Restart,iD_Scene_Next,finalScene,bPath,bQuadTree,mPath,mQ
 1,2,2,3,0,..\Resource\MapBackGround\bLevel1Scene2.txt,..\Resource\MapBackGround\bLevel1Scene2quadTree.txt,..\Resource\map\level1scene2GO.txt,..\Resource\map\level1scene2QTGO.txt,60,64
 1,3,3,4,0,..\Resource\MapBackGround\bLevel1Scene2.txt,..\Resource\MapBackGround\bLevel1Scene2quadtree.txt,..\Resource\map\level1scene3GO.txt,..\Resource\map\level1scene3QTGO.txt,3188,257
 1,4,3,3,0,..\Resource\MapBackGround\bLevel1Scene3.txt,..\Resource\MapBackGround\bLevel1Scene3quadtree.txt,..\Resource\map\level1scene4GO.txt,..\Resource\map\level1scene4QTGO.txt,60,64
-1,5,5,0,1,..\Resource\MapBackGround\bLevel1Scene2.txt,..\Resource\MapBackGround\bLevel1Scene2quadtree.txt,..\Resource\map\level1scene2GO.txt,..\Resource\map\level1scene5QTGO.txt,4194,256
+1,5,5,0,1,..\Resource\MapBackGround\bLevel1Scene2.txt,..\Resource\MapBackGround\bLevel1Scene2quadtree.txt,..\Resource\map\level1scene5GO.txt,..\Resource\map\level1scene5QTGO.txt,4194,256
