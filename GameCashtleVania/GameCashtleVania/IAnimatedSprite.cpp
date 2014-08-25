@@ -39,7 +39,6 @@ void IAnimatedSprite::animated(float deltaTime)
 
 		_beforeTimeOld -= _elapseTimeSwitchFrame;
 	}
-	
 }
 
 RECT* IAnimatedSprite::updateRectRS(int width, int height)

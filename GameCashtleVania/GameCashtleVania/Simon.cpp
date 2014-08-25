@@ -1420,6 +1420,21 @@ void Simon::addHeart(int numberHeart)
 	this->count_Heart += numberHeart;
 }
 
+bool Simon::autoMove(float posXTarget, float deltaTime)
+{
+	float distance = posXTarget - _pos.x;
+
+	if (distance > this->_Vx_default * deltaTime)
+	{
+		_pos.x +=  this->_Vx_default * deltaTime;
+		return false;
+	}else
+	{
+		_pos.x = posXTarget;
+		return true;
+	}
+}
+
 void Simon::addCoin(int _coin)
 {
 	this->coin += _coin;

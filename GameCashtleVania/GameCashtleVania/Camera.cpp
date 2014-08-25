@@ -68,6 +68,22 @@ void Camera::update(float x, float deltaTime)
 	}
 }
 
+bool Camera::move(float vx, float posXTarget, float deltaTime)
+{
+	float x_target = posXTarget - Screen_Width / 2;
+	float distance = x_target - _pos.x;
+	
+	if (distance > vx * deltaTime)
+	{
+		_pos.x += vx * deltaTime;
+		return false;
+	}else
+	{
+		_pos.x = x_target;
+		return true;
+	}
+}
+
 void Camera::setBound(RECT rect)
 {
 	this->_boundScene = rect;

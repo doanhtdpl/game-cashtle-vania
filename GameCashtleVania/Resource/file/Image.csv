@@ -36,5 +36,9 @@ ID_Image,filename
 1510,..\Resource\image\weapon\FireBomb2.png
 1604,..\Resource\image\ground\BigLight.png
 1605,..\Resource\image\ground\SmallLight.png
-2001,..\Resource\MapBackGround\backGround.png
+1651,..\Resource\image\ground\Gate.png
+1652,..\Resource\image\ground\Gate2.png
+1653,..\Resource\image\ground\MovingPlatform.png
+1654,..\Resource\image\ground\7.png
+2001,..\Resource\MapBackGround\bgLevel1.png
 2002,..\Resource\MapBackGround\bg.png

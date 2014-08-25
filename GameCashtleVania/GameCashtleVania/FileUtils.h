@@ -10,7 +10,7 @@
 
 #define fileSimon "..\\Resource\\file\\Simon.csv"
 #define fileIronRod "..\\Resource\\file\\IronRod.csv"
-#define fileGroundBG "..\\Resource\\file\\GroundBG.csv"
+#define fileGround "..\\Resource\\file\\Ground.csv"
 #define fileLight "..\\Resource\\file\\Light.csv"
 #define fileItem "..\\Resource\\file\\Item.csv"
 #define fileWeapon "..\\Resource\\file\\Weapon.csv"
