@@ -9,6 +9,7 @@
 #include "EnemyFactory.h"
 #include "EffectFactory.h"
 #include "ManageAudio.h"
+#include "GroundBGFac.h"
 
 using namespace std;
 
@@ -82,6 +83,7 @@ void FileUtils::loadCSV()
     this->readFileCSV(fileItem, ItemFactory::getInstance());
 	this->readFileCSV(fileEnemy, EnemyFactory::getInstance());
 	this->readFileCSV(fileEffect, EffectFactory::getInstance());
+	this->readFileCSV(fileGround, GroundBGFac::getInstance());
 
 	this->readFileImage();
 	this->readFileAudio();
@@ -162,13 +164,19 @@ std::vector<std::vector<std::string>> FileUtils::readFile(std::string filePath, 
 	ifstream* myfile = new ifstream(filePath);
 	if (myfile->is_open())
 	{
-		while ( !myfile->eof() ) 
+		while ( !myfile->eof() )
 		{
 			if (getline(*myfile, line))
 			{
 				//doc tung dong. cat ra va dua vao info
-				arr = split(line, key);
-				info.push_back(arr);
+				if (line != "")
+				{
+					arr = split(line, key);
+					if (arr.size() > 0)
+					{
+						info.push_back(arr);
+					}
+				}
 			}
 		}
 	}

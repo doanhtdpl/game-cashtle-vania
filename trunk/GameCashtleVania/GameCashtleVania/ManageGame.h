@@ -6,6 +6,7 @@
 #include "QuadTreeBackground.h"
 #include "QuadTreeObject.h"
 #include "Simon.h"
+#include "Gate.h"
 
 class ManageGame : public Game
 {
@@ -20,6 +21,7 @@ private:
 	void nextScene();
 	void nextLevel();
 	void changeScene(float deltaTime);
+	bool openGate;
 public:
 	//bien co cho khi simon dung item watch
   static	bool isUseWatchItem;
@@ -35,6 +37,7 @@ public:
 	RECT screen;
 	int level;
 	int scene;
+	Gate* gate;
 
 	//khi simon va cham Hide Object change scene thi goi thang nay = true. --> ChangeScene()
 	static bool isChangeScene;

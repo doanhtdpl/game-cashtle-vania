@@ -18,6 +18,7 @@ public:
 	void setBound(RECT rect);
 	float speedX;
 	void update(float x, float deltaTime);
+	bool move(float vx, float posXTarget, float deltaTime);
 	D3DXVECTOR3 getPosCamera();
 	D3DXVECTOR3 getPointTransform(float x, float y);
 	RECT getScreen();

@@ -43,15 +43,6 @@
     <Filter Include="Config\SimonFactoty">
       <UniqueIdentifier>{ad9cd0ba-ee4c-476d-83bf-c2485b6a7250}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\StaticObject\Brick">
-      <UniqueIdentifier>{b7ab5087-310b-49e1-86b8-334ab580ed4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\StaticObject\Stair">
-      <UniqueIdentifier>{907e1f17-c1b9-4490-9bd2-8ecfca003670}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\StaticObject\Door">
-      <UniqueIdentifier>{7798f388-4d28-4b5d-b7d4-4c498f48dcd9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Config\GroundBGFactory">
       <UniqueIdentifier>{568c5ed9-4d6f-4650-a8a9-370a5de76846}</UniqueIdentifier>
     </Filter>
@@ -175,6 +166,18 @@
     <Filter Include="DirectX\Audio">
       <UniqueIdentifier>{e8e39e28-46b5-4280-a862-8e5fc356c6fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\StaticObject\GroundObj\Brick">
+      <UniqueIdentifier>{b7ab5087-310b-49e1-86b8-334ab580ed4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\StaticObject\GroundObj\Door">
+      <UniqueIdentifier>{7798f388-4d28-4b5d-b7d4-4c498f48dcd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\StaticObject\GroundObj\Stair">
+      <UniqueIdentifier>{907e1f17-c1b9-4490-9bd2-8ecfca003670}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\StaticObject\GroundObj\Gate">
+      <UniqueIdentifier>{1ca7b6cf-a3ba-44ad-877e-8896a1187527}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -235,13 +238,13 @@
       <Filter>Config\IronRodFactory</Filter>
     </ClCompile>
     <ClCompile Include="Brick.cpp">
-      <Filter>GameObject\StaticObject\Brick</Filter>
+      <Filter>GameObject\StaticObject\GroundObj\Brick</Filter>
     </ClCompile>
     <ClCompile Include="Stair.cpp">
-      <Filter>GameObject\StaticObject\Stair</Filter>
+      <Filter>GameObject\StaticObject\GroundObj\Stair</Filter>
     </ClCompile>
     <ClCompile Include="Door.cpp">
-      <Filter>GameObject\StaticObject\Door</Filter>
+      <Filter>GameObject\StaticObject\GroundObj\Door</Filter>
     </ClCompile>
     <ClCompile Include="GroundBGFac.cpp">
       <Filter>Config\GroundBGFactory</Filter>
@@ -372,6 +375,9 @@
     <ClCompile Include="ManageAudio.cpp">
       <Filter>DirectX\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="Gate.cpp">
+      <Filter>GameObject\StaticObject\GroundObj\Gate</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h">
@@ -432,13 +438,13 @@
       <Filter>Config\IronRodFactory</Filter>
     </ClInclude>
     <ClInclude Include="Brick.h">
-      <Filter>GameObject\StaticObject\Brick</Filter>
+      <Filter>GameObject\StaticObject\GroundObj\Brick</Filter>
     </ClInclude>
     <ClInclude Include="Stair.h">
-      <Filter>GameObject\StaticObject\Stair</Filter>
+      <Filter>GameObject\StaticObject\GroundObj\Stair</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
-      <Filter>GameObject\StaticObject\Door</Filter>
+      <Filter>GameObject\StaticObject\GroundObj\Door</Filter>
     </ClInclude>
     <ClInclude Include="GroundBGFac.h">
       <Filter>Config\GroundBGFactory</Filter>
@@ -568,6 +574,9 @@
     </ClInclude>
     <ClInclude Include="ManageAudio.h">
       <Filter>DirectX\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Gate.h">
+      <Filter>GameObject\StaticObject\GroundObj\Gate</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

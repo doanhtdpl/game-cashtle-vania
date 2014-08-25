@@ -1,3 +1,5 @@
-ID,ID_Image,Name,Width,Height
-604,1604,BigLight,32,64
-605,1605,SmallLight,16,32
+ID,ID_Image,Name,Width,Height,Coloumn,TotalFrame,ElapseTimeChangeFrame,Vx,Vy
+651,1651,Gate1,96,96,2,2,0.3,
+652,1652,Gate2,96,96,2,2,0.3
+653,1653,MovingPlatform,64,16,1,1,0.0,50,0
+654,1654,Gate1,96,96,2,2,0.3

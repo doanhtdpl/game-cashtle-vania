@@ -27,6 +27,7 @@ public:
 	void processInput();
 	void draw();
 	Box getBox();
+	bool autoMove(float posXTarget, float deltaTime);
 
 	//add Heart
 	void addHeart(int numberHeart);

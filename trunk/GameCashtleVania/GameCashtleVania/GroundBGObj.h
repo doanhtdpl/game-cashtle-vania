@@ -10,6 +10,7 @@ public:
 	GroundBGObj();
 	GroundBGObj(std::vector<std::string> arr);
 	virtual std::string className();
+	virtual void update(float deltaTime);
 protected:
 private:
 };

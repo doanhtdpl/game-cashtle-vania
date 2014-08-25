@@ -32,7 +32,7 @@ ManageGame::ManageGame()
 	//isChangeScene = false;
 	acting = false;
 	this->recentlyChangeScene = false;
-
+	this->openGate = false;
 	this->isUseWatchItem = false;
 	this->maxNumberSecondEffect = 3;
 	this->currentNumberSecondEffect = 0;
@@ -50,6 +50,11 @@ void ManageGame::gameDraw()
 	{
 		quadTreeBG->draw(screen);
 		quadTreeObj->draw(screen);
+
+		if (openGate)
+		{
+			ManageSprite::createInstance()->drawObject(gate);
+		}
 
 		simon->draw();
 	}else
@@ -132,13 +137,40 @@ void ManageGame::changeScene(float deltaTime)
 		acting = true;
 	}else
 	{
-		simon->_moveMent = SimonMove::Moves;
-		simon->animated(deltaTime);
-		if (Itween::getInstance()->MoveTo(simon, deltaTime))
+		if (!openGate)
 		{
-			acting = false;
-			isChangeScene = false;
-			nextScene();
+			if (ManageSprite::createInstance()->_camera->move(simon->_Vx_default, simon->_pos.x, deltaTime))
+			{
+				openGate = true;
+				int ID_Gate = 650 + level;
+				gate = (Gate*)GroundBGFac::getInstance()->createObj(ID_Gate);
+				gate->_pos.x = simon->getRect().right + gate->_width / 2;
+				gate->_pos.y = simon->getRect().bottom + gate->_height / 2;
+				//quadTreeObj->addObjectToQuadTree(gate);
+			}
+		}else
+		{
+			gate->update(deltaTime);
+			if (gate->finish)
+			{
+				simon->_moveMent = SimonMove::Moves;
+				simon->animated(deltaTime);
+				if (simon->autoMove(gate->_pos.x + 100, deltaTime))
+				{
+					if (ManageSprite::createInstance()->_camera->move(simon->_Vx_default, simon->_pos.x, deltaTime))
+					{
+						simon->_moveMent = SimonMove::Idle;
+						acting = false;
+						isChangeScene = false;
+						nextScene();
+					}
+				}
+				/*if (Itween::getInstance()->MoveTo(simon, deltaTime))
+				{
+					
+				}*/
+			}
+			
 		}
 	}
 }
