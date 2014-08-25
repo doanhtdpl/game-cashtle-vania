@@ -1,5 +1,5 @@
 ID,ID_Image,Name,Width,Height,Vx,Vy,ColumnFrame,TotalFrame,ElaspTime,aY,HP,lamda,k
-201,1002,Zombie,34,64,80,100,2,2,0.15,300,2
+201,1002,Zombie,34,64,80,100,2,2,0.15,300,1
 202,1003,BlackLeopard,64,32,180,300,4,4,0.15,800,1
 203,1004,VampireBat,32,32,160,80,4,4,0.15,300,1,200,50
 204,1005,Medusa,32,32,50,50,2,2,0.15,300,1

@@ -11,6 +11,7 @@
 
 
 int ManageGame::_score = 0;
+bool ManageGame::isUseWatchItem = false;
 bool ManageGame::isChangeScene = false;
 
 ManageGame* ManageGame::_instance = NULL;
@@ -31,6 +32,10 @@ ManageGame::ManageGame()
 	//isChangeScene = false;
 	acting = false;
 	this->recentlyChangeScene = false;
+
+	this->isUseWatchItem = false;
+	this->maxNumberSecondEffect = 3;
+	this->currentNumberSecondEffect = 0;
 }
 
 ManageGame::~ManageGame(void)
@@ -71,13 +76,25 @@ void ManageGame::gameUpdate(float deltaTime)
 	while(it != arr.end())
 	{
 		obj = *it++;
-		if (obj->className() == TagClassName::getInstance()->tagItem 
-			|| obj->className() == TagClassName::getInstance()->tagWeapon
-				|| obj->className() == TagClassName::getInstance()->tagEnemy)
+		if (obj->className() == TagClassName::getInstance()->tagItem)
 		{
 			DynamicObject* dynamicObject = (DynamicObject*)obj;
 			obj->update(deltaTime, arr);
-		}else
+		}
+		else if (obj->className() == TagClassName::getInstance()->tagEnemy)
+		{
+			//kiem tra simon co su dung item watch
+			if (this->isUseWatchItem == true)
+			{
+
+			}
+			else
+			{
+				DynamicObject* dynamicObject = (DynamicObject*)obj;
+				obj->update(deltaTime, arr);
+			}				
+		}
+		else
 		{
 			obj->update(deltaTime);
 		}

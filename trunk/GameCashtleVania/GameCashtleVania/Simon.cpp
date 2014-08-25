@@ -107,7 +107,7 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_belowGround = 0;
 
 	//Create Axe
-	this->_typeOfWeaponCurr = TypeWeapon::FireBomb;
+	this->_typeOfWeaponCurr = TypeWeapon::Watch;
 	this->count_Heart = 10;
 	this->coin = 0;
 	this->HP = 10;
@@ -903,7 +903,11 @@ void Simon::processInput()
 					//
 					if (count_Heart > 0)
 					{
-						ManageAudio::getInstance()->playSound(TypeAudio::Hit);
+						if (this->_typeOfWeaponCurr == TypeWeapon::Watch)
+						{
+							ManageGame::getInstance()->isUseWatchItem = true;							
+						}
+						ManageAudio::getInstance()->playSound(TypeAudio::Using_Whip);
 						this->_attacking = true;
 						weaponCurr->_isALive = false;
 						count_Heart --;
@@ -916,7 +920,7 @@ void Simon::processInput()
 			//chua su dung roi
 			if (!this->_attacking && this->_moveMent != SimonMove::DownStair && this->_moveMent != SimonMove::UpStair && !this->_collisionEnemy)
 			{
-				ManageAudio::getInstance()->playSound(TypeAudio::Hit);
+				ManageAudio::getInstance()->playSound(TypeAudio::Using_Whip);
 				this->_attacking = true;
 				IronRod::getInstance()->Use(this->_pos, this->_Left);
 			}
@@ -971,7 +975,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 			if ((hideObj->getTypeHideObject() == TypeHideObect::Ground || hideObj->getTypeHideObject() == TypeHideObect::GroundVertical) && !this->_canFree)
 			{
 				if (timeCollision == 2.0f)
-				{
+				{					
 					// bi va cham theo AABBCheck
 					if (this->_moveMent == SimonMove::Free && normalY > 0)
 					{
@@ -982,6 +986,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 							{
 								this->_collisionEnemy = false;
 							}*/
+							ManageAudio::getInstance()->playSound(TypeAudio::Falling);
 							this->_moveMent = SimonMove::Idle;
 							this->_pos.x += normalX;
 							this->_pos.y += normalY;
@@ -1088,7 +1093,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 						{
 							this->_collisionEnemy = false;
 						}*/
-
+						ManageAudio::getInstance()->playSound(TypeAudio::Falling);
 						this->_pos.y += timeCollision * (deltatime * this->_vy);
 						this->_moveMent = SimonMove::Idle;
 						//this->_vx = 0;
@@ -1330,6 +1335,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 
 		if (obj->className() == TagClassName::getInstance()->tagItem)
 		{
+			
 			Item* item = (Item*)obj;
 			timeCollision = this->collision(item, normalX, normalY, deltatime);
 			if ((timeCollision > 0 && timeCollision < 1.0f) || timeCollision == 2.0f)
@@ -1338,6 +1344,27 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				{
 					item->effectSimon();
 					item->_isALive = false;
+					//phan loai item phat am thanh tuong ung
+					if (obj->_ID == TypeItem::MorningStar)
+					{
+						ManageAudio::getInstance()->playSound(TypeAudio::CollectWeapon);
+					}
+					else if (obj->_ID == TypeItem::Cross)
+					{
+						ManageAudio::getInstance()->playSound(TypeAudio::Holy_Cross);
+						for (std::vector<ObjectGame*>::iterator it  = _listObjectCollision.begin(); it != _listObjectCollision.end(); it++)
+						{
+							if ((*it)->className() == TagClassName::getInstance()->tagEnemy)
+							{
+								(*it)->_isALive = false;
+							}							
+						}
+						
+					}
+					else
+					{
+						ManageAudio::getInstance()->playSound(TypeAudio::Collect_Item);
+					}
 				}
 			}
 
@@ -1364,6 +1391,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 						int dir = this->_Left ? -1 : 1;
 						this->_vx = dir * this->_Vx_default;
 					}
+					
 				}
 			}
 		}

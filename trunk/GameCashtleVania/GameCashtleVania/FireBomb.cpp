@@ -4,7 +4,7 @@
 #include "QuadTreeObject.h"
 #include "WeaponFactory.h"
 #include "ManageSprite.h"
-
+#include "ManageAudio.h"
 FireBomb::FireBomb()
 {
 	this->_vx = this->_Vx_default;
@@ -83,6 +83,8 @@ void FireBomb::handleCollisionWithGround(HideObject* hideObj)
 	//QuadTreeObject::getInstance()->addObjectToQuadTree(fireBomb2);
 	if (!this->colGround)
 	{
+
+		ManageAudio::getInstance()->playSound(TypeAudio::Holy_Water);
 		this->_pos.y = hideObj->getRect().top + this->_height / 2;
 		this->colGround = true;
 		this->_curFrame = 1;

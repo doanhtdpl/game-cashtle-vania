@@ -6,7 +6,7 @@
 #include "Light.h"
 #include "QuadTreeObject.h"
 #include "EffectFactory.h"
-
+#include "ManageAudio.h"
 Weapon::Weapon()
 {
 }
@@ -107,7 +107,7 @@ void Weapon::handleCollision(float delta_Time, std::vector<ObjectGame*> _listObj
 					this->_isALive = false;
 					this->_can_Use_Weapon = true;
 				}
-
+			//	ManageAudio::getInstance()->playSound(TypeAudio::Hit);
 				D3DXVECTOR2 posEffect = D3DXVECTOR2(enemy->_pos.x, this->_pos.y);
 				this->effectWhenAttack(posEffect);
 				//handleCollisionWithEnemy(enemy);

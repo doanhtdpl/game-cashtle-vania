@@ -21,7 +21,13 @@ private:
 	void nextLevel();
 	void changeScene(float deltaTime);
 public:
-	static int _score;
+	//bien co cho khi simon dung item watch
+  static	bool isUseWatchItem;
+   int maxNumberSecondEffect;
+ 	int currentNumberSecondEffect;
+	
+ 
+   static int _score;
 	
 	QuadTreeBackground* quadTreeBG;
 	QuadTreeObject* quadTreeObj;

@@ -2,7 +2,7 @@
 #include "TagClassName.h"
 #include "QuadTreeObject.h"
 #include "ItemManager.h"
-
+#include "ManageAudio.h"
 Enemy::Enemy()
 {
 
@@ -249,6 +249,7 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 			//co va cham
 			if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
 			{
+				
 				_hp --;
 				if (_hp <= 0)
 				{
@@ -297,6 +298,7 @@ void Enemy::isAttack()
 {
 	if (this->_timeDelayCur <= 0)
 	{
+		ManageAudio::getInstance()->playSound(TypeAudio::Hit);
 		this->_hp --;
 		if (_hp <= 0)
 		{
