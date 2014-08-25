@@ -46,6 +46,7 @@ Weapon* WeaponFactory::createObj(int ID)
 		break;
 	case TypeWeapon::Watch:
 		//
+
 		break;
 	default:
 		break;

@@ -1,7 +1,7 @@
 #include "Light.h"
 #include "TagClassName.h"
 #include "ItemManager.h"
-
+#include "ManageAudio.h"
 Light::Light()
 {
 
@@ -42,6 +42,7 @@ Item* Light::effectWhenCollisionRod()
 {
 	Item* item = NULL;
 	this->_isALive = false;
+	ManageAudio::getInstance()->playSound(TypeAudio::Hit);
 	switch (this->_typeLight)
 	{
 	case TypeLight::BigLightDagger:
