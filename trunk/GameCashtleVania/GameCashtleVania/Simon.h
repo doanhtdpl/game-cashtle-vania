@@ -27,7 +27,10 @@ public:
 	void processInput();
 	void draw();
 	Box getBox();
-	bool autoMove(float posXTarget, float deltaTime);
+	bool autoMove(D3DXVECTOR2 posTarget, float deltaTime);
+
+	bool donePrepare;
+	D3DXVECTOR2 posTarget;
 
 	//add Heart
 	void addHeart(int numberHeart);
@@ -48,6 +51,11 @@ public:
 	bool _prepareUpStairRight;
 	bool _prepareDownStairLeft;
 	bool _prepareDownStairRight;
+
+	bool _prepareChangeTop;//chuan bi change top.
+	bool _prepareChangeDown;
+	bool _changingTop;//dang hanh dong viec di chuyen de change scene.
+	bool _changingDown;
 
 	//co the roi hay ko
 	float distanceFree;

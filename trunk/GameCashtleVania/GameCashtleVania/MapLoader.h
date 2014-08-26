@@ -19,6 +19,8 @@ public:
 	int iD_Scene_Restart;//lay ID cua level duoc restart khi dang choi level nay
 	int iD_Scene_Next;//lay ID cua scene tiep theo
 	D3DXVECTOR2 _posSimon;
+	int width;
+	int height;
 	bool finalScene;//scene cuoi cung cua level do
 	RECT _bound;
 	std::string bGPath;//duong dan toi background
