@@ -13,6 +13,8 @@ enum class TypeHideObect
 	UpStairRight = 714, // 32 - 32
 	ChangeTop = 715, // 32 - 32
 	ChangeDown = 716, // 32 - 32
+	ChangeTopLeft = 717, // 32 - 32
+	ChangeDownLeft = 718, // 32 - 32
 	GroundVertical = 712
 };
 #endif // !__TYPE__HIDE__OBJECT__

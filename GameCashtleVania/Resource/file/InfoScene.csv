@@ -1,6 +1,6 @@
-Level,IDScene,iD_Scene_Restart,iD_Scene_Next,finalScene,bPath,bQuadTree,mPath,mQuadTree,posXSimon,posYSiMon
-1,1,1,2,0,..\Resource\MapBackGround\level1scene1.txt,..\Resource\MapBackGround\level1scene1quadtree.txt,..\Resource\map\level1scene1GO.txt,..\Resource\map\level1scene1QTGO.txt,60,100
-1,2,2,3,0,..\Resource\MapBackGround\level1scene2.txt,..\Resource\MapBackGround\level1scene2quadtree.txt,..\Resource\map\level1scene2GO.txt,..\Resource\map\level1scene2QTGO.txt,2000,64
-1,3,3,4,0,..\Resource\MapBackGround\level1scene3.txt,..\Resource\MapBackGround\level1scene3quadtree.txt,..\Resource\map\level1scene3GO.txt,..\Resource\map\level1scene3QTGO.txt,60,64
-1,4,3,3,0,..\Resource\MapBackGround\level1scene4.txt,..\Resource\MapBackGround\level1scene4quadtree.txt,..\Resource\map\mLevel1Scene4GO.txt,..\Resource\map\mLevel1Scene4QTGO.txt,60,64
-1,5,5,0,1,..\Resource\MapBackGround\level1scene5.txt,..\Resource\MapBackGround\level1scene5quadtree.txt,..\Resource\map\mLevel1Scene5TS.pngGO.txt,..\Resource\map\mLevel1Scene5TS.pngQTGO.txt,60,64
+Level,IDScene,iD_Scene_Restart,iD_Scene_Next,finalScene,bPath,bQuadTree,mPath,mQuadTree,posXSimon,posYSiMon,Width,Height
+1,1,1,2,0,..\Resource\MapBackGround\level1scene1.txt,..\Resource\MapBackGround\level1scene1quadtree.txt,..\Resource\map\level1scene1GO.txt,..\Resource\map\level1scene1QTGO.txt,60,62,1536,320
+1,2,2,3,0,..\Resource\MapBackGround\level1scene2.txt,..\Resource\MapBackGround\level1scene2quadtree.txt,..\Resource\map\level1scene2GO.txt,..\Resource\map\level1scene2QTGO.txt,60,62,3072,352
+1,3,3,4,0,..\Resource\MapBackGround\level1scene3.txt,..\Resource\MapBackGround\level1scene3quadtree.txt,..\Resource\map\level1Scene3TSGO.txt,..\Resource\map\level1Scene3TSQTGO.txt,128,254,1120,352
+1,4,3,3,0,..\Resource\MapBackGround\level1scene4.txt,..\Resource\MapBackGround\level1scene4quadtree.txt,..\Resource\map\level1scene4GO.txt,..\Resource\map\level1scene4QTGO.txt,128,340,1024,384
+1,5,5,0,1,..\Resource\MapBackGround\level1scene5.txt,..\Resource\MapBackGround\level1scene5quadtree.txt,..\Resource\map\mLevel1Scene5TS.pngGO.txt,..\Resource\map\mLevel1Scene5TS.pngQTGO.txt,128,254,1536,352

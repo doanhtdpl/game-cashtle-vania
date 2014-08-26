@@ -4,15 +4,17 @@
 #include "ManageSprite.h"
 #include "SimonFactory.h"
 #include "Simon.h"
-#include "MapLoader.h"
 #include "TagClassName.h"
 #include "Itween.h"
 #include "ManageAudio.h"
 #include "GroundBGFac.h"
+#include "utils.h"
 
 int ManageGame::_score = 0;
 bool ManageGame::isUseWatchItem = false;
 bool ManageGame::isChangeScene = false;
+bool ManageGame::isChangeTop = false;
+bool ManageGame::isChangeDown = false;
 
 ManageGame* ManageGame::_instance = NULL;
 
@@ -125,6 +127,17 @@ void ManageGame::gameUpdate(float deltaTime)
 		changeScene(deltaTime);
 	}
 
+	if (isChangeDown)
+	{
+		this->changeSceneDown();
+		isChangeDown = false;
+	}
+
+	if (isChangeTop)
+	{
+		this->changeSceneTop();
+		isChangeTop = false;
+	}
 	//delete obj;
 	arr.clear();
 	
@@ -132,89 +145,148 @@ void ManageGame::gameUpdate(float deltaTime)
 
 void ManageGame::changeScene(float deltaTime)
 {
-	
-	if (!acting)
+	int Id_scene = this->level * 10 + this->scene;
+	int posXSimonTarget;
+	int posXCamera;
+	D3DXVECTOR2 posGate;
+	switch (Id_scene)
 	{
-		//chua dien ra hanh dong
-		D3DXVECTOR2 posFrom = simon->_pos;
-		D3DXVECTOR2 posTo = D3DXVECTOR2(simon->_pos.x + 300, simon->_pos.y);
-		D3DXVECTOR2 speed = D3DXVECTOR2(simon->_Vx_default, 0);
+	case 11:
+		//level 1 scene 1
+		simon->_moveMent = SimonMove::Moves;
+		simon->animated(deltaTime);
+		if(simon->autoMove(D3DXVECTOR2(simon->_pos.x + 300, simon->_pos.y), deltaTime))
+		{
+			acting = false;
+			isChangeScene = false;
+			nextScene(1);
+		}
+		break;
+	case 12:
+		//level 1 scene 2
+		if (changeSceneWithGate(deltaTime))
+		{
+			isChangeScene = false;
+			nextScene(1);
+		}
+		break;
+	case 13:
+		//level 1 scene 3
+		if (changeSceneWithGate(deltaTime))
+		{
+			isChangeScene = false;
+			nextScene(2);
+		}
+		break;
+	default:
+		break;
+	}
+	//simon->animated(deltaTime);
+}
 
-		Itween::getInstance()->posFrom = posFrom;
-		Itween::getInstance()->posTo = posTo;
-		Itween::getInstance()->speed = speed;
-		Itween::getInstance()->timeDelay = 2.0;
-		Itween::getInstance()->wasActing = false;
-		acting = true;
+bool ManageGame::changeSceneWithGate(float deltaTime)
+{
+	int Id_scene = this->level * 10 + this->scene;
+	int posXSimonTarget;
+	int posXCamera;
+
+	if (!openGate)
+	{
+		if (ManageSprite::createInstance()->_camera->move(simon->_Vx_default, simon->_pos.x, deltaTime))
+		{
+			openGate = true;
+			int ID_Gate = 650 + level;
+			gate = (Gate*)GroundBGFac::getInstance()->createObj(ID_Gate);
+			gate->_pos.x = simon->getRect().right + 32;
+			gate->_pos.y = simon->getRect().bottom + gate->_height / 2;
+			gate->finish = false;
+			this->finish_simon_automove = false;
+			//quadTreeObj->addObjectToQuadTree(gate);
+		}
 	}else
 	{
-		if (!openGate)
+		gate->update(deltaTime);
+		if (gate->finish)
 		{
-			if (ManageSprite::createInstance()->_camera->move(simon->_Vx_default, simon->_pos.x, deltaTime))
-			{
-				openGate = true;
-				int ID_Gate = 650 + level;
-				gate = (Gate*)GroundBGFac::getInstance()->createObj(ID_Gate);
-				gate->_pos.x = simon->getRect().right + gate->_width / 2;
-				gate->_pos.y = simon->getRect().bottom + gate->_height / 2;
-				//quadTreeObj->addObjectToQuadTree(gate);
-			}
-		}else
-		{
-			gate->update(deltaTime);
-			if (gate->finish)
+			if (!finish_simon_automove)
 			{
 				simon->_moveMent = SimonMove::Moves;
-				simon->animated(deltaTime);
-				if (simon->autoMove(gate->_pos.x + 100, deltaTime))
+				posXSimonTarget = this->_infoScene->width + 128;
+				this->finish_simon_automove = simon->autoMove(D3DXVECTOR2(posXSimonTarget, simon->_pos.y), deltaTime);
+			}else
+			{
+				simon->_moveMent = SimonMove::Idle;
+				posXCamera = this->_infoScene->width + Screen_Width / 2;
+				if (ManageSprite::createInstance()->_camera->move(simon->_Vx_default, posXCamera, deltaTime))
 				{
-					if (ManageSprite::createInstance()->_camera->move(simon->_Vx_default, simon->_pos.x, deltaTime))
-					{
-						simon->_moveMent = SimonMove::Idle;
-						acting = false;
-						isChangeScene = false;
-						nextScene();
-					}
-				}
-				/*if (Itween::getInstance()->MoveTo(simon, deltaTime))
-				{
+					this->finish_simon_automove = false;
+					this->openGate = false;
 					
-				}*/
+					acting = false;
+					return true;
+				}
 			}
-			
+			simon->animated(deltaTime);
 		}
+	}
+
+	return false;
+}
+
+void ManageGame::changeSceneDown()
+{
+	if (this->_infoScene->level == 1)
+	{
+		//lay vi tri simon truoc khi chuyen scene
+		D3DXVECTOR2 posSimonDown = D3DXVECTOR2(simon->_pos.x, 348);
+		nextScene(1);	
+		//cap nhap lai vi tri simon
+		simon->_pos = posSimonDown;
+		simon->_changingDown = false;
 	}
 }
 
-void ManageGame::nextScene()
+void ManageGame::changeSceneTop()
 {
-	InfoScene* infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
-	if (infoScene->finalScene)
+	if (level == 1)
+	{
+		D3DXVECTOR2 posSimonTop = D3DXVECTOR2(simon->_pos.x, 45);
+		nextScene(-1);
+		simon->_pos = posSimonTop;
+		simon->_changingTop = false;
+	}
+	
+}
+
+void ManageGame::nextScene(int increaseScene)
+{
+	this->_infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
+	if (this->_infoScene->finalScene)
 	{
 		nextLevel();
 	}else
 	{
-		this->scene++;
-		infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
+		this->scene += increaseScene;
+		this->_infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
 
 		//dua thong tin file cho quadtree
 		quadTreeBG->clearDataQuadtree();
 		quadTreeObj->clearDataQuadtree();
 
-		quadTreeBG->fileMap = infoScene->bGPath;
-		quadTreeBG->fileQuadtree = infoScene->bGQuadTree;
+		quadTreeBG->fileMap = this->_infoScene->bGPath;
+		quadTreeBG->fileQuadtree = this->_infoScene->bGQuadTree;
 		quadTreeBG->loadMap();
 
-		quadTreeObj->fileMap = infoScene->mapPath;
-		quadTreeObj->fileQuadtree = infoScene->mQuadTree;
+		quadTreeObj->fileMap = this->_infoScene->mapPath;
+		quadTreeObj->fileQuadtree = this->_infoScene->mQuadTree;
 		quadTreeObj->loadMap();
 
 		//xet lai bound cho camera
-		ManageSprite::createInstance()->_camera->setBound(infoScene->getBound());
-		simon->_boundScene = infoScene->getBound();
+		ManageSprite::createInstance()->_camera->setBound(this->_infoScene->getBound());
+		simon->_boundScene = this->_infoScene->getBound();
 
 		quadTreeObj->upDateQuadTree(this->screen);
-		simon->_pos = infoScene->_posSimon;
+		simon->_pos = this->_infoScene->_posSimon;
 		//quadTreeObj->addObjectToQuadTree(simon);
 		ManageSprite::createInstance()->_camera->stopScrollScreen = false;
 		this->recentlyChangeScene = true;
@@ -256,30 +328,42 @@ void ManageGame::gameInit()
 	quadTreeObj = QuadTreeObject::getInstance();
 	
 	level = 1;
-	scene = 2;
+	scene = 1;
 	ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
 
-	InfoScene* infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
+	this->_infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
 	//dua thong tin file cho quadtree
 
-	quadTreeBG->fileMap = infoScene->bGPath;
-	quadTreeBG->fileQuadtree = infoScene->bGQuadTree;
+	quadTreeBG->fileMap = this->_infoScene->bGPath;
+	quadTreeBG->fileQuadtree = this->_infoScene->bGQuadTree;
 	quadTreeBG->loadMap();
 
-	quadTreeObj->fileMap = infoScene->mapPath;
-	quadTreeObj->fileQuadtree = infoScene->mQuadTree;
+	quadTreeObj->fileMap = this->_infoScene->mapPath;
+	quadTreeObj->fileQuadtree = this->_infoScene->mQuadTree;
 	quadTreeObj->loadMap();
 
 	//add simon vao quad tre
 	
 	//quadTreeObj->addObjectToQuadTree(simon);
 
-	ManageSprite::createInstance()->_camera->setBound(infoScene->getBound());
+	ManageSprite::createInstance()->_camera->setBound(this->_infoScene->getBound());
 	screen = ManageSprite::createInstance()->_camera->getScreen();
-	simon->_boundScene = infoScene->getBound();
-	simon->_pos = infoScene->_posSimon;
+	simon->_boundScene = this->_infoScene->getBound();
+	simon->_pos = this->_infoScene->_posSimon;
 
 	quadTreeObj->upDateQuadTree(screen);
+}
+
+bool ManageGame::pauseGame(float deltaTime)
+{
+	this->_timePause -= deltaTime;
+	if (this->_timePause <= 0)
+	{
+		return true;
+	}else
+	{
+		return false;
+	}
 }
 
 void ManageGame::delete_Memory_Game()

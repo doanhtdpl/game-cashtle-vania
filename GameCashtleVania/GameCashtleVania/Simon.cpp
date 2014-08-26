@@ -72,7 +72,7 @@ Simon::Simon(std::vector<std::string> arr)
 
 	this->_rectRS = this->updateRectRS(this->_width, this->_height);
 
-	_moveMent = SimonMove::Free;
+	_moveMent = SimonMove::Idle;
 	this->_CanJum = true;
 	this->_CanMoveL = true;
 	this->_CanMoveR = true;
@@ -102,12 +102,17 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_elapseTimeMoveStair = this->_elapseTimeSwitchFrame * 1.2;
 	this->_timeDelayMoveStair = 0.0f;
 
+	this->_prepareChangeDown = false;
+	this->_prepareChangeTop = false;
+	this->_changingDown = false;
+	this->_changingTop = false;
+
 	this->_canFree = false;
 	this->distanceFree = 0;
 	this->_belowGround = 0;
 
 	//Create Axe
-	this->_typeOfWeaponCurr = TypeWeapon::Watch;
+	this->_typeOfWeaponCurr = TypeWeapon::None;
 	this->count_Heart = 10;
 	this->coin = 0;
 	this->HP = 10;
@@ -117,6 +122,10 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_collisionEnemy = false;
 	this->Time_Delay_ColEnemy = 2.0f;
 	this->_timeDelayColEnemy = 0.0f;
+
+	//chuan bi de auto move
+	this->donePrepare = false;
+	
 }
 
 Box Simon::getBox()
@@ -152,8 +161,8 @@ void Simon::updateMovement(float delta_Time)
 		}else
 		{
 			this->_CanJum = true;
-			this->_CanMoveL = true;
-			this->_CanMoveR = true;
+			//this->_CanMoveL = true;
+			//this->_CanMoveR = true;
 			this->_High_Jumped = 0;
 			this->_vy = 0;
 
@@ -230,6 +239,12 @@ void Simon::updateMovement(float delta_Time)
 				{
 					this->_moveMent = SimonMove::OnStairUp;
 					this->_finish_MoveStair = true;
+					if (this->_changingTop)
+					{
+						ManageGame::isChangeTop = true;
+						this->_changingTop = false;
+						//ManageGame::getInstance()->changeSceneTop();
+					}
 				}
 			}
 
@@ -281,6 +296,13 @@ void Simon::updateMovement(float delta_Time)
 				{
 					this->_moveMent = SimonMove::OnStairDown;
 					this->_finish_MoveStair = true;
+
+					if (this->_changingDown)
+					{
+						ManageGame::isChangeDown = true;
+						this->_changingDown = false;
+						//ManageGame::getInstance()->changeSceneDown();
+					}
 				}
 			}
 
@@ -670,6 +692,7 @@ void Simon::processInput()
 		{
 			this->_moveMent = SimonMove::Moves;
 			this->_Left = false;
+			this->_CanMoveL = true;
 		}
 
 		if (this->_moveMent == SimonMove::OnStairUp)
@@ -710,6 +733,7 @@ void Simon::processInput()
 			{
 				this->_moveMent = SimonMove::Moves;
 				this->_Left = true;
+				this->_CanMoveR = true;
 			}
 
 			if (this->_moveMent == SimonMove::OnStairUp)
@@ -807,6 +831,28 @@ void Simon::processInput()
 						}
 					}
 				}
+
+				//if (this->_prepareChangeDown)
+				//{
+				//	this->_changingDown = true;
+				//	this->_moveMent = SimonMove::DownStair;
+				//	//dang dung tren cau thang
+				//	if (this->_onStair)
+				//	{
+				//		this->_Left = this->_dirMoveStair;
+				//		this->_stepOnStair = StepOnStair::Step0;
+				//		this->_start_MoveStair = true;
+				//		this->_finish_MoveStair = false;
+				//	}else
+				//	{
+				//		this->_start_MoveStair = false;
+				//		this->_finish_MoveStair = false;
+				//		this->posPrepareOnStair.x = _rectOfStair.right - (_rectOfStair.right - _rectOfStair.left) / 2 ;// + this->_width / 4;
+				//		this->posPrepareOnStair.y = _rectOfStair.bottom + this->_height / 2 - 4;
+				//		this->_stepOnStair = StepOnStair::Step0;
+				//		this->_dirMoveStair = this->_dirMoveStair;
+				//	}
+				//}
 			}
 
 			//chua chuyen trang thai movement thi chuyen sang ngoi. Truong hop khac cua cac truong hop tren
@@ -877,6 +923,28 @@ void Simon::processInput()
 				}
 			}
 		}
+
+		//if (this->_prepareChangeTop)
+		//{
+		//	this->_changingTop = true;
+		//	this->_moveMent = SimonMove::UpStair;
+		//	//dang dung tren cau thang
+		//	if (this->_onStair)
+		//	{
+		//		this->_Left = this->_dirMoveStair;
+		//		this->_stepOnStair = StepOnStair::Step0;
+		//		this->_start_MoveStair = true;
+		//		this->_finish_MoveStair = false;
+		//	}else
+		//	{
+		//		this->_start_MoveStair = false;
+		//		this->_finish_MoveStair = false;
+		//		this->posPrepareOnStair.x = _rectOfStair.right - (_rectOfStair.right - _rectOfStair.left) / 2 ;// + this->_width / 4;
+		//		this->posPrepareOnStair.y = _rectOfStair.bottom + this->_height / 2 - 4;
+		//		this->_stepOnStair = StepOnStair::Step0;
+		//		this->_dirMoveStair = this->_dirMoveStair;
+		//	}
+		//}
 	}
 #pragma endregion
 
@@ -1277,30 +1345,6 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 											{
 												if ((this->_moveMent == SimonMove::Idle || this->_moveMent == SimonMove::Moves) && !this->_onStair)
 												{
-													////
-													//if (this->_Left)
-													//{
-													//	if ( abs(this->getRect().left - hideObj->_pos.x) < 5 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
-													//	{
-													//		this->_canFree = true;
-													//		this->_moveMent = SimonMove::Free;
-													//		this->_vx = 0;
-													//	}else
-													//	{
-													//		this->_canFree = false;
-													//	}
-													//}else
-													//{
-													//	if ( abs(this->getRect().right - hideObj->_pos.x) < 5 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
-													//	{
-													//		this->_canFree = true;
-													//		this->_moveMent = SimonMove::Free;
-													//		this->_vx = 0;
-													//	}else
-													//	{
-													//		this->_canFree = false;
-													//	}
-													//}
 													if ( abs(this->_pos.x - hideObj->_pos.x) < 25 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
 													{
 														this->_canFree = true;
@@ -1319,7 +1363,55 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 															
 											}
 										}
+
 #pragma endregion
+										else
+										{
+#pragma region Hide Object = Chang Top //di len tren
+
+											if (hideObj->getTypeHideObject() == TypeHideObect::ChangeTop)
+											{
+												if ((timeCollision > 0.0f && timeCollision < 1.0f)|| timeCollision == 2.0f)
+												{
+													//tam thoi thi dung cho scene 1. Change top - Left
+													if ( abs(this->_pos.x - hideObj->_pos.x) < 15 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
+													{
+														this->_changingTop = true;
+														/*this->_dirMoveStair = true;
+														this->_prepareChangeTop = true;
+														this->_rectOfStair = hideObj->getRect();*/
+													}else
+													{
+														this->_changingTop = false;
+													}													
+												}
+											}
+
+#pragma endregion
+											else
+											{
+#pragma region Hide Object = Chang DOWN //di xuong duoi
+
+												if (hideObj->getTypeHideObject() == TypeHideObect::ChangeDown)
+												{
+													//tuong tu change down = Right
+													if ((timeCollision > 0.0f && timeCollision < 1.0f)|| timeCollision == 2.0f)
+													{
+														if ( abs(this->_pos.x - hideObj->_pos.x) < 15  && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
+														{
+															this->_changingDown = true;
+															/*this->_dirMoveStair = false;
+															this->_prepareChangeDown = true;
+															this->_rectOfStair = hideObj->getRect();*/
+														}else
+														{
+															this->_changingDown = false;
+														}
+													}
+												}
+#pragma endregion
+											}
+										}
 									}
 								}
 							}
@@ -1382,7 +1474,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				//va cham voi enemy.
 				if (!this->_collisionEnemy)
 				{
-					if (!this->_onStair)
+					if (!(this->_onStair || this->_moveMent == SimonMove::Sit))
 					{
 						this->_moveMent = SimonMove::Jump;
 						this->_vy = this->_Vy_default;
@@ -1420,18 +1512,27 @@ void Simon::addHeart(int numberHeart)
 	this->count_Heart += numberHeart;
 }
 
-bool Simon::autoMove(float posXTarget, float deltaTime)
+bool Simon::autoMove(D3DXVECTOR2 _posTarget, float deltaTime)
 {
-	float distance = posXTarget - _pos.x;
-
-	if (distance > this->_Vx_default * deltaTime)
+	if (!donePrepare)
 	{
-		_pos.x +=  this->_Vx_default * deltaTime;
+		this->posTarget = _posTarget;
+		this->donePrepare = true;
 		return false;
 	}else
 	{
-		_pos.x = posXTarget;
-		return true;
+		float distance = posTarget.x - _pos.x;
+
+		if (distance > this->_Vx_default * deltaTime)
+		{
+			_pos.x +=  this->_Vx_default * deltaTime;
+			return false;
+		}else
+		{
+			this->donePrepare = false;
+			_pos.x = posTarget.x;
+			return true;
+		}
 	}
 }
 

@@ -17,6 +17,10 @@ public:
 	bool stopScrollScreen;
 	void setBound(RECT rect);
 	float speedX;
+	
+	bool donePrepare;
+	float posXTarget;
+
 	void update(float x, float deltaTime);
 	bool move(float vx, float posXTarget, float deltaTime);
 	D3DXVECTOR3 getPosCamera();
