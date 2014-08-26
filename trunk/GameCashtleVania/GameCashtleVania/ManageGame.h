@@ -7,7 +7,7 @@
 #include "QuadTreeObject.h"
 #include "Simon.h"
 #include "Gate.h"
-
+#include "Banner.h"
 class ManageGame : public Game
 {
 private:
@@ -27,10 +27,12 @@ public:
 	static bool isUseWatchItem;
 	float maxNumberSecondEffect;
  	float currentNumberSecondEffect;
-	
+	//bien quan ly banner
+	BANNER* _banner;
  
    static int _score;
-	
+   float _timeGame;
+
 	QuadTreeBackground* quadTreeBG;
 	QuadTreeObject* quadTreeObj;
 	Simon* simon;

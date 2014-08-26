@@ -18,7 +18,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -40,8 +40,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28August 2009%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28August 2009%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -83,6 +83,7 @@
     <ClCompile Include="Axe.cpp" />
     <ClCompile Include="AxeMan.cpp" />
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="Banner.cpp" />
     <ClCompile Include="BlackKnight.cpp" />
     <ClCompile Include="BlackLeopard.cpp" />
     <ClCompile Include="Boomerang.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Axe.h" />
     <ClInclude Include="AxeMan.h" />
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="Banner.h" />
     <ClInclude Include="BlackKnight.h" />
     <ClInclude Include="BlackLeopard.h" />
     <ClInclude Include="Boomerang.h" />
