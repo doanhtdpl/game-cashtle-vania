@@ -8,7 +8,7 @@
 #include "TagClassName.h"
 #include "Itween.h"
 #include "ManageAudio.h"
-
+#include "GroundBGFac.h"
 
 int ManageGame::_score = 0;
 bool ManageGame::isUseWatchItem = false;
@@ -36,6 +36,8 @@ ManageGame::ManageGame()
 	this->isUseWatchItem = false;
 	this->maxNumberSecondEffect = 3;
 	this->currentNumberSecondEffect = 0;
+
+	this->_banner = new BANNER();
 }
 
 ManageGame::~ManageGame(void)
@@ -44,7 +46,7 @@ ManageGame::~ManageGame(void)
 
 void ManageGame::gameDraw()
 {
-
+	this->_banner->draw();
 	//chuyen scene vua xong thi khong ve
 	if (!recentlyChangeScene)
 	{
@@ -70,6 +72,7 @@ void ManageGame::processInput()
 
 void ManageGame::gameUpdate(float deltaTime)
 {
+	this->_banner->update(deltaTime);
 	ManageSprite::createInstance()->update_Camera(Simon::getInstance()->_pos.x, deltaTime);
 	screen = ManageSprite::createInstance()->_camera->getScreen();
 	quadTreeObj->upDateQuadTree(screen);

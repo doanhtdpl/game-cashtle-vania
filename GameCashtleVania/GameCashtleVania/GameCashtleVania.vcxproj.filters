@@ -178,6 +178,9 @@
     <Filter Include="GameObject\StaticObject\GroundObj\Gate">
       <UniqueIdentifier>{1ca7b6cf-a3ba-44ad-877e-8896a1187527}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Banner">
+      <UniqueIdentifier>{c6a2b805-d11a-4165-9a4f-0fc76d47c9f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -378,6 +381,9 @@
     <ClCompile Include="Gate.cpp">
       <Filter>GameObject\StaticObject\GroundObj\Gate</Filter>
     </ClCompile>
+    <ClCompile Include="Banner.cpp">
+      <Filter>GameObject\Banner</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h">
@@ -577,6 +583,9 @@
     </ClInclude>
     <ClInclude Include="Gate.h">
       <Filter>GameObject\StaticObject\GroundObj\Gate</Filter>
+    </ClInclude>
+    <ClInclude Include="Banner.h">
+      <Filter>GameObject\Banner</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -76,6 +76,7 @@ public:
 	int count_Heart;
 	int HP;
 	int coin;
+	int numberSimon;
 protected:
 	float HeightDefault;
 	float HeightSit;
