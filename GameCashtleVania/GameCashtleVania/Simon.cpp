@@ -34,7 +34,7 @@ Simon* Simon::createInstance(std::vector<std::string> arr)
 
 Simon::Simon() : DynamicObject()
 {
-
+	
 }
 
 std::string Simon::className()

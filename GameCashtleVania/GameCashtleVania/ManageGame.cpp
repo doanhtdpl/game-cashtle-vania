@@ -40,6 +40,8 @@ ManageGame::ManageGame()
 	this->currentNumberSecondEffect = 0;
 
 	this->_banner = new BANNER();
+	this->_timeGame = 10;
+	
 }
 
 ManageGame::~ManageGame(void)
@@ -74,7 +76,7 @@ void ManageGame::processInput()
 
 void ManageGame::gameUpdate(float deltaTime)
 {
-	this->_banner->update(deltaTime);
+	this->_timeGame += deltaTime;
 	ManageSprite::createInstance()->update_Camera(Simon::getInstance()->_pos.x, deltaTime);
 	screen = ManageSprite::createInstance()->_camera->getScreen();
 	quadTreeObj->upDateQuadTree(screen);
@@ -141,6 +143,7 @@ void ManageGame::gameUpdate(float deltaTime)
 	//delete obj;
 	arr.clear();
 	
+	this->_banner->update(deltaTime);
 }
 
 void ManageGame::changeScene(float deltaTime)
@@ -352,6 +355,9 @@ void ManageGame::gameInit()
 	simon->_pos = this->_infoScene->_posSimon;
 
 	quadTreeObj->upDateQuadTree(screen);
+
+	// banner
+	this->_banner->init();
 }
 
 bool ManageGame::pauseGame(float deltaTime)

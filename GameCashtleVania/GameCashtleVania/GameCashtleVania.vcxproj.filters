@@ -181,6 +181,9 @@
     <Filter Include="GameObject\Banner">
       <UniqueIdentifier>{c6a2b805-d11a-4165-9a4f-0fc76d47c9f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DirectX\Font">
+      <UniqueIdentifier>{22df4e04-1bd5-43c9-b54c-40d0a6613d66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -384,6 +387,9 @@
     <ClCompile Include="Banner.cpp">
       <Filter>GameObject\Banner</Filter>
     </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>DirectX\Font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h">
@@ -586,6 +592,9 @@
     </ClInclude>
     <ClInclude Include="Banner.h">
       <Filter>GameObject\Banner</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>DirectX\Font</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
