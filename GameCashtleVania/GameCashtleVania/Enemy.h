@@ -25,7 +25,8 @@ enum class TypeEnemy
 	DRAGON_SKULL_CANNON = 207,
 	BLACK_KNIGHT = 208,
 	WHITE_SKELETON = 209,
-	GHOST = 210
+	GHOST = 210,
+	FIRE_BALL = 211
 };
 #endif // !__TYPE__ENEMY__
 

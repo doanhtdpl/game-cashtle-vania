@@ -9,6 +9,7 @@
 #include "VampireBat.h"
 #include "Medusa.h"
 #include "WhiteSkeleton.h"
+#include "FireBall.h"
 
 EnemyFactory* EnemyFactory::_instance = NULL;
 
@@ -63,6 +64,9 @@ Enemy* EnemyFactory::createObj(int ID)
 		break;
 	case TypeEnemy::WHITE_SKELETON:
 		enemy = new WhiteSkeleton(arr);
+		break;
+	case TypeEnemy::FIRE_BALL:
+		enemy = new FireBall(arr);
 		break;
 	default:
 		break;

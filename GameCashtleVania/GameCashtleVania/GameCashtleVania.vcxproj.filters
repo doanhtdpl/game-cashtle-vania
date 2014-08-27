@@ -16,9 +16,6 @@
     <Filter Include="DirectX\Texture">
       <UniqueIdentifier>{069935ad-7d28-4759-a3e0-f674b5ab9d10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\Interface">
-      <UniqueIdentifier>{830a5d61-f021-431e-8c39-eeb243b17169}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\DynamicObject">
       <UniqueIdentifier>{834f9db5-f01c-4ce4-b7aa-37ed6b448184}</UniqueIdentifier>
     </Filter>
@@ -184,6 +181,12 @@
     <Filter Include="DirectX\Font">
       <UniqueIdentifier>{22df4e04-1bd5-43c9-b54c-40d0a6613d66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\DynamicObject\Enemy\FireBall">
+      <UniqueIdentifier>{a250772e-d5b9-440e-9815-71ad9dfcca22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Interface">
+      <UniqueIdentifier>{830a5d61-f021-431e-8c39-eeb243b17169}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -272,9 +275,6 @@
     </ClCompile>
     <ClCompile Include="DragonSkullCannon.cpp">
       <Filter>GameObject\DynamicObject\Enemy\DragonSkullCannon</Filter>
-    </ClCompile>
-    <ClCompile Include="FishMan.cpp">
-      <Filter>GameObject\DynamicObject\Enemy\FishMan</Filter>
     </ClCompile>
     <ClCompile Include="Ghost.cpp">
       <Filter>GameObject\DynamicObject\Enemy\Ghost</Filter>
@@ -389,6 +389,12 @@
     </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>DirectX\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="FishMan.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\FishMan</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\FireBall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -595,6 +601,9 @@
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>DirectX\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>GameObject\DynamicObject\Enemy\FireBall</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

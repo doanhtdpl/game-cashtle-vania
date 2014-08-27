@@ -10,6 +10,15 @@ public:
 	FishMan();
 	FishMan(std::vector<std::string> arr);
 	void handleCollisionWithFreeObject(float deltatime, HideObject* hideObj);
+	void animated(float deltaTime);
+	void update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
+	void fire();
+	float eslapseTimeFire;
+	float timeFireCur;
+	bool attacking;//dang ban
+	float timeDelayAttack;
+	float timeDelayCur;
+	int countFire;
 protected:
 private:
 };
