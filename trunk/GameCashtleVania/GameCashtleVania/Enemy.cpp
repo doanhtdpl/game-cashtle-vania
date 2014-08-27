@@ -146,7 +146,7 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				if (timeCollision == 2.0f)
 				{
 					// bi va cham theo AABBCheck
-					if (this->_moveMent == EnemyMovement::Free && normalY >= 0)
+					if (this->_moveMent == EnemyMovement::Free && normalY > 0)
 					{
 						//dang roi
 						if (this->getRect().bottom > hideObj->getRect().bottom)
@@ -176,8 +176,6 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 					//Object dang di chuyen qua ben trai
 					if (normalX == 1)
 					{
-
-
 						if (this->_moveMent == EnemyMovement::Jump)
 						{
 							this->_moveMent == EnemyMovement::Free;
@@ -195,11 +193,10 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 					//Object dang di chuyen qua ben phai
 					if (normalX == -1)
 					{
-
-						if (this->_moveMent == EnemyMovement::Jump)
+						/*if (this->_moveMent == EnemyMovement::Jump)
 						{
 							this->_moveMent == EnemyMovement::Free;
-						}
+						}*/
 
 						if (this->_moveMent == EnemyMovement::Moves)
 						{
@@ -237,7 +234,10 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
 				{
 					//xu ly voi doi tuong hide object = Free
-					handleCollisionWithFreeObject(deltatime, hideObj);
+					if (abs(this->getRect().bottom - hideObj->getRect().bottom) < 5)
+					{
+						handleCollisionWithFreeObject(deltatime, hideObj);
+					}
 				}
 			}
 		}

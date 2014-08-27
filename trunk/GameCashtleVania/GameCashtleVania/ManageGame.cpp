@@ -50,7 +50,6 @@ ManageGame::~ManageGame(void)
 
 void ManageGame::gameDraw()
 {
-	this->_banner->draw();
 	//chuyen scene vua xong thi khong ve
 	if (!recentlyChangeScene)
 	{
@@ -67,6 +66,8 @@ void ManageGame::gameDraw()
 	{
 		recentlyChangeScene = false;
 	}
+
+	this->_banner->draw();
 }
 
 void ManageGame::processInput()
@@ -331,7 +332,7 @@ void ManageGame::gameInit()
 	quadTreeObj = QuadTreeObject::getInstance();
 	
 	level = 1;
-	scene = 1;
+	scene = 4;
 	ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
 
 	this->_infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);

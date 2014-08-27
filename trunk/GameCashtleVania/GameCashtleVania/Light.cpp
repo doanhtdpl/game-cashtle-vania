@@ -66,6 +66,9 @@ Item* Light::effectWhenCollisionRod()
 	case TypeLight::SmallLightFireBomb:
 		item = ItemManager::getInstance()->appearItem(TypeItem::FireBomb, this->_pos);
 		break;
+	case TypeLight::SmallLightDoubleShot:
+		item = ItemManager::getInstance()->appearItem(TypeItem::DoubleShot, this->_pos);
+		break;
 	case TypeLight::SmallLightRandom:
 		item = ItemManager::getInstance()->appearItem(this->_pos);
 		break;

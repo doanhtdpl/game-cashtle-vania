@@ -11,7 +11,7 @@ using namespace std;
 
 #define ClassName "Cashtle Vania"
 #define Screen_Width 512
-#define Screen_Height 480
+#define Screen_Height 496
 #define Frame_Rate 60
 #define KEYBOARD_BUFFER_SIZE 256
 
