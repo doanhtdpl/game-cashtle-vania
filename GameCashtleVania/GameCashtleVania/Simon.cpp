@@ -11,6 +11,7 @@
 #include "ManageAudio.h"
 #include <time.h>
 #include <stdlib.h>
+#include "MovingPlatform.h"
 
 Simon* Simon::_instance = NULL;
 
@@ -354,14 +355,16 @@ void Simon::updateMovement(float delta_Time)
 			//	this->_collisionEnemy = false;
 			//}
 		}
-
+		this->_CanMoveL = true;
+		this->_CanMoveR = true;
 		break;
 	case Free:
 		//this->_vy = -this->_Vy_default * 2;
 		this->_vy += this->_ay * delta_Time * 2;
 		this->_High_Jumped = 0;
 		this->_CanJum = false;
-
+		this->_CanMoveL = true;
+		this->_CanMoveR = true;
 		break;
 	default:
 		break;
@@ -816,7 +819,7 @@ void Simon::processInput()
 #pragma region Nhan Phim Down
 
 		//neu de phim Down thi chuyen sang ngoi neu simon dang dung yen
-		if (Input::CreateInstance()->IsKeyDown(DIK_DOWN) || key == DIK_DOWN)
+		if ((Input::CreateInstance()->IsKeyDown(DIK_DOWN) || key == DIK_DOWN) && !this->_attacking)
 		{
 			//if (this->_moveMent == SimonMove::Idle)
 			{
@@ -902,7 +905,7 @@ void Simon::processInput()
 	
 #pragma region Xu ly phim UP
 	//neu de phim Up de di len cau thang
-	if (Input::CreateInstance()->IsKeyDown(DIK_UP) || key == DIK_UP)
+	if ((Input::CreateInstance()->IsKeyDown(DIK_UP) || key == DIK_UP) && !this->_attacking)
 	{
 		//dang o trang thai chuan bi di xuong
 		//if (this->_moveMent == SimonMove::PrepareDownTheStairLeft)
@@ -983,6 +986,16 @@ void Simon::processInput()
 	{
 		if (this->_CanJum)
 		{
+			if (Input::CreateInstance()->IsKeyDown(DIK_RIGHT))
+			{
+				this->_vx = this->_Vx_default;
+			}
+
+			if (Input::CreateInstance()->IsKeyDown(DIK_LEFT))
+			{
+				this->_vx = -this->_Vx_default;
+			}
+
 			this->_moveMent = SimonMove::Jump;
 			this->_vy = this->_Vy_default;
 		}
@@ -1058,9 +1071,9 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 	this->_belowGround = 0;
 	//this->_canFree = false;
 	float timeCollision;
-	for (int i = 0; i < _listObjectCollision.size(); i++)
+	for (std::vector<ObjectGame*>::iterator it = _listObjectCollision.begin(); it != _listObjectCollision.end(); it++)
 	{
-		ObjectGame* obj = _listObjectCollision.at(i);
+		ObjectGame* obj = *it;
 #pragma region Object Game la HideObject
 
 		if (obj->className() == TagClassName::getInstance()->tagHideObject)
@@ -1086,8 +1099,10 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 							}*/
 							ManageAudio::getInstance()->playSound(TypeAudio::Falling);
 							this->_moveMent = SimonMove::Idle;
+							this->_CanMoveL = true;
+							this->_CanMoveR = true;
 							this->_pos.x += normalX;
-							this->_pos.y += normalY;
+							this->_pos.y += normalY - 2;
 							//this->_vx = 0;
 							this->_vy = 0;
 							
@@ -1101,25 +1116,34 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 						if (this->_moveMent == SimonMove::Moves || this->_moveMent == SimonMove::Idle)
 						{
 							this->_moveMent = SimonMove::Idle;
+							/*this->_CanMoveL = true;
+							this->_CanMoveR = true;*/
 							this->_pos.x += normalX;
 							this->_pos.y += normalY;
-							if (this->_Left)
+							if (this->_moveMent == SimonMove::Moves)
 							{
-								this->_pos.x += 3;
-								this->_CanMoveL = false;
-							}else
-							{
-								this->_pos.x -= 3;
-								this->_CanMoveR = false;
+								if (this->_Left)
+								{
+									//this->_pos.x += 3;
+									this->_CanMoveL = false;
+								}else
+								{
+									//this->_pos.x -= 3;
+									this->_CanMoveR = false;
+								}
 							}
+							
 							this->_vx = 0;
 						}else
 						{
 							if (this->_moveMent == SimonMove::Jump || this->_moveMent == SimonMove::Free)
 							{
+								this->_CanMoveL = true;
+								this->_CanMoveR = true;
 								if (hideObj->getTypeHideObject() == TypeHideObect::GroundVertical)
 								{
 									this->_moveMent = SimonMove::Free;
+									
 									this->_pos.x += normalX;
 									this->_pos.y += normalY;
 									this->_vx = 0;
@@ -1157,8 +1181,6 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 								
 							}
 						}
-
-						
 					}
 
 					//Object dang di chuyen qua ben phai
@@ -1189,16 +1211,11 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 					//Obj dang roi
 					if (normalY == 1 && !this->_canFree)
 					{
-					/*	if (this->_collisionEnemy)
-						{
-							this->_collisionEnemy = false;
-						}*/
 						if (hideObj->getTypeHideObject() != TypeHideObect::GroundVertical)
 						{
 							ManageAudio::getInstance()->playSound(TypeAudio::Falling);
-							this->_pos.y += timeCollision * (deltatime * this->_vy);
+							this->_pos.y += timeCollision * (deltatime * this->_vy) + 2;
 							this->_moveMent = SimonMove::Idle;
-							//this->_vx = 0;
 							this->_vy = 0;
 							this->_belowGround ++;
 						}
@@ -1445,7 +1462,31 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 													}
 												}
 #pragma endregion
+												else
+												{
+													if (hideObj->getTypeHideObject() == TypeHideObect::AttackBoss)
+													{
+														if ((timeCollision > 0.0f && timeCollision < 1.0f)|| timeCollision == 2.0f)
+														{
+															ManageSprite::createInstance()->_camera->stopScrollScreen = true;
+															for (std::vector<ObjectGame*>::iterator itEnemy = _listObjectCollision.begin(); itEnemy != _listObjectCollision.end(); itEnemy++)
+															{
+																ObjectGame* objEnemy = *itEnemy;
+																if (objEnemy->className() == TagClassName::getInstance()->tagEnemy)
+																{
+																	Enemy* enemyDie = (Enemy*)objEnemy;
+																	if (enemyDie->_typeEnemy != TypeEnemy::BOSS_LEVEL1 && enemyDie->_typeEnemy != TypeEnemy::BOSS_LEVEL2)
+																	{
+																		enemyDie->_isALive = false;
+																	}
+																}
+															}
+														}
+														
+													}
+												}
 											}
+
 										}
 									}
 								}

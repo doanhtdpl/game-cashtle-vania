@@ -19,12 +19,16 @@ void FireBall::appear(D3DXVECTOR2 pos, bool dir)
 
 void FireBall::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision)
 {
-	this->updateMovement(delta_Time);
-	this->move(delta_Time);
-
-	lifeTime -= delta_Time;
-	if (lifeTime <= 0)
+	if (!this->pause)
 	{
-		this->_isALive = false;
+		this->updateMovement(delta_Time);
+		this->move(delta_Time);
+
+		lifeTime -= delta_Time;
+		if (lifeTime <= 0)
+		{
+			this->_isALive = false;
+		}
 	}
+	
 }

@@ -101,20 +101,19 @@ void Weapon::handleCollision(float delta_Time, std::vector<ObjectGame*> _listObj
 			timeCollision = this->collision((DynamicObject*)obj, normalX, normalY, delta_Time);
 			if((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
 			{
-				enemy->isAttack();
+				D3DXVECTOR2 posEffect = D3DXVECTOR2(enemy->_pos.x, this->_pos.y);
+				if (enemy->isAttack())
+				{
+					this->effectWhenAttack(posEffect);
+				}
+
 				if (this->_typeOfWeapon == TypeWeapon::Dagger)
 				{
 					this->_isALive = false;
 					this->_can_Use_Weapon = true;
 				}
 			//	ManageAudio::getInstance()->playSound(TypeAudio::Hit);
-				D3DXVECTOR2 posEffect = D3DXVECTOR2(enemy->_pos.x, this->_pos.y);
-				if (!enemy->pause)
-				{
-					this->effectWhenAttack(posEffect);
-				}
 				
-				//handleCollisionWithEnemy(enemy);
 			}
 		}
 		else if(obj->className() == TagClassName::getInstance()->tagHideObject)
