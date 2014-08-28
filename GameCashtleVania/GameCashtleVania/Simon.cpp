@@ -185,8 +185,8 @@ void Simon::updateMovement(float delta_Time)
 		}
 		break;
 	case Idle:
-		this->_CanMoveL = true;
-		this->_CanMoveR = true;
+		/*this->_CanMoveL = true;
+		this->_CanMoveR = true;*/
 		this->_High_Jumped = 0;
 		this->_CanJum = true;
 		this->_vx = 0.0f;
@@ -516,8 +516,6 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 			_timeDelayColEnemy -= Time_Delay_ColEnemy;
 		}
 	}
-
-	
 }
 
 void Simon::animated(float deltatime)
@@ -807,6 +805,8 @@ void Simon::processInput()
 		if (this->_moveMent == SimonMove::Sit)
 		{
 			this->_moveMent = SimonMove::Idle;
+			this->_CanMoveL = true;
+			this->_CanMoveR = true;
 			//thay doi chieu cao, dong thoi fix vi tri
 			this->_height = this->HeightDefault;
 			this->_pos.y += (this->HeightDefault - this->HeightSit) / 2;
@@ -1105,9 +1105,11 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 							this->_pos.y += normalY;
 							if (this->_Left)
 							{
+								this->_pos.x += 3;
 								this->_CanMoveL = false;
 							}else
 							{
+								this->_pos.x -= 3;
 								this->_CanMoveR = false;
 							}
 							this->_vx = 0;

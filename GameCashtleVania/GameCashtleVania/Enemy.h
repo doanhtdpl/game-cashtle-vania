@@ -57,7 +57,7 @@ public:
 	Enemy(std::vector<std::string> arr);
 	
 	//implement lai ham get rect cho tung enemy. Day se la vung di chuyen cua enemy.
-	virtual RECT getRect();
+	//virtual RECT getRect();
 	D3DXVECTOR2 posDefault;//vi tri xuat hien dau tien cua enemy
 
 	//bi tan cong

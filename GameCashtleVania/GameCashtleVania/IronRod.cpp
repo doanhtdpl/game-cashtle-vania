@@ -217,7 +217,11 @@ void IronRod::update(float delta_Time, std::vector<ObjectGame*> _listObjectColli
 						{
 							enemy->isAttack();
 							D3DXVECTOR2 posEffect = D3DXVECTOR2(enemy->_pos.x, this->_pos.y);
-							this->effectWhenAttack(posEffect);
+							if (!enemy->pause)
+							{
+								this->effectWhenAttack(posEffect);
+							}
+							
 						}
 						
 					}

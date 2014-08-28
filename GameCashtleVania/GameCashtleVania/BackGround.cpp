@@ -115,10 +115,15 @@ void BackGround::drawBackGround()
 
 void BackGround::drawTileByID(int ID)
 {
+	
 	int col = ID % _mapHeight;
 	int row = ID / _mapHeight;
 
 	int IDTile = _matrix[row][col];
+	if (IDTile == 18 || IDTile == 20 || row == 8)
+	{
+		int k = 1;
+	}
 
 	D3DXVECTOR2 pos = D3DXVECTOR2( (col + 1) * _tileWidth, (_mapWidth - row) * _tileHeight);
 	D3DXVECTOR3 posCenter = D3DXVECTOR3(pos.x - _tileWidth / 2, pos.y - _tileWidth / 2 , 0);
