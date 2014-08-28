@@ -15,7 +15,8 @@ enum class TypeHideObect
 	ChangeDown = 716, // 32 - 32
 	ChangeTopLeft = 717, // 32 - 32
 	ChangeDownLeft = 718, // 32 - 32
-	GroundVertical = 712
+	GroundVertical = 712,
+	AttackBoss = 720
 };
 #endif // !__TYPE__HIDE__OBJECT__
 
