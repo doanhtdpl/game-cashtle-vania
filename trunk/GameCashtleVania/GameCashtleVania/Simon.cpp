@@ -9,6 +9,8 @@
 #include "WeaponFactory.h"
 #include "Item.h"
 #include "ManageAudio.h"
+#include <time.h>
+#include <stdlib.h>
 
 Simon* Simon::_instance = NULL;
 
@@ -120,8 +122,15 @@ Simon::Simon(std::vector<std::string> arr)
 
 	//collision enemy
 	this->_collisionEnemy = false;
-	this->Time_Delay_ColEnemy = 2.0f;
+	this->Time_Delay_ColEnemy = atof(arr.at(11).c_str());
 	this->_timeDelayColEnemy = 0.0f;
+
+	this->_simonDie = false;
+
+	//collision item rod
+	this->_collisionItemRod = false;
+	this->Time_Delay_ColRod = atof(arr.at(12).c_str());
+	this->_timeDelayColRod = 0.0f;
 
 	//chuan bi de auto move
 	this->donePrepare = false;
@@ -394,6 +403,12 @@ void Simon::move(float delta_Time)
 	}
 	
 	this->_pos.y += this->_vy * delta_Time;
+	
+	if (this->_pos.y <= -this->_height)
+	{
+		this->_simonDie = true;
+	}
+
 	if (this->_moveMent == SimonMove::Free)
 	{
 		distanceFree -= this->_vy * delta_Time;
@@ -415,22 +430,34 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 	//khi co va cham thi thay doi lai bien do.
 	//sau do processInput
 	
-	processInput();
-
-	updateMovement(deltatime);
-
-	handleCollision(deltatime, _listObjectCollision);
-
-	animated(deltatime);
-
-	move(deltatime);
-	
-	if (this->_pos.x < this->_width / 2)
+	if (this->_collisionItemRod)
 	{
-		this->_pos.x = this->_width / 2;
-	}
+		this->_timeDelayColRod += deltatime;
+		if (_timeDelayColRod >= Time_Delay_ColRod)
+		{
+			this->_timeDelayColRod -= Time_Delay_ColRod;
+			this->_collisionItemRod = false;
+		}
+	}else
+	{
+		processInput();
 
-	this->_box = this->getBox();
+		updateMovement(deltatime);
+
+		handleCollision(deltatime, _listObjectCollision);
+
+		animated(deltatime);
+
+		move(deltatime);
+
+		if (this->_pos.x < this->_width / 2)
+		{
+			this->_pos.x = this->_width / 2;
+		}
+
+		this->_box = this->getBox();
+	}
+	
 	
 	//dang tan cong thi update rod
 	if (_attacking)
@@ -481,6 +508,7 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 	//dang co va cham voi enemy
 	if (this->_collisionEnemy)
 	{
+		this->_drawColEnemy = !this->_drawColEnemy;
 		this->_timeDelayColEnemy += deltatime;
 		if (_timeDelayColEnemy >= Time_Delay_ColEnemy)
 		{
@@ -488,6 +516,8 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 			_timeDelayColEnemy -= Time_Delay_ColEnemy;
 		}
 	}
+
+	
 }
 
 void Simon::animated(float deltatime)
@@ -772,7 +802,7 @@ void Simon::processInput()
 #pragma region XU ly phim down
 
 	//Neu phim Down khong duoc nhan. thi chuyen ve stand neu no dang ngoi
-	if (key_up == DIK_DOWN && !this->_attacking && !this->_collisionEnemy)
+	if (key_up == DIK_DOWN)// && !this->_attacking && !this->_collisionEnemy
 	{
 		if (this->_moveMent == SimonMove::Sit)
 		{
@@ -951,7 +981,7 @@ void Simon::processInput()
 #pragma region Xu ly phim SPACE
 	if (key == DIK_SPACE && !this->_attacking)
 	{
-		if (this->_CanJum && !this->_collisionEnemy)
+		if (this->_CanJum)
 		{
 			this->_moveMent = SimonMove::Jump;
 			this->_vy = this->_Vy_default;
@@ -964,7 +994,7 @@ void Simon::processInput()
 	{
 		if (Input::CreateInstance()->IsKeyDown(DIK_UP))
 		{
-			if (!this->_attacking && this->_moveMent != SimonMove::DownStair && this->_moveMent != SimonMove::UpStair && !this->_collisionEnemy)
+			if (!this->_attacking && this->_moveMent != SimonMove::DownStair && this->_moveMent != SimonMove::UpStair)
 			{
 				if (weaponCurr->_can_Use_Weapon && this->_typeOfWeaponCurr != TypeWeapon::None)
 				{
@@ -986,7 +1016,7 @@ void Simon::processInput()
 		}else
 		{
 			//chua su dung roi
-			if (!this->_attacking && this->_moveMent != SimonMove::DownStair && this->_moveMent != SimonMove::UpStair && !this->_collisionEnemy)
+			if (!this->_attacking && this->_moveMent != SimonMove::DownStair && this->_moveMent != SimonMove::UpStair)
 			{
 				ManageAudio::getInstance()->playSound(TypeAudio::Using_Whip);
 				this->_attacking = true;
@@ -1161,12 +1191,15 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 						{
 							this->_collisionEnemy = false;
 						}*/
-						ManageAudio::getInstance()->playSound(TypeAudio::Falling);
-						this->_pos.y += timeCollision * (deltatime * this->_vy);
-						this->_moveMent = SimonMove::Idle;
-						//this->_vx = 0;
-						this->_vy = 0;
-						this->_belowGround ++;
+						if (hideObj->getTypeHideObject() != TypeHideObect::GroundVertical)
+						{
+							ManageAudio::getInstance()->playSound(TypeAudio::Falling);
+							this->_pos.y += timeCollision * (deltatime * this->_vy);
+							this->_moveMent = SimonMove::Idle;
+							//this->_vx = 0;
+							this->_vy = 0;
+							this->_belowGround ++;
+						}
 					}
 
 					//obj dang nhay
@@ -1439,6 +1472,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 					//phan loai item phat am thanh tuong ung
 					if (obj->_ID == TypeItem::MorningStar)
 					{
+						this->_collisionItemRod = true;
 						ManageAudio::getInstance()->playSound(TypeAudio::CollectWeapon);
 					}
 					else if (obj->_ID == TypeItem::Cross)
@@ -1451,7 +1485,6 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 								(*it)->_isALive = false;
 							}							
 						}
-						
 					}
 					else
 					{
@@ -1479,6 +1512,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 						this->_moveMent = SimonMove::Jump;
 						this->_vy = this->_Vy_default;
 						this->_collisionEnemy = true;
+						this->_drawColEnemy = false;
 						//this->_Left = !this->_Left;
 						int dir = this->_Left ? -1 : 1;
 						this->_vx = dir * this->_Vx_default;
@@ -1494,7 +1528,29 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 
 void Simon::draw()
 {
-	ManageSprite::createInstance()->drawObject(this);
+	std::srand(time(0));
+
+	if (this->_collisionEnemy)
+	{
+		if (this->_drawColEnemy)
+		{
+			ManageSprite::createInstance()->drawObject(this);
+		}
+	}else
+	{
+		if (this->_collisionItemRod)
+		{
+			int r = rand() % 100 + 100;
+			int g = rand() % 50 + 50;
+			int b = rand() % 50;
+			D3DCOLOR transcolor = D3DCOLOR_XRGB(r, g, b);
+			ManageSprite::createInstance()->drawObject(this, transcolor);
+		}else
+		{
+			ManageSprite::createInstance()->drawObject(this);
+		}
+	}
+	
 
 	if (this->ironRod->_isALive)
 	{
@@ -1510,6 +1566,22 @@ void Simon::draw()
 void Simon::addHeart(int numberHeart)
 {
 	this->count_Heart += numberHeart;
+}
+
+void Simon::reset()
+{
+	this->_canFree = false;
+	this->_moveMent = SimonMove::Idle;
+	this->_simonDie = false;
+	this->_collisionEnemy = false;
+	this->_collisionItemRod = false;
+	this->_changingDown = false;
+	this->_changingTop = false;
+}
+
+void Simon::die()
+{
+	ManageGame::getInstance()->restartGame();
 }
 
 bool Simon::autoMove(D3DXVECTOR2 _posTarget, float deltaTime)
@@ -1540,4 +1612,3 @@ void Simon::addCoin(int _coin)
 {
 	this->coin += _coin;
 }
-

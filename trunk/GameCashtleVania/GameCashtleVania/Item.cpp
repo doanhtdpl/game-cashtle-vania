@@ -33,7 +33,7 @@ Item::Item(std::vector<std::string> arr)
 	{
 		//co 3 loai money bag.
 		this->_curFrame = (rand() % 3);
-		this->_typeItem = (TypeItem)(this->_ID * this->_curFrame);
+		this->_typeItem = (TypeItem)(this->_ID * 10 + this->_curFrame);
 		this->_isAnimatedSprite = true;
 		this->_rectRS = this->updateRectRS(this->_width, this->_height);	
 	}

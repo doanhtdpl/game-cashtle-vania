@@ -18,7 +18,7 @@ public:
 	ManageSprite();
 	static ManageSprite* createInstance();
 	void init_Sprite(LPD3DXSPRITE spriteHandle);
-	void drawObject(ObjectGame *Object);
+	void drawObject(ObjectGame *Object, D3DCOLOR transcolor = D3DCOLOR_XRGB(255, 255, 255));
 
 	//ve hinh theo IDImage tai vi tri trung tam. pos la vi tri o giua
 	void draw(int IDImage, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor = 0xFFFFFFFF);

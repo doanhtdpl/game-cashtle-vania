@@ -49,7 +49,7 @@ void Camera::update(float x, float deltaTime)
 		//		_pos.x = x_target;
 		//	}
 		//}
-		_pos.x = x_target;
+		_pos.x = (int)x_target;
 		
 		if (_pos.x < 0)
 		{

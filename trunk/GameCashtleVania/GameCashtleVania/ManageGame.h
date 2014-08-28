@@ -29,8 +29,8 @@ private:
 	bool pauseGame(float deltaTime);
 	bool openGate;
 public:
-	
 	static bool isUseWatchItem;
+	int countLifeSimon;
 	float maxNumberSecondEffect;
  	float currentNumberSecondEffect;
 	//bien quan ly banner
@@ -57,6 +57,7 @@ public:
 	bool recentlyChangeScene;
 	bool acting;
 
+	void restartGame();
 
 	void gameUpdate(float DeltaTime);
 	void gameDraw();
