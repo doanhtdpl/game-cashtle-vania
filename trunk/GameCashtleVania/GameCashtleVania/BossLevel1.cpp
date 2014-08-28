@@ -53,6 +53,7 @@ void BossLevel1::move(float delta_Time)
 		{
 			this->_vx = 0;
 			this->_vy = 0;
+			return;
 		}
 		else
 		{
@@ -93,6 +94,7 @@ void BossLevel1::move(float delta_Time)
 		{
 			this->_vx = 0;
 			this->_vy = 0;
+			return;
 		}
 		else
 		{
