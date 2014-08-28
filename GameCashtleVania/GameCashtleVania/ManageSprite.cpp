@@ -22,7 +22,7 @@ void ManageSprite::init_Sprite(LPD3DXSPRITE spriteHandle)
 	_camera = new Camera();
 }
 
-void ManageSprite::drawObject(ObjectGame *Object)
+void ManageSprite::drawObject(ObjectGame *Object,D3DCOLOR transcolor)
 {
 	RECT *rectRS;
 	bool isCenter = true;
@@ -35,7 +35,7 @@ void ManageSprite::drawObject(ObjectGame *Object)
 		rectRS = Object->_rectRS;
 
 	Texture *texture = ManageTexture::getInstance()->getTetureByKey(Object->_ID_Image);
-	D3DCOLOR transcolor = D3DCOLOR_XRGB(255, 255, 255);
+	//D3DCOLOR transcolor = D3DCOLOR_XRGB(255, 255, 255);
 	D3DXVECTOR3 pos_Draw;
 
 	pos_Draw = _camera->getPointTransform(Object->_pos.x, Object->_pos.y);

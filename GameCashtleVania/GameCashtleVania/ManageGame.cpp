@@ -42,6 +42,7 @@ ManageGame::ManageGame()
 	this->_banner = new BANNER();
 	this->_timeGame = 10;
 	
+	this->countLifeSimon = 5;
 }
 
 ManageGame::~ManageGame(void)
@@ -89,6 +90,7 @@ void ManageGame::gameUpdate(float deltaTime)
 	while(it != arr.end())
 	{
 		obj = *it++;
+		
 		if (obj->className() == TagClassName::getInstance()->tagItem)
 		{
 			DynamicObject* dynamicObject = (DynamicObject*)obj;
@@ -110,7 +112,7 @@ void ManageGame::gameUpdate(float deltaTime)
 			}						
 			else
 			{
-				enemy->pause = false;
+				enemy->pause = simon->_collisionItemRod;
 			}
 
 			enemy->update(deltaTime, arr);							
@@ -127,7 +129,20 @@ void ManageGame::gameUpdate(float deltaTime)
 		simon->update(deltaTime, arr);
 	}else
 	{
-		changeScene(deltaTime);
+		if (_infoScene->level == 1 && !simon->_Left)
+		{
+			changeScene(deltaTime);
+		}else
+		{
+			simon->update(deltaTime, arr);
+		}
+	}
+
+	if (simon->_simonDie)
+	{
+		simon->_simonDie = false;
+		this->restartGame();
+		simon->reset();
 	}
 
 	if (isChangeDown)
@@ -145,6 +160,26 @@ void ManageGame::gameUpdate(float deltaTime)
 	arr.clear();
 	
 	this->_banner->update(deltaTime);
+}
+
+void ManageGame::restartGame()
+{
+	this->countLifeSimon --;
+	if (this->countLifeSimon > 0)
+	{
+		if (this->_infoScene->iD_Scene + this->_infoScene->level * 10 == 14)
+		{
+			nextScene(-1);
+		}else
+		{
+			nextScene(0);
+		}
+	}
+	else
+	{
+		this->loseGame();
+	}
+	
 }
 
 void ManageGame::changeScene(float deltaTime)
@@ -291,6 +326,7 @@ void ManageGame::nextScene(int increaseScene)
 
 		quadTreeObj->upDateQuadTree(this->screen);
 		simon->_pos = this->_infoScene->_posSimon;
+		//simon->reset();
 		//quadTreeObj->addObjectToQuadTree(simon);
 		ManageSprite::createInstance()->_camera->stopScrollScreen = false;
 		this->recentlyChangeScene = true;

@@ -42,6 +42,10 @@ RECT InfoScene::getBoundFromFile(std::vector<std::string> arr)
 
 RECT InfoScene::getBound()
 {
+	this->_bound.left = 0;
+	this->_bound.right = this->width;
+	this->_bound.top = this->height;
+	this->_bound.bottom = 0;
 	return this->_bound;
 }
 

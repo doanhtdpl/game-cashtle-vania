@@ -28,6 +28,10 @@ public:
 	void draw();
 	Box getBox();
 	bool autoMove(D3DXVECTOR2 posTarget, float deltaTime);
+	
+	void die();
+	void reset();
+	bool _simonDie;
 
 	bool donePrepare;
 	D3DXVECTOR2 posTarget;
@@ -72,8 +76,13 @@ public:
 
 	//va cham voi enemy
 	bool _collisionEnemy;
+	bool _drawColEnemy;
 	float _timeDelayColEnemy;
 	float Time_Delay_ColEnemy;
+
+	bool _collisionItemRod;
+	float _timeDelayColRod;
+	float Time_Delay_ColRod;
 
 	bool _attacking;//dang dung item or dung roi.
 
