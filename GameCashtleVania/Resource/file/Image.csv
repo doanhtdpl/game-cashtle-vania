@@ -11,6 +11,8 @@ ID_Image,filename
 1010,..\Resource\image\enemy\WhiteSkeleton.png
 1011,..\Resource\image\enemy\Ghost.png
 1211,..\Resource\image\enemy\fireball.png
+1401,..\Resource\image\boss\0.png
+1402,..\Resource\image\boss\1.png
 1012,..\Resource\image\item\SmallHeart.png
 1013,..\Resource\image\item\LargeHeart.png
 1014,..\Resource\image\item\MagicalCrystal.png

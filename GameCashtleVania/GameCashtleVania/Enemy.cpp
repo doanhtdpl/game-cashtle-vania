@@ -3,6 +3,7 @@
 #include "QuadTreeObject.h"
 #include "ItemManager.h"
 #include "ManageAudio.h"
+#include "Simon.h"
 Enemy::Enemy()
 {
 
@@ -299,12 +300,13 @@ void Enemy::isAttack()
 {
 	if (this->_timeDelayCur <= 0)
 	{
-		ManageAudio::getInstance()->playSound(TypeAudio::Hit);
+		ManageAudio::getInstance()->playSound(TypeAudio::Hit);		
 		this->_hp --;
 		if (_hp <= 0)
 		{
 			//chet roi
 			this->_isALive = false;
+			Simon::getInstance()->addCoin(100);
 			Item* item = ItemManager::getInstance()->appearItemEnemyDie(this->_pos);
 			if (item != NULL)
 			{

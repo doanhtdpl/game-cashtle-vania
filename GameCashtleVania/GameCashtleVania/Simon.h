@@ -94,6 +94,7 @@ public:
 	int HP;
 	int coin;
 	int numberSimon;
+
 protected:
 	float HeightDefault;
 	float HeightSit;
