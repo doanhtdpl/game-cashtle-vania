@@ -5,6 +5,7 @@
 #include "HideObjectFactory.h"
 #include "EnemyFactory.h"
 #include "MapLoader.h"
+#include "GroundBGFac.h"
 
 Map::Map(void)
 {
@@ -93,7 +94,14 @@ std::vector<ObjectGame*> Map::getListObjectinScreen(std::vector<int> listID)
 					//Light
 					if (ID > 600 && ID < 700)
 					{
-						obj = LightFactory::getInstance()->createObj(arr);
+						if (ID < 650)
+						{
+							obj = LightFactory::getInstance()->createObj(arr);
+						}
+						else
+						{
+							obj = GroundBGFac::getInstance()->createObj(arr);
+						}
 					}else
 					{
 						if (ID > 200 && ID < 410)
