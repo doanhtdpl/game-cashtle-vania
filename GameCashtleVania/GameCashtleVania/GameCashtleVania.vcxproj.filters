@@ -190,6 +190,9 @@
     <Filter Include="GameObject\DynamicObject\Enemy\Boss">
       <UniqueIdentifier>{fc8016d6-54ee-4fca-b46c-5ca490f9f29e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\StaticObject\GroundObj\MovingPlatform">
+      <UniqueIdentifier>{c9261cb7-8583-4a39-b50f-75931e3d6865}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -402,6 +405,9 @@
     <ClCompile Include="BossLevel1.cpp">
       <Filter>GameObject\DynamicObject\Enemy\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="MovingPlatform.cpp">
+      <Filter>GameObject\StaticObject\GroundObj\MovingPlatform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h">
@@ -613,6 +619,9 @@
     </ClInclude>
     <ClInclude Include="BossLevel1.h">
       <Filter>GameObject\DynamicObject\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingPlatform.h">
+      <Filter>GameObject\StaticObject\GroundObj\MovingPlatform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

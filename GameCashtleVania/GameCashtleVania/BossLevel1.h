@@ -4,7 +4,7 @@
 #include "Enemy.h"
 
 #define MAX_TIME_CHANGE_POSITION_RANDOM 2
-#define MAX_TIME_CHANGE_POSITION_SIMON 5
+#define MAX_TIME_CHANGE_POSITION_SIMON 6
 class BossLevel1 : public Enemy
 {
 

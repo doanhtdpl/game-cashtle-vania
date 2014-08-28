@@ -15,7 +15,6 @@ bool ManageGame::isUseWatchItem = false;
 bool ManageGame::isChangeScene = false;
 bool ManageGame::isChangeTop = false;
 bool ManageGame::isChangeDown = false;
-InfoScene* ManageGame::_infoScene = NULL;
 
 ManageGame* ManageGame::_instance = NULL;
 
@@ -69,7 +68,7 @@ void ManageGame::gameDraw()
 		recentlyChangeScene = false;
 	}
 
-	//this->_banner->draw();
+	this->_banner->draw();
 }
 
 void ManageGame::processInput()
@@ -368,7 +367,7 @@ void ManageGame::gameInit()
 	quadTreeBG = QuadTreeBackground::getInstance();
 	quadTreeObj = QuadTreeObject::getInstance();
 	
-	level = 2;
+	level = 1;
 	scene = 1;
 	ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
 

@@ -3,7 +3,7 @@
 
 #include "ObjectFactoty.h"
 #include "GroundBGObj.h"
-
+#include "MovingPlatform.h"
 class GroundBGFac: public ObjectFactory
 {
 public:
@@ -13,7 +13,7 @@ public:
 	GroundBGObj* createObj(int ID);
 
 	//tao doi tuong Ground doc tu file map
-	//GroundBGObj* createObj(std::vector<std::string> arr);
+	GroundBGObj* createObj(std::vector<std::string> arr);
 	
 protected:
 private:

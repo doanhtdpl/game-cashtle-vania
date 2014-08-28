@@ -49,70 +49,79 @@ void BossLevel1::move(float delta_Time)
 
 	if (this->isAtackSimon == true)
 	{
-		if (this->_pos.x == this->posSimon.x && this->_pos.y == this->posSimon.y)
-		{
-			return;
-		}
-		// di chuyen boss theo x
-		if (this->_pos.x < this->posSimon.x)
-		{
-			this->_vx = this->_Vx_default;
-		}
-		else if (this->_pos.x > this->posSimon.x)
-		{
-			this->_vx = this->_Vx_default * (-1);
-		}
-		else
+		if (abs(this->_pos.x - this->posSimon.x) < 10 && abs( this->_pos.y - this->posSimon.y) < 10)
 		{
 			this->_vx = 0;
-		}
-
-		// di chuyen boss theo y
-		if (this->_pos.y < this->posSimon.y)
-		{
-			this->_vy = this->_Vy_default*2;
-		}
-		else if (this->_pos.y > this->posSimon.y)
-		{
-			this->_vy = (-1) * this->_Vy_default*2;
+			this->_vy = 0;
 		}
 		else
 		{
-			this->_vy = 0;
+			if (this->_pos.x < this->posSimon.x) // di chuyen boss theo x
+			{
+				this->_vx = this->_Vx_default;
+			}
+			else if (this->_pos.x > this->posSimon.x)
+			{
+				this->_vx = -this->_Vx_default;
+			}
+			else
+			{
+				this->_vx = 0;
+			}
+
+
+			// di chuyen boss theo y
+			if (this->_pos.y < this->posSimon.y)
+			{
+				this->_vy = this->_Vy_default;
+			}
+			else if (this->_pos.y > this->posSimon.y)
+			{
+				this->_vy = -this->_Vy_default;
+			}
+			else
+			{
+				this->_vy = 0;
+			}
 		}
+		
 	}
 
-	else
+	else // di chuyen vi tri co dinh
 	{
-		if (this->_pos.x == this->arrPos[this->dectPos].x && this->_pos.y == this->arrPos[this->dectPos].y)
-		{
-			return;
-		}
-		if (this->_pos.x < this->arrPos[this->dectPos].x)
-		{
-			this->_vx = this->_Vx_default;
-		}
-		else if (this->_pos.x > this->arrPos[this->dectPos].x)
-		{
-			this->_vx = this->_Vx_default * (-1);
-		}
-		else
+		if (abs(this->_pos.x - this->arrPos[this->dectPos].x) <10 && abs(this->_pos.y - this->arrPos[this->dectPos].y) <10)
 		{
 			this->_vx = 0;
-		}
-
-		if (this->_pos.y < this->arrPos[this->dectPos].y)
-		{
-			this->_vy = this->_Vy_default;
-		}
-		else if (this->_pos.y > this->arrPos[this->dectPos].y)
-		{
-			this->_vy = (-1) * this->_Vy_default;
+			this->_vy = 0;
 		}
 		else
 		{
-			this->_vy = 0;
-		}
+			if (this->_pos.x < this->arrPos[this->dectPos].x)
+			{
+				this->_vx = this->_Vx_default;
+			}
+			else if (this->_pos.x > this->arrPos[this->dectPos].x)
+			{
+				this->_vx = -this->_Vx_default;
+			}
+			else
+			{
+				this->_vx = 0;
+			}
+
+			if (this->_pos.y < this->arrPos[this->dectPos].y)
+			{
+				this->_vy = this->_Vy_default;
+			}
+			else if (this->_pos.y > this->arrPos[this->dectPos].y)
+			{
+				this->_vy = -this->_Vy_default;
+			}
+			else
+			{
+				this->_vy = 0;
+			}
+		}		
 	}	
 
 	this->_pos.x += this->_vx * delta_Time;
