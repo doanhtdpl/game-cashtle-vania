@@ -109,7 +109,11 @@ void Weapon::handleCollision(float delta_Time, std::vector<ObjectGame*> _listObj
 				}
 			//	ManageAudio::getInstance()->playSound(TypeAudio::Hit);
 				D3DXVECTOR2 posEffect = D3DXVECTOR2(enemy->_pos.x, this->_pos.y);
-				this->effectWhenAttack(posEffect);
+				if (!enemy->pause)
+				{
+					this->effectWhenAttack(posEffect);
+				}
+				
 				//handleCollisionWithEnemy(enemy);
 			}
 		}

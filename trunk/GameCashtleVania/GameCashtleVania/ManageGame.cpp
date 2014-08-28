@@ -68,7 +68,7 @@ void ManageGame::gameDraw()
 		recentlyChangeScene = false;
 	}
 
-	this->_banner->draw();
+	//this->_banner->draw();
 }
 
 void ManageGame::processInput()
@@ -119,7 +119,13 @@ void ManageGame::gameUpdate(float deltaTime)
 		}
 		else
 		{
-			obj->update(deltaTime);
+			if (obj->className() == TagClassName::getInstance()->tagGroundObject)
+			{
+				obj->update(deltaTime, arr);
+			}else
+			{
+				obj->update(deltaTime);
+			}
 		}
 	}
 
@@ -282,6 +288,14 @@ void ManageGame::changeSceneDown()
 		//cap nhap lai vi tri simon
 		simon->_pos = posSimonDown;
 		simon->_changingDown = false;
+	}else
+	{
+		//lay vi tri simon truoc khi chuyen scene
+		D3DXVECTOR2 posSimonDown = D3DXVECTOR2(simon->_pos.x, 348);
+		nextScene(-1);	
+		//cap nhap lai vi tri simon
+		simon->_pos = posSimonDown;
+		simon->_changingDown = false;
 	}
 }
 
@@ -293,6 +307,17 @@ void ManageGame::changeSceneTop()
 		nextScene(-1);
 		simon->_pos = posSimonTop;
 		simon->_changingTop = false;
+	}else
+	{
+		if (level == 2)
+		{
+			D3DXVECTOR2 posSimonTop = D3DXVECTOR2(simon->_pos.x, 45);
+			//posSimonTop.x += MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene + 1)->width - this->_infoScene->width;
+			posSimonTop =  MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene + 1)->_posSimon;
+			nextScene(1);
+			simon->_pos = posSimonTop;
+			simon->_changingTop = false;
+		}
 	}
 	
 }
@@ -367,8 +392,8 @@ void ManageGame::gameInit()
 	quadTreeBG = QuadTreeBackground::getInstance();
 	quadTreeObj = QuadTreeObject::getInstance();
 	
-	level = 1;
-	scene = 5;
+	level = 2;
+	scene = 1;
 	ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
 
 	this->_infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);

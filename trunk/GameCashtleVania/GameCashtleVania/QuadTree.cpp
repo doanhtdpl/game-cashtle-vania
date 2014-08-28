@@ -33,6 +33,12 @@ void QuadTree::loadListQNodeFromFile(std::string filePath)
 	{
 		arr = *it++;
 		//int ID_Node, x_node, y_node, width;
+		int k = 0;
+		while(arr.at(0)[k] < 48 || arr.at(0)[k] > 57)
+		{
+			arr.at(0).erase(arr.at(0).begin());
+		}
+
 		int ID_Node = std::atoi(arr.at(0).c_str());
 		int x_node = std::atoi(arr.at(1).c_str());
 		int y_node = std::atoi(arr.at(2).c_str());

@@ -245,23 +245,23 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 
 #pragma region Collision With Weapon
 
-		if (obj->className() == TagClassName::getInstance()->tagWeapon)
-		{
-			timeCollision = this->collision((DynamicObject*)obj, normalX, normalY, deltatime);
-			//co va cham
-			if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
-			{
-				
-				_hp --;
-				if (_hp <= 0)
-				{
-					//die
-					this->_isALive = false;
-				}
+		//if (obj->className() == TagClassName::getInstance()->tagWeapon)
+		//{
+		//	timeCollision = this->collision((DynamicObject*)obj, normalX, normalY, deltatime);
+		//	//co va cham
+		//	if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
+		//	{
+		//		
+		//		_hp --;
+		//		if (_hp <= 0)
+		//		{
+		//			//die
+		//			this->_isALive = false;
+		//		}
 
-				_timeDelayCur = TimeDelay;
-			}
-		}
+		//		_timeDelayCur = TimeDelay;
+		//	}
+		//}
 
 #pragma endregion
 
@@ -318,16 +318,16 @@ void Enemy::isAttack()
 	}
 }
 
-RECT Enemy::getRect()
-{
-	this->_rect.top = _pos.y + this->_height / 2;
-	this->_rect.bottom = this->_rect.top - this->_height;
-
-	this->_rect.left = _pos.x - this->_width / 2;
-	this->_rect.right = this->_rect.left + this->_width;
-
-	return this->_rect;
-}
+//RECT Enemy::getRect()
+//{
+//	this->_rect.top = _pos.y + this->_height / 2;
+//	this->_rect.bottom = this->_rect.top - this->_height;
+//
+//	this->_rect.left = _pos.x - this->_width / 2;
+//	this->_rect.right = this->_rect.left + this->_width;
+//
+//	return this->_rect;
+//}
 
 void Enemy::animated(float deltaTime)
 {
@@ -339,20 +339,18 @@ void Enemy::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollisi
 	if (_timeDelayCur >= 0)
 	{
 		_timeDelayCur -= delta_Time;
+		this->pause = true;
 	}
 	else
 	{
-		if (this->pause == false)
-		{
-			animated(delta_Time);
+		pause = false;
+		animated(delta_Time);
 
-			updateMovement(delta_Time);
+		updateMovement(delta_Time);
 
-			handleCollision(delta_Time, _listObjectCollision);
+		handleCollision(delta_Time, _listObjectCollision);
 
-			move(delta_Time);
-		}
-		
+		move(delta_Time);
 	}
 	this->_rectRS = this->updateRectRS(this->_width, this->_height);
 }
