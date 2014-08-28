@@ -100,8 +100,8 @@ void BANNER::draw()
 		}
 		
 		this->_pFont->drawFont(this->_countHeartSimon, this->posCountHeart.x,this->posCountHeart.y );
-		//this->_pFont->drawFont(this->_scene, this->posScene.x, this->posScene.y);
-		//this->_pFont->drawFont(this->_numberSimon, this->posNumberSimon.x, this->posNumberSimon.y);
+		this->_pFont->drawFont(this->_scene, this->posScene.x, this->posScene.y);
+		this->_pFont->drawFont(this->_numberSimon, this->posNumberSimon.x, this->posNumberSimon.y);
 		this->_pFont->drawFont(this->_score, this->posScore.x, this->posScore.y);
 		this->_pFont->drawFont((int)this->_time, this->posTime.x, this->posTime.y);
 }

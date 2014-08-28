@@ -26,7 +26,9 @@ enum class TypeEnemy
 	BLACK_KNIGHT = 208,
 	WHITE_SKELETON = 209,
 	GHOST = 210,
-	FIRE_BALL = 211
+	FIRE_BALL = 211,
+	BOSS_LEVEL1 = 401,
+	BOSS_LEVEL2 = 402
 };
 #endif // !__TYPE__ENEMY__
 

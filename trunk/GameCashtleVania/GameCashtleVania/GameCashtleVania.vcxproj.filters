@@ -187,6 +187,9 @@
     <Filter Include="GameObject\Interface">
       <UniqueIdentifier>{830a5d61-f021-431e-8c39-eeb243b17169}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\DynamicObject\Enemy\Boss">
+      <UniqueIdentifier>{fc8016d6-54ee-4fca-b46c-5ca490f9f29e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -396,6 +399,9 @@
     <ClCompile Include="FireBall.cpp">
       <Filter>GameObject\DynamicObject\Enemy\FireBall</Filter>
     </ClCompile>
+    <ClCompile Include="BossLevel1.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h">
@@ -604,6 +610,9 @@
     </ClInclude>
     <ClInclude Include="FireBall.h">
       <Filter>GameObject\DynamicObject\Enemy\FireBall</Filter>
+    </ClInclude>
+    <ClInclude Include="BossLevel1.h">
+      <Filter>GameObject\DynamicObject\Enemy\Boss</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

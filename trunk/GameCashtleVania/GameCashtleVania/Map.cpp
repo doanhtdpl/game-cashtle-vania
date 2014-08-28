@@ -96,7 +96,7 @@ std::vector<ObjectGame*> Map::getListObjectinScreen(std::vector<int> listID)
 						obj = LightFactory::getInstance()->createObj(arr);
 					}else
 					{
-						if (ID > 200 && ID < 300)
+						if (ID > 200 && ID < 410)
 						{
 							obj = EnemyFactory::getInstance()->createObj(arr);
 							//xoa no khoi quad tree va add lai voi rect la vung bound

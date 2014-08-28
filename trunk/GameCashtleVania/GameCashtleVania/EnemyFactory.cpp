@@ -10,6 +10,7 @@
 #include "Medusa.h"
 #include "WhiteSkeleton.h"
 #include "FireBall.h"
+#include "BossLevel1.h"
 
 EnemyFactory* EnemyFactory::_instance = NULL;
 
@@ -68,6 +69,8 @@ Enemy* EnemyFactory::createObj(int ID)
 	case TypeEnemy::FIRE_BALL:
 		enemy = new FireBall(arr);
 		break;
+	case TypeEnemy::BOSS_LEVEL1:
+		enemy = new BossLevel1(arr);
 	default:
 		break;
 	}
