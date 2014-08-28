@@ -3,6 +3,7 @@
 #include <fstream>
 #include "GroundBGFac.h"
 #include "FileUtils.h"
+#include "ManageGame.h"
 
 using namespace std;
 
@@ -19,52 +20,9 @@ BackGround::~BackGround()
 
 void BackGround::readMapFromFile(std::string filePath)
 {
-	this->_column = 17;
-
-	//std::vector<std::vector<std::string>> info = FileUtils::readFile(filePath);
-	//std::vector<std::vector<std::string>>::iterator it;
-	//it = info.begin();
-	//std::vector<std::string> arr;
-
-	//arr = *it++;//lay dong dau tien. map width - map height
-	//int k = 0;
-	//std::string str = arr[0];
-	////chuan hoa lai dong dau tien
-	//while(str[k] < 48 || str[k] > 57)
-	//{
-	//	str.erase(str.begin());
-	//}
-	//arr = FileUtils::split(str, '\t');
-	//_mapWidth = atoi(arr[0].c_str()); 
-	//_mapHeight = atoi(arr[1].c_str());
-
-	//this->_matrix = new int*[_mapWidth];
-	//for (int i = 0; i < _mapWidth; i++)
-	//{
-	//	this->_matrix[i] = new int[_mapHeight];
-	//}
-
-	////////////////////////////////////////////////////////////////////////////
-	//arr = *it++;//lay dong tiep theo tileWidht  - tileHegit
-	//str = arr[0];
-	////chuan hoa lai dong dau tien
-	//while(str[k] < 48 || str[k] > 57)
-	//{
-	//	str.erase(str.begin());
-	//}
-	//arr = FileUtils::split(str, '\t');
-
-	//this->_tileHeight = atoi(arr[0].c_str()); 
-	//this->_tileWidth = atoi(arr[1].c_str());
-
-	//int row = 0;
-	////duyet nhung dong con lai
-	//while(it != info.end())
-	//{
-	//	arr = *it++;
-	//	addElement(arr, row);
-	//	row++;
-	//}
+	this->_IDImage = 2000 + ManageGame::_infoScene->level;
+	this->_texture = ManageTexture::getInstance()->getTetureByKey(_IDImage);
+	this->_column = this->_texture->getWidth() / 32;
 
 	std::string line;
 	std::vector<std::string> arr;
@@ -165,7 +123,8 @@ void BackGround::drawTileByID(int ID)
 	D3DXVECTOR2 pos = D3DXVECTOR2( (col + 1) * _tileWidth, (_mapWidth - row) * _tileHeight);
 	D3DXVECTOR3 posCenter = D3DXVECTOR3(pos.x - _tileWidth / 2, pos.y - _tileWidth / 2 , 0);
 	//RECT* rectRS = &getRectResouceByIDTile(IDTile);
-	ManageSprite::createInstance()->draw(this->_IDImage, &getRectResouceByIDTile(IDTile), posCenter);
+	//ManageSprite::createInstance()->_Sprite->draw(_texture, &getRectResouceByIDTile(IDTile), D3DXVECTOR3(pos));
+	ManageSprite::createInstance()->draw(this->_texture, &getRectResouceByIDTile(IDTile), posCenter);
 }
 
 // luu 1 dong vao matran

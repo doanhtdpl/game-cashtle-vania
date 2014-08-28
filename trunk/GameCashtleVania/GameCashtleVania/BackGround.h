@@ -7,6 +7,7 @@
 #include <vector>
 #include <iostream>
 #include "ObjectGame.h"
+#include "ManageTexture.h"
 
 class BackGround
 {
@@ -18,6 +19,7 @@ private:
 	int _mapWidth;
 	int _column;// tong so tile tren 1 dong cua background; 17
 	int _IDImage;
+	Texture* _texture;
 
 	// ID va RectRS cua no trong buc anh lon. ID = i * width + j
 	std::hash_map<int, RECT> _listTileRectRS;

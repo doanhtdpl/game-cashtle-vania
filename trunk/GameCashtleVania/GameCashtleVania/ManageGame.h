@@ -44,7 +44,7 @@ public:
 	Simon* simon;
 	bool finish_simon_automove;
 	RECT screen;
-	InfoScene* _infoScene;
+	static InfoScene* _infoScene;
 	int level;
 	int scene;
 	Gate* gate;

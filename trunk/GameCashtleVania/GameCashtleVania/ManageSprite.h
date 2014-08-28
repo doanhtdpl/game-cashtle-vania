@@ -22,6 +22,7 @@ public:
 
 	//ve hinh theo IDImage tai vi tri trung tam. pos la vi tri o giua
 	void draw(int IDImage, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor = 0xFFFFFFFF);
+	void draw(Texture* texture, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor = 0xFFFFFFFF);
 	void update_Camera(float posx_simon, float deltaTime);
 	friend class Font;
 	~ManageSprite(void);

@@ -72,6 +72,14 @@ void ManageSprite::draw(int IDImage, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR tra
 	//this->_SpriteHandel->Draw(image->Get_Texture(), RectRS, NULL, &pos, transcolor);
 }
 
+void ManageSprite::draw(Texture* texture, RECT *RectRS, D3DXVECTOR3 pos, D3DCOLOR transcolor)
+{
+	D3DXVECTOR3 pos_Draw;
+	pos_Draw =_camera->getPointTransform(pos.x, pos.y);
+
+	_Sprite->draw(texture, RectRS, pos_Draw, transcolor,true);
+}
+
 ManageSprite::~ManageSprite(void)
 {
 }
