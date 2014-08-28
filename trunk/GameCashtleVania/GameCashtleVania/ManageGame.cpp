@@ -392,8 +392,8 @@ void ManageGame::gameInit()
 	quadTreeBG = QuadTreeBackground::getInstance();
 	quadTreeObj = QuadTreeObject::getInstance();
 	
-	level = 2;
-	scene = 1;
+	level = 1;
+	scene = 5;
 	ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
 
 	this->_infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);

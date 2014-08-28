@@ -215,9 +215,9 @@ void IronRod::update(float delta_Time, std::vector<ObjectGame*> _listObjectColli
 						timeCollision = this->collision((DynamicObject*)obj, normalX, normalY, delta_Time);
 						if((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
 						{
-							enemy->isAttack();
+							
 							D3DXVECTOR2 posEffect = D3DXVECTOR2(enemy->_pos.x, this->_pos.y);
-							if (!enemy->pause)
+							if (enemy->isAttack())
 							{
 								this->effectWhenAttack(posEffect);
 							}

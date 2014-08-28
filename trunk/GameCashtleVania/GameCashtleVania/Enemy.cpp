@@ -296,7 +296,7 @@ void Enemy::handleCollisionWithFreeObject(float deltatime, HideObject* hideObj)
 	}
 }
 
-void Enemy::isAttack()
+bool Enemy::isAttack()
 {
 	if (this->_timeDelayCur <= 0)
 	{
@@ -315,7 +315,10 @@ void Enemy::isAttack()
 		}
 
 		_timeDelayCur =  TimeDelay;
+		return true;
 	}
+
+	return false;
 }
 
 //RECT Enemy::getRect()
@@ -336,21 +339,22 @@ void Enemy::animated(float deltaTime)
 
 void Enemy::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision)
 {
-	if (_timeDelayCur >= 0)
+	if (!this->pause)
 	{
-		_timeDelayCur -= delta_Time;
-		this->pause = true;
-	}
-	else
-	{
-		pause = false;
-		animated(delta_Time);
+		if (_timeDelayCur >= 0)
+		{
+			_timeDelayCur -= delta_Time;
+		}
+		else
+		{
+			animated(delta_Time);
 
-		updateMovement(delta_Time);
+			updateMovement(delta_Time);
 
-		handleCollision(delta_Time, _listObjectCollision);
+			handleCollision(delta_Time, _listObjectCollision);
 
-		move(delta_Time);
+			move(delta_Time);
+		}
 	}
 	this->_rectRS = this->updateRectRS(this->_width, this->_height);
 }

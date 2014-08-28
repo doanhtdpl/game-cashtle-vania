@@ -45,7 +45,7 @@ enum class TypeEnemy
 class Enemy : public DynamicObject,public IAnimatedSprite
 {
 public:
-	bool pause;
+	
 	virtual std::string className();
 	virtual void move(float delta_Time);
 	virtual void animated(float deltaTime);
@@ -61,12 +61,14 @@ public:
 	D3DXVECTOR2 posDefault;//vi tri xuat hien dau tien cua enemy
 
 	//bi tan cong
-	void isAttack();
+	bool isAttack();
+	bool pause;
+	float _timeDelayCur;
+	TypeEnemy _typeEnemy;
 protected:
 	EnemyMovement _moveMent;
-	TypeEnemy _typeEnemy;
+	
 	float TimeDelay;//bi delay khi va cham voi IronRod
-	float _timeDelayCur;
 	bool _canFree;
 	float _hp;
 	RECT _bound;//vung di chuyen cua enemy

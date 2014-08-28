@@ -16,7 +16,7 @@ FishMan::FishMan(std::vector<std::string> arr) : Enemy(arr)
 
 	this->timeFireCur = 0.0f;
 	this->eslapseTimeFire = 1.0f;
-	this->timeDelayAttack = 0.5f;
+	this->timeDelayAttack = 2.0f;
 	this->timeDelayCur = 0.0f;
 	this->attacking = true;
 	this->countFire = 0;
