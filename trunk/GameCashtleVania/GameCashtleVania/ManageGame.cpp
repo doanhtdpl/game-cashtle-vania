@@ -45,6 +45,10 @@ ManageGame::ManageGame()
 	
 	this->countLifeSimon = 5;
 
+	/*this->currentState = TypeStateGame::PlayGame;
+	this->stateGame = new MenuState();
+	this->delay = 0;*/
+	
 	this->currentState = TypeStateGame::MenuGame;
 	this->stateGame = new MenuState();	
 	this->delay = 0;
@@ -68,6 +72,7 @@ void ManageGame::gameDraw()
 		break;
 	case TypeStateGame::IntroGame:
 		this->stateGame->draw();
+		this->_banner->draw();
 		break;
 	case TypeStateGame::PlayGame:
 		this->drawPlayGame();
@@ -119,6 +124,7 @@ void ManageGame::processInput()
 
 		if (key == DIK_RETURN)
 		{
+			ManageAudio::getInstance()->playSound(TypeAudio::Select);
 			this->currentState = TypeStateGame::IntroGame;
 			delete this->stateGame;
 			this->stateGame = new IntroState();			
@@ -143,6 +149,7 @@ void ManageGame::gameUpdate(float deltaTime)
 			if (delay > 2)
 			{
 				this->currentState = TypeStateGame::PlayGame;
+				ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
 				delete this->stateGame;
 			}			
 		}
@@ -152,7 +159,7 @@ void ManageGame::gameUpdate(float deltaTime)
 		}		
 		break;
 	case TypeStateGame::PlayGame:
-		this->updatePlayGame(deltaTime);
+		this->updatePlayGame(deltaTime);		
 		break;
 	case TypeStateGame::NextMapGame:
 		this->stateGame->update(deltaTime);
@@ -559,9 +566,9 @@ void ManageGame::gameInit()
 	quadTreeObj = QuadTreeObject::getInstance();
 	
 	level = 1;
-	scene = 2;
+	scene = 1;
 
-	ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
+	//ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
 
 	this->_infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
 	//dua thong tin file cho quadtree

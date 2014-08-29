@@ -43,8 +43,7 @@ void BANNER::init()
 }
 
 void BANNER::update(float deltaTime)
-{		
-	//this->_time = ManageGame::getInstance()->_timeGame;
+{			
 	this->_hpSimon = Simon::getInstance()->HP;
 	this->_hpEnemy = this->_hpSimon;
 	this->_countHeartSimon = Simon::getInstance()->count_Heart;

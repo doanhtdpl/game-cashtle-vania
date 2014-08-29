@@ -13,7 +13,7 @@ public:
 	~IntroState();
 private:
 	Helicopter helicopter;
-	BANNER banner;
+	//BANNER banner;
 	BatIntroState bat1;
 	BatIntroState bat2;
 	SimonIntroState simon;

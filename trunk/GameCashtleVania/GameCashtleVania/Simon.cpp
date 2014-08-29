@@ -13,7 +13,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include "MovingPlatform.h"
-
+#include "Boss.h"
 Simon* Simon::_instance = NULL;
 
 Simon* Simon::getInstance()
@@ -1490,6 +1490,16 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 														{
 															ManageSprite::createInstance()->_camera->stopScrollScreen = true;
 															this->_attackingBoss = true;
+															for (std::vector<ObjectGame*>::iterator it = _listObjectCollision.begin(); it != _listObjectCollision.end(); it++)
+															{
+																ObjectGame* item = *it;
+
+																if (item->_ID >= (int)TypeEnemy::BOSS_LEVEL1 &&item->_ID <= (int)TypeEnemy::BOSS_LEVEL2)
+																{
+																	Boss* boss = (Boss*)item;
+																	boss->setMovement(EnemyMovement::Moves);
+																}
+															}
 															this->_boundScene = ManageSprite::createInstance()->_camera->getScreen();
 															ManageAudio::getInstance()->stopSound(Stage_01_Vampire_Killer);
 															ManageAudio::getInstance()->playSound(Boss_Battle_Poison_Mind);

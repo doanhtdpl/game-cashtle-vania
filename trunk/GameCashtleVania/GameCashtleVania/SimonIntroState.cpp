@@ -1,6 +1,7 @@
 #include "SimonIntroState.h"
 #include "ManageSprite.h"
 #include "ManageTexture.h"
+#include "ManageAudio.h"
 SimonIntroState::SimonIntroState()
 {
 	this->_width = 60;
@@ -33,6 +34,7 @@ void SimonIntroState::init()
 	this->_pos = D3DXVECTOR3(500, 450, 0);
 	this->_des = D3DXVECTOR3(250, 450, 0);
 	this->isFinish = false;
+	ManageAudio::getInstance()->playSound(TypeAudio::Game_Start_Prologue);
 }
 
 
