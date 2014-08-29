@@ -6,6 +6,7 @@
 #include "ManageSprite.h"
 #include "HideObject.h"
 #include "ManageGame.h"
+#include "ManageAudio.h"
 #include "WeaponFactory.h"
 #include "Item.h"
 #include "ManageAudio.h"
@@ -118,7 +119,7 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_typeOfWeaponCurr = TypeWeapon::None;
 	this->count_Heart = 10;
 	this->coin = 0;
-	this->HP = 10;
+	this->HP = HP_DEFAULT;
 	this->weaponCurr = WeaponFactory::getInstance()->createObj((int)TypeWeapon::FireBomb);
 
 	//collision enemy
@@ -127,6 +128,7 @@ Simon::Simon(std::vector<std::string> arr)
 	this->_timeDelayColEnemy = 0.0f;
 
 	this->_simonDie = false;
+	this->_canDie = false;
 
 	//collision item rod
 	this->_collisionItemRod = false;
@@ -136,6 +138,8 @@ Simon::Simon(std::vector<std::string> arr)
 	//chuan bi de auto move
 	this->donePrepare = false;
 	
+	//attacking boss
+	this->_attackingBoss = false;
 }
 
 Box Simon::getBox()
@@ -385,16 +389,20 @@ void Simon::move(float delta_Time)
 	{
 		this->_pos.x += this->_vx * delta_Time;
 		
-		//if (this->_pos.x < this->_boundScene.left)
-		//{
-		//	this->_pos.x = this->_boundScene.left;
-		//}else
-		//{
-		//	if (this->_pos.x > this->_boundScene.right)
-		//	{
-		//		this->_pos.x = this->_boundScene.right;
-		//	}
-		//}
+		if (this->_attackingBoss)
+		{
+			if (this->_pos.x < this->_boundScene.left + this->_width / 2)
+			{
+				this->_pos.x = this->_boundScene.left + this->_width / 2;
+			}else
+			{
+				if (this->_pos.x > this->_boundScene.right - this->_width / 2)
+				{
+					this->_pos.x = this->_boundScene.right - this->_width / 2;
+				}
+			}
+		}
+		
 
 		//co the di qua ben trai va v
 		
@@ -432,7 +440,18 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 	//chuyen cac bien prepare stair -> false
 	//khi co va cham thi thay doi lai bien do.
 	//sau do processInput
-	
+	if (this->_canDie)
+	{
+		this->_timeDie -= deltatime;
+		if (_timeDie <= 0)
+		{
+			this->_simonDie = true;
+			this->_canDie = false;
+			//this->die();
+		}
+		return;
+	}
+
 	if (this->_collisionItemRod)
 	{
 		this->_timeDelayColRod += deltatime;
@@ -1464,11 +1483,16 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 #pragma endregion
 												else
 												{
+#pragma region Hide Object  == Attack Boss. 
 													if (hideObj->getTypeHideObject() == TypeHideObect::AttackBoss)
 													{
 														if ((timeCollision > 0.0f && timeCollision < 1.0f)|| timeCollision == 2.0f)
 														{
 															ManageSprite::createInstance()->_camera->stopScrollScreen = true;
+															this->_attackingBoss = true;
+															this->_boundScene = ManageSprite::createInstance()->_camera->getScreen();
+															ManageAudio::getInstance()->stopSound(Stage_01_Vampire_Killer);
+															ManageAudio::getInstance()->playSound(Boss_Battle_Poison_Mind);
 															for (std::vector<ObjectGame*>::iterator itEnemy = _listObjectCollision.begin(); itEnemy != _listObjectCollision.end(); itEnemy++)
 															{
 																ObjectGame* objEnemy = *itEnemy;
@@ -1482,8 +1506,9 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 																}
 															}
 														}
-														
+
 													}
+#pragma endregion
 												}
 											}
 
@@ -1550,6 +1575,8 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				//va cham voi enemy.
 				if (!this->_collisionEnemy)
 				{
+					this->addHP(-2);
+
 					if (!(this->_onStair || this->_moveMent == SimonMove::Sit))
 					{
 						this->_moveMent = SimonMove::Jump;
@@ -1611,8 +1638,28 @@ void Simon::addHeart(int numberHeart)
 	this->count_Heart += numberHeart;
 }
 
+void Simon::addHP(int _HP)
+{
+	this->HP += _HP;
+	if (this->HP <= 0)
+	{
+		//this->_simonDie = true;
+		this->_canDie = true;
+		this->_timeDie = TIME_DIE;
+		//this->_moveMent = SimonMove::DIE;
+		this->_ID_Image = 1000;
+		this->_isAnimatedSprite = false;
+		//this->_rectRS = NULL;
+		//this->_pos.y -= this->_height / 4;
+		//DIe
+	}
+}
+
 void Simon::reset()
 {
+	this->HP = HP_DEFAULT;
+	this->_typeOfWeaponCurr = TypeWeapon::None;
+	this->ironRod->reset();
 	this->_canFree = false;
 	this->_moveMent = SimonMove::Idle;
 	this->_simonDie = false;
@@ -1620,6 +1667,14 @@ void Simon::reset()
 	this->_collisionItemRod = false;
 	this->_changingDown = false;
 	this->_changingTop = false;
+	this->_ID_Image = 1001;
+	this->_isAnimatedSprite = true;
+	this->_CanJum = true;
+	this->_attacking = false;
+	this->_Left = false;
+	this->_CanMoveL = true;
+	this->_CanMoveR = true;
+	this->_canDie = false;
 }
 
 void Simon::die()
@@ -1627,7 +1682,7 @@ void Simon::die()
 	ManageGame::getInstance()->restartGame();
 }
 
-bool Simon::autoMove(D3DXVECTOR2 _posTarget, float deltaTime)
+bool Simon::autoMove(D3DXVECTOR2 _posTarget, float deltaTime, bool dir)
 {
 	if (!donePrepare)
 	{
@@ -1636,11 +1691,12 @@ bool Simon::autoMove(D3DXVECTOR2 _posTarget, float deltaTime)
 		return false;
 	}else
 	{
-		float distance = posTarget.x - _pos.x;
+		int direction = dir ? -1 : 1;//di qua ben trai thi tru 
+		float distance = (posTarget.x - _pos.x) * direction;
 
 		if (distance > this->_Vx_default * deltaTime)
 		{
-			_pos.x +=  this->_Vx_default * deltaTime;
+			_pos.x +=  this->_Vx_default * deltaTime * direction;
 			return false;
 		}else
 		{

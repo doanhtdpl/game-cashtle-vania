@@ -41,6 +41,7 @@ ManageGame::ManageGame()
 
 	this->_banner = new BANNER();
 	this->_timeGame = 10;
+	this->_timePause = 0.0f;
 	
 	this->countLifeSimon = 5;
 
@@ -165,7 +166,7 @@ void ManageGame::gameUpdate(float deltaTime)
 void ManageGame::updatePlayGame(float deltaTime)
 {
 	this->_timeGame += deltaTime;
-	ManageSprite::createInstance()->update_Camera(Simon::getInstance()->_pos.x, deltaTime);
+	
 	screen = ManageSprite::createInstance()->_camera->getScreen();
 	quadTreeObj->upDateQuadTree(screen);
 
@@ -220,10 +221,11 @@ void ManageGame::updatePlayGame(float deltaTime)
 	if (!isChangeScene)
 	{
 		simon->update(deltaTime, arr);
+		ManageSprite::createInstance()->update_Camera(Simon::getInstance()->_pos.x, deltaTime);
 	}
 	else
 	{
-		if (_infoScene->level == 1 && !simon->_Left)
+		if ((_infoScene->level == 1 && !simon->_Left) || (_infoScene->level == 2 && simon->_Left))
 		{
 			changeScene(deltaTime);
 		}
@@ -237,7 +239,6 @@ void ManageGame::updatePlayGame(float deltaTime)
 	{
 		simon->_simonDie = false;
 		this->restartGame();
-		simon->reset();
 	}
 
 	if (isChangeDown)
@@ -262,13 +263,16 @@ void ManageGame::restartGame()
 	this->countLifeSimon --;
 	if (this->countLifeSimon > 0)
 	{
-		if (this->_infoScene->iD_Scene + this->_infoScene->level * 10 == 14)
+		int scene_restart = this->_infoScene->iD_Scene_Restart;
+		nextScene(scene_restart - this->_infoScene->iD_Scene);
+		simon->reset();
+		/*if (this->_infoScene->iD_Scene + this->_infoScene->level * 10 == 14)
 		{
 			nextScene(-1);
 		}else
 		{
 			nextScene(0);
-		}
+		}*/
 	}
 	else
 	{
@@ -312,6 +316,22 @@ void ManageGame::changeScene(float deltaTime)
 			nextScene(2);
 		}
 		break;
+	case 22:
+		//level 2 scene 2
+		if (changeSceneWithGate(deltaTime))
+		{
+			isChangeScene = false;
+			nextScene(1);
+		}
+		break;
+	case 24:
+		//level 2 scene 2
+		if (changeSceneWithGate(deltaTime))
+		{
+			isChangeScene = false;
+			nextScene(1);
+		}
+		break;
 	default:
 		break;
 	}
@@ -326,12 +346,30 @@ bool ManageGame::changeSceneWithGate(float deltaTime)
 
 	if (!openGate)
 	{
-		if (ManageSprite::createInstance()->_camera->move(simon->_Vx_default, simon->_pos.x, deltaTime))
+		bool dirCameraMove = false;
+		int vxCamera = 0;
+		if (_infoScene->level == 1)
+		{
+			dirCameraMove = false;
+			vxCamera = simon->_Vx_default;
+		}else
+		{
+			dirCameraMove = true;
+			vxCamera = -simon->_Vx_default;
+		}
+		if (ManageSprite::createInstance()->_camera->move(vxCamera, simon->_pos.x, deltaTime, dirCameraMove))
 		{
 			openGate = true;
 			int ID_Gate = 650 + level;
 			gate = (Gate*)GroundBGFac::getInstance()->createObj(ID_Gate);
-			gate->_pos.x = simon->getRect().right + 32;
+			if (this->_infoScene->level == 1)
+			{
+				gate->_pos.x = simon->getRect().right + 32;
+			}else
+			{
+				gate->_pos.x = simon->getRect().left - 32;
+			}
+			
 			gate->_pos.y = simon->getRect().bottom + gate->_height / 2;
 			gate->finish = false;
 			this->finish_simon_automove = false;
@@ -345,20 +383,55 @@ bool ManageGame::changeSceneWithGate(float deltaTime)
 			if (!finish_simon_automove)
 			{
 				simon->_moveMent = SimonMove::Moves;
-				posXSimonTarget = this->_infoScene->width + 128;
-				this->finish_simon_automove = simon->autoMove(D3DXVECTOR2(posXSimonTarget, simon->_pos.y), deltaTime);
+				if (_infoScene->level == 1)
+				{
+					posXSimonTarget = this->_infoScene->width + 128;
+					this->finish_simon_automove = simon->autoMove(D3DXVECTOR2(posXSimonTarget, simon->_pos.y), deltaTime);
+				}else
+				{
+					posXSimonTarget = this->_infoScene->_bound.left - 128;
+					this->finish_simon_automove = simon->autoMove(D3DXVECTOR2(posXSimonTarget, simon->_pos.y), deltaTime, true);
+				}
+				
 			}else
 			{
 				simon->_moveMent = SimonMove::Idle;
-				posXCamera = this->_infoScene->width + Screen_Width / 2;
-				if (ManageSprite::createInstance()->_camera->move(simon->_Vx_default, posXCamera, deltaTime))
+				if (_infoScene->level == 1)
 				{
-					this->finish_simon_automove = false;
-					this->openGate = false;
-					
-					acting = false;
-					return true;
+					posXCamera = this->_infoScene->width + Screen_Width / 2;
+					if (ManageSprite::createInstance()->_camera->move(simon->_Vx_default, posXCamera, deltaTime))
+					{
+						this->_timePause = 1.0f;
+						
+						this->finish_simon_automove = false;
+						this->openGate = false;
+
+						acting = false;
+						return true;
+					}/*else
+					{
+						this->_timePause = 1.0f;
+					}*/
+				}else
+				{
+					posXCamera = this->_infoScene->_bound.left - Screen_Width / 2;
+					if (ManageSprite::createInstance()->_camera->move(-simon->_Vx_default, posXCamera, deltaTime, true))
+					{
+						if (this->pauseGame(deltaTime))
+						{
+							this->finish_simon_automove = false;
+							this->openGate = false;
+
+							acting = false;
+							return true;
+						}
+					}/*else
+					{
+						this->_timePause = 1.0f;
+					}*/
 				}
+				
+				
 			}
 			simon->animated(deltaTime);
 		}
@@ -381,7 +454,9 @@ void ManageGame::changeSceneDown()
 	{
 		//lay vi tri simon truoc khi chuyen scene
 		D3DXVECTOR2 posSimonDown = D3DXVECTOR2(simon->_pos.x, 348);
-		nextScene(-1);	
+		int disDifference = this->_infoScene->width - MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene - 1)->width;
+		posSimonDown.x -= disDifference;
+		nextScene(-1);
 		//cap nhap lai vi tri simon
 		simon->_pos = posSimonDown;
 		simon->_changingDown = false;
@@ -400,9 +475,11 @@ void ManageGame::changeSceneTop()
 	{
 		if (level == 2)
 		{
-			D3DXVECTOR2 posSimonTop = D3DXVECTOR2(simon->_pos.x, 45);
+			D3DXVECTOR2 posSimonTop = D3DXVECTOR2(simon->_pos.x + 16, 45);
 			//posSimonTop.x += MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene + 1)->width - this->_infoScene->width;
-			posSimonTop =  MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene + 1)->_posSimon;
+			//posSimonTop =  MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene + 1)->_posSimon;
+			int disDifference = this->_infoScene->width - MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene + 1)->width;
+			posSimonTop.x -= disDifference;
 			nextScene(1);
 			simon->_pos = posSimonTop;
 			simon->_changingTop = false;
@@ -414,10 +491,10 @@ void ManageGame::changeSceneTop()
 void ManageGame::nextScene(int increaseScene)
 {
 	this->_infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
-	if (this->_infoScene->finalScene)
-	{
-		nextLevel();
-	}else
+	//if (this->_infoScene->finalScene)
+	//{
+	//	nextLevel();
+	//}else
 	{
 		this->scene += increaseScene;
 		this->_infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
@@ -482,7 +559,8 @@ void ManageGame::gameInit()
 	quadTreeObj = QuadTreeObject::getInstance();
 	
 	level = 1;
-	scene = 1;
+	scene = 2;
+
 	ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
 
 	this->_infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);

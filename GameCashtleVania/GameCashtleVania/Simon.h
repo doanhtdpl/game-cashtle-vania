@@ -9,6 +9,8 @@ enum SimonMove;
 enum class StepOnStair;
 #define DIS_MOVE_STAIR 16/10
 #define COUNT_STEP_STAIR 6
+#define HP_DEFAULT 16
+#define TIME_DIE 1.0f
 
 class Simon : public DynamicObject, IAnimatedSprite
 {
@@ -27,11 +29,13 @@ public:
 	void processInput();
 	void draw();
 	Box getBox();
-	bool autoMove(D3DXVECTOR2 posTarget, float deltaTime);
+	bool autoMove(D3DXVECTOR2 posTarget, float deltaTime, bool dir = false);//mac dinh la di qua ben phai
 	
+	float _timeDie;
 	void die();
 	void reset();
 	bool _simonDie;
+	bool _canDie;
 
 	bool donePrepare;
 	D3DXVECTOR2 posTarget;
@@ -39,6 +43,7 @@ public:
 	//add Heart
 	void addHeart(int numberHeart);
 	void addCoin(int coin);
+	void addHP(int HP);
 	
 	//xu ly collision
 	void handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision);
@@ -88,6 +93,7 @@ public:
 
 	//bound scene
 	RECT _boundScene;
+	bool _attackingBoss;//dang danh voi bosss.
 
 	//item
 	int count_Heart;
@@ -126,7 +132,8 @@ enum SimonMove
 	//PrepareUpTheStairRight,//chuan bi len cau thang ben phai
 	//PrepareDownTheStairRight,//chuan bi xuong can thang ben phai
 	Jump,//dang nhay
-	Free//dang roi tu do
+	Free,//dang roi tu do
+	DIE//die roi
 };
 
 #endif // !__SIMON_MOVE__

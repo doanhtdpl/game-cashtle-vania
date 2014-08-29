@@ -27,9 +27,9 @@ void IntroState::initStateGame()
 	this->simon.init();
 	this->_posBackground = D3DXVECTOR3(0, 80, 0);
 	this->banner._countHeartSimon = 5;
-	this->banner._hpEnemy = 10;
-	this->banner._hpSimon = 10;
-	this->banner._numberSimon = 3;
+	this->banner._hpEnemy = 16;
+	this->banner._hpSimon = 16;
+	this->banner._numberSimon = 5;
 	this->banner._scene = 1;
 	this->banner._score = 0;
 	this->banner._time = 300;

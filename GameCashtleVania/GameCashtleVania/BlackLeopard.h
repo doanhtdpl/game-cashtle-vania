@@ -9,7 +9,9 @@ public:
 	BlackLeopard();
 	BlackLeopard(std::vector<std::string> arr);
 	void handleCollisionWithFreeObject(float deltatime, HideObject* hideObj);
+	void update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
 	void animated(float deltaTime);
+	bool enable;
 protected:
 private:
 };

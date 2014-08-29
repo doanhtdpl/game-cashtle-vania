@@ -22,12 +22,16 @@ InfoScene::InfoScene(std::vector<std::string> arr)
 	this->_posSimon.y = atoi(arr.at(10).c_str());
 	this->width = atoi(arr.at(11).c_str());
 	this->height = atoi(arr.at(12).c_str());
-	this->_bound = RECT();
+	
+	this->_bound.left = atoi(arr.at(13).c_str());
+	this->_bound.right = atoi(arr.at(14).c_str());
+	this->_bound.bottom = 0;
+	this->_bound.top = this->height;
 }
 
 RECT InfoScene::getBoundFromFile(std::vector<std::string> arr)
 {
-	int x = atoi(arr.at(2).c_str());
+	/*int x = atoi(arr.at(2).c_str());
 	int y = atoi(arr.at(3).c_str());
 	int height = atoi(arr.at(4).c_str());
 	int width = atoi(arr.at(5).c_str());
@@ -35,17 +39,17 @@ RECT InfoScene::getBoundFromFile(std::vector<std::string> arr)
 	this->_bound.left = x - width / 2;
 	this->_bound.right = x + width / 2;
 	this->_bound.bottom = y - height / 2;
-	this->_bound.top = y + height / 2;
+	this->_bound.top = y + height / 2;*/
 
 	return this->_bound;
 }
 
 RECT InfoScene::getBound()
 {
-	this->_bound.left = 0;
+	/*this->_bound.left = 0;
 	this->_bound.right = this->width;
 	this->_bound.top = this->height;
-	this->_bound.bottom = 0;
+	this->_bound.bottom = 0;*/
 	return this->_bound;
 }
 

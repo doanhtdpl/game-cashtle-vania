@@ -36,6 +36,7 @@ public:
 	void ChangeState();//thay doi trang thai 
 	void ChangeTypeRod();//thay doi roi
 	void Use(D3DXVECTOR2 posSimon, bool Left);//
+	void reset();
 	Box getBox();// box de va cham
 	void animated(float deltaTime);
 	void update(float delta_Time, std::vector<ObjectGame*> _ListObjectCollision);

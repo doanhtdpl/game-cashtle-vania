@@ -1,4 +1,5 @@
 #include "BlackLeopard.h"
+#include "Simon.h"
 
 BlackLeopard::BlackLeopard()
 {
@@ -7,7 +8,29 @@ BlackLeopard::BlackLeopard()
 
 BlackLeopard::BlackLeopard(std::vector<std::string> arr) : Enemy(arr)
 {
-	this->_moveMent = EnemyMovement::Moves;
+	this->lamda = atoi(arr.at(12).c_str());
+	this->k = atoi(arr.at(13).c_str());
+
+	this->_moveMent = EnemyMovement::Idle;
+	this->enable = false;
+}
+
+void BlackLeopard::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision)
+{
+	if (enable)
+	{
+		Enemy::update(delta_Time, _listObjectCollision);
+	}else
+	{
+
+		animated(delta_Time);
+		this->_rectRS = this->updateRectRS(this->_width, this->_height);
+		if (abs(Simon::getInstance()->_pos.x - this->_pos.x) < k)
+		{
+			enable = true;
+			this->_moveMent = EnemyMovement::Moves;
+		}
+	}
 }
 
 void BlackLeopard::animated(float deltaTime)
@@ -55,5 +78,4 @@ void BlackLeopard::handleCollisionWithFreeObject(float deltatime, HideObject* hi
 		}
 		
 	}
-	
 }

@@ -94,13 +94,6 @@ void Enemy::updateMovement(float delta_Time)
 			this->_moveMent = EnemyMovement::Free;
 		}
 		
-		//if (this->_Left)//dang di chuyen qua ben trai
-		//{
-		//	this->_vx = -this->_Vx_default;
-		//}else
-		//{
-		//	this->_vx = this->_Vx_default;
-		//}
 		break;
 	case EnemyMovement::Free:
 		this->_vy = -this->_Vy_default * 2;
@@ -140,9 +133,10 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 			timeCollision = this->collision((StaticObject*)obj, normalX, normalY, deltatime);
 
 #pragma region HideObject = Ground
-			if (hideObj->getTypeHideObject() == TypeHideObect::Ground && 
+			if ((hideObj->getTypeHideObject() == TypeHideObect::Ground || hideObj->getTypeHideObject() == TypeHideObect::GroundVertical) && 
 				this->_typeEnemy != TypeEnemy::MEDUSA && 
-					this->_typeEnemy != TypeEnemy::VAMPIRE_BAT && !this->_canFree)
+					this->_typeEnemy != TypeEnemy::VAMPIRE_BAT &&
+						this->_typeEnemy != TypeEnemy::GHOST && !this->_canFree)
 			{
 				if (timeCollision == 2.0f)
 				{
@@ -166,6 +160,15 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 						this->_moveMent = EnemyMovement::Moves;
 						this->_pos.x += normalX;
 						this->_pos.y += normalY;
+
+						if (this->_Left)
+						{
+							this->_pos.x += 3;
+						}else
+						{
+							this->_pos.x -= 3;
+						}
+
 						this->_Left = !this->_Left;
 					}
 				}else
@@ -184,7 +187,7 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 
 						if (this->_moveMent == EnemyMovement::Moves)
 						{
-							this->_pos.x += timeCollision * (deltatime * this->_vx) + 0.5f;
+							this->_pos.x += timeCollision * (deltatime * this->_vx) + 1.0f;
 							this->_vx = 0;
 							this->_Left = false;
 						}
@@ -194,14 +197,9 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 					//Object dang di chuyen qua ben phai
 					if (normalX == -1)
 					{
-						/*if (this->_moveMent == EnemyMovement::Jump)
-						{
-							this->_moveMent == EnemyMovement::Free;
-						}*/
-
 						if (this->_moveMent == EnemyMovement::Moves)
 						{
-							this->_pos.x += timeCollision * (deltatime * this->_vx) - 0.5f;
+							this->_pos.x += timeCollision * (deltatime * this->_vx) - 1.0f;
 							this->_vx = 0;
 							this->_Left = true;
 						}
@@ -218,7 +216,7 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 							this->_vy = 0;
 							if (this->_typeEnemy == TypeEnemy::BLACK_LEOPARD)
 							{
-								//doi nguoi huong khi roi xuong cua con cho.
+								//doi nguoc huong khi roi xuong cua con cho.
 								this->_Left = !this->_Left;
 							}
 						}
@@ -242,28 +240,6 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				}
 			}
 		}
-
-#pragma region Collision With Weapon
-
-		//if (obj->className() == TagClassName::getInstance()->tagWeapon)
-		//{
-		//	timeCollision = this->collision((DynamicObject*)obj, normalX, normalY, deltatime);
-		//	//co va cham
-		//	if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
-		//	{
-		//		
-		//		_hp --;
-		//		if (_hp <= 0)
-		//		{
-		//			//die
-		//			this->_isALive = false;
-		//		}
-
-		//		_timeDelayCur = TimeDelay;
-		//	}
-		//}
-
-#pragma endregion
 
 	}
 }
@@ -320,17 +296,6 @@ bool Enemy::isAttack()
 
 	return false;
 }
-
-//RECT Enemy::getRect()
-//{
-//	this->_rect.top = _pos.y + this->_height / 2;
-//	this->_rect.bottom = this->_rect.top - this->_height;
-//
-//	this->_rect.left = _pos.x - this->_width / 2;
-//	this->_rect.right = this->_rect.left + this->_width;
-//
-//	return this->_rect;
-//}
 
 void Enemy::animated(float deltaTime)
 {
