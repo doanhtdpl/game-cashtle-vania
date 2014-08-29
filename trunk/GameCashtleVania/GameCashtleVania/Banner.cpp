@@ -33,12 +33,12 @@ void BANNER::init()
 
 	this->_hpSimon = Simon::getInstance()->HP;
 	this->_countHeartSimon = Simon::getInstance()->count_Heart;
-	this->_numberSimon = Simon::getInstance()->numberSimon;
+	this->_numberSimon = ManageGame::getInstance()->countLifeSimon;
 	//this->_typeWeapon = Simon::getInstance()->weaponCurr->_ID_Image;
 	this->_score = Simon::getInstance()->coin;
 	//this->_hpEnemy = ManageGame::getInstance()->boss->HP;
 	this->_hpEnemy = 10;
-	this->_scene = ManageGame::getInstance()->scene;
+	this->_scene = ManageGame::_infoScene->iD_Scene;
 	
 }
 
@@ -46,8 +46,9 @@ void BANNER::update(float deltaTime)
 {		
 	//this->_time = ManageGame::getInstance()->_timeGame;
 	this->_hpSimon = Simon::getInstance()->HP;
+	this->_hpEnemy = this->_hpSimon;
 	this->_countHeartSimon = Simon::getInstance()->count_Heart;
-	this->_numberSimon = Simon::getInstance()->numberSimon;
+	this->_numberSimon = ManageGame::getInstance()->countLifeSimon;
 	this->_typeWeapon = Simon::getInstance()->_typeOfWeaponCurr;
 	switch (this->_typeWeapon)
 	{
@@ -73,7 +74,7 @@ void BANNER::update(float deltaTime)
 
 	this->_score = Simon::getInstance()->coin;
 	//this->_hpEnemy = ManageGame::getInstance()->boss->HP;
-	this->_scene = ManageGame::getInstance()->scene;
+	this->_scene = ManageGame::getInstance()->_infoScene->iD_Scene;
 	this->_time += deltaTime;
 }
 
@@ -86,17 +87,17 @@ void BANNER::draw()
 		}	
 
 		D3DXVECTOR3 positionHpSimon = this->posHpSimon;
-		for (int i = 0; i <= this->_hpSimon; i++)
+		for (int i = 0; i < this->_hpSimon; i++)
 		{			
 			ManageSprite::createInstance()->_Sprite->draw(this->textureHpPlayer, NULL, positionHpSimon);
 			positionHpSimon.x += 8;
 		}
 		
 		D3DXVECTOR3 positionHpEnemy = this->posHpEnemy;
-		for (int i = 0; i <= this->_hpEnemy; i++)
+		for (int i = 0; i < this->_hpEnemy; i++)
 		{
-			ManageSprite::createInstance()->_Sprite->draw(this->textureHpEnemy, NULL, this->posHpEnemy);
-			positionHpSimon.x += 8;
+			ManageSprite::createInstance()->_Sprite->draw(this->textureHpEnemy, NULL, positionHpEnemy);
+			positionHpEnemy.x += 8;
 		}
 		
 		this->_pFont->drawFont(this->_countHeartSimon, this->posCountHeart.x,this->posCountHeart.y );

@@ -9,6 +9,8 @@ public:
 	Ghost();
 	Ghost(std::vector<std::string> arr);
 	void handleCollisionWithFreeObject(float deltatime, HideObject* hideObj);
+	D3DXVECTOR2 posTarget;//vi tri cua simon
+	void move(float delta_Time);
 protected:
 private:
 };

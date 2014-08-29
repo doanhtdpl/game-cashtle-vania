@@ -26,51 +26,51 @@ D3DXVECTOR3 Camera::getPosCamera()
 
 void Camera::update(float x, float deltaTime)
 {
-	float x_target = x - Screen_Width / 2;
-	float distance = x_target - _pos.x;
-	if (!stopScrollScreen)
+	if (!donePrepare) //dang auto move. khong update
 	{
-		//if (distance > 0)
-		//{//di chuyen cau thang qua ben phai
-		//	if (distance > speedX * deltaTime)
-		//	{
-		//		_pos.x += speedX * deltaTime;
-		//	}else
-		//	{
-		//		_pos.x = x_target;
-		//	}
-		//}else
-		//{//di chuyen cau thang qua ben trai
-		//	if (abs(distance) > abs(speedX) * deltaTime)
-		//	{
-		//		_pos.x += -speedX * deltaTime;
-		//	}else
-		//	{
-		//		_pos.x = x_target;
-		//	}
-		//}
-		_pos.x = (int)x_target;
-		
-		if (_pos.x < 0)
+		float x_target = x - Screen_Width / 2;
+		float distance = x_target - _pos.x;
+		if (!stopScrollScreen)
 		{
-			_pos.x = 0;
+			//if (distance > 0)
+			//{//di chuyen cau thang qua ben phai
+			//	if (distance > speedX * deltaTime)
+			//	{
+			//		_pos.x += speedX * deltaTime;
+			//	}else
+			//	{
+			//		_pos.x = x_target;
+			//	}
+			//}else
+			//{//di chuyen cau thang qua ben trai
+			//	if (abs(distance) > abs(speedX) * deltaTime)
+			//	{
+			//		_pos.x += -speedX * deltaTime;
+			//	}else
+			//	{
+			//		_pos.x = x_target;
+			//	}
+			//}
+			_pos.x = (int)x_target;
+		
+			/*kiem tra pos khi vuot qua bound.
+			pos la vi tri top left*/
+			if (this->_pos.x < this->_boundScene.left)
+			{
+				this->_pos.x = this->_boundScene.left;
+			}else
+			{
+				if (this->_pos.x > this->_boundScene.right - Screen_Width)
+				{
+					this->_pos.x = this->_boundScene.right - Screen_Width;
+				}
+			}
 		}
-		//kiem tra pos khi vuot qua bound.
-		//pos la vi tri top left
-		//if (this->_pos.x < this->_boundScene.left)
-		//{
-		//	this->_pos.x = this->_boundScene.left;
-		//}else
-		//{
-		//	if (this->_pos.x > this->_boundScene.right - Screen_Width)
-		//	{
-		//		this->_pos.x = this->_boundScene.right - Screen_Width;
-		//	}
-		//}
 	}
+	
 }
 
-bool Camera::move(float vx, float _posXTarget, float deltaTime)
+bool Camera::move(float vx, float _posXTarget, float deltaTime, bool dir)
 {
 	if (!donePrepare)
 	{
@@ -79,8 +79,9 @@ bool Camera::move(float vx, float _posXTarget, float deltaTime)
 		return false;
 	}else
 	{
+		int direction = dir ? -1 : 1;//di qua ben trai thi tru 
 		float x_target = posXTarget - Screen_Width / 2;
-		float distance = x_target - _pos.x;
+		float distance = (x_target - _pos.x) * direction;
 
 		if (distance > vx * deltaTime)
 		{

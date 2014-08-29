@@ -68,6 +68,10 @@ public:
 protected:
 	EnemyMovement _moveMent;
 	
+	//dung cho nhung enemy di chuyen hinh sin
+	float lamda;
+	float k;//vung bound y.
+
 	float TimeDelay;//bi delay khi va cham voi IronRod
 	bool _canFree;
 	float _hp;

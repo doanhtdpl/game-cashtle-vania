@@ -8,8 +8,12 @@ class DragonSkullCannon : public Enemy
 public:
 	DragonSkullCannon();
 	DragonSkullCannon(std::vector<std::string> arr);
-	void handleCollisionWithFreeObject(float deltatime, HideObject* hideObj);
+	//void handleCollisionWithFreeObject(float deltatime, HideObject* hideObj);
+	void update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
 protected:
+	void fire();
+	float eslapseTimeFire;
+	float timeFireCur;
 private:
 };
 

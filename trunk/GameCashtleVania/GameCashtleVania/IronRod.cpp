@@ -72,6 +72,11 @@ State_Rod IronRod::getStateRod()
 	return this->_stateRod;
 }
 
+void IronRod::reset()
+{
+	this->_typeRod = Type_Rod::Rod1;
+}
+
 void IronRod::ChangeState()
 {
 	switch (this->_stateRod)

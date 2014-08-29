@@ -11,6 +11,7 @@ public:
 	void handleCollisionWithFreeObject(float deltatime, HideObject* hideObj);
 	void move(float delta_Time);
 protected:
+	
 private:
 };
 

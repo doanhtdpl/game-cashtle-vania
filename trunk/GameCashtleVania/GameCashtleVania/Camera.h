@@ -22,7 +22,7 @@ public:
 	float posXTarget;
 
 	void update(float x, float deltaTime);
-	bool move(float vx, float posXTarget, float deltaTime);
+	bool move(float vx, float posXTarget, float deltaTime, bool dir = false);//mac dinh di qua ben phai
 	D3DXVECTOR3 getPosCamera();
 	D3DXVECTOR3 getPointTransform(float x, float y);
 	RECT getScreen();

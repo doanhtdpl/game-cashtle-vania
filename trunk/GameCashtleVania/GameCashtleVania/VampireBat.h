@@ -11,9 +11,6 @@ public:
 	void move(float delta_Time);
 	void handleCollisionWithFreeObject(float deltatime, HideObject* hideObj);
 protected:
-	
-	float lamda;
-	float k;//vung bound y.
 private:
 };
 
