@@ -10,18 +10,19 @@ public:
 	SimonIntroState();
 	~SimonIntroState();
 	virtual void animated(float deltaTime);
+	void setPosAndDes(D3DXVECTOR3 pos, D3DXVECTOR3 des);
 	void update(float deltaTime);
-	void draw();
+	void draw(bool isFlipX);
 	void init();
 	void move(float deltaTime);
-	void setPosAndDes(D3DXVECTOR3 pos, D3DXVECTOR3 des);
 	bool isFinish;
+	int vx;
 private:
 	D3DXVECTOR3 _pos;
 	D3DXVECTOR3 _des;
 	Texture* _texture;
 	RECT* _rect;
-	int vx;
+	
 	int vy;
 	int vxDefault;
 	int vyDefault;

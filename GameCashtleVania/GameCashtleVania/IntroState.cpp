@@ -50,7 +50,7 @@ void IntroState::drawStateGame()
 	this->helicopter.draw();
 	this->bat1.draw();
 	this->bat2.draw();
-	this->simon.draw();
+	this->simon.draw(false);
 }
 void IntroState::changeStateGame()
 {

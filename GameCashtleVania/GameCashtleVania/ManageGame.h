@@ -11,7 +11,7 @@
 #include "Banner.h"
 #include "MenuState.h"
 #include "IntroState.h"
-
+#include "NextMapState.h"
 class ManageGame : public Game
 {
 private:

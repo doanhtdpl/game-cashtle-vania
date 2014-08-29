@@ -205,7 +205,7 @@
     <Filter Include="GameObject\State\IntroState">
       <UniqueIdentifier>{d18fc071-15c7-4b49-8d5c-8b832b72675d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\State\MapState">
+    <Filter Include="GameObject\State\NextMapState">
       <UniqueIdentifier>{f91bfc32-f9e1-40e7-a0a5-cb8db70a74b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -444,6 +444,9 @@
     <ClCompile Include="SimonIntroState.cpp">
       <Filter>GameObject\State\IntroState</Filter>
     </ClCompile>
+    <ClCompile Include="NextMapState.cpp">
+      <Filter>GameObject\State\NextMapState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h">
@@ -679,6 +682,9 @@
     </ClInclude>
     <ClInclude Include="SimonIntroState.h">
       <Filter>GameObject\State\IntroState</Filter>
+    </ClInclude>
+    <ClInclude Include="NextMapState.h">
+      <Filter>GameObject\State\NextMapState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

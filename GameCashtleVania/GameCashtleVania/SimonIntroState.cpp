@@ -35,6 +35,7 @@ void SimonIntroState::init()
 	this->isFinish = false;
 }
 
+
 void SimonIntroState::animated(float deltaTime)
 {
 	this->_beforeTimeOld += deltaTime;	
@@ -65,9 +66,17 @@ void SimonIntroState::update(float deltaTime)
 	animated(deltaTime);
 	this->_rect = this->updateRectRS(this->_width, this->_height);
 }
-void SimonIntroState::draw()
+void SimonIntroState::draw(bool isFlipX)
 {
-	ManageSprite::createInstance()->_Sprite->draw(this->_texture, this->_rect, this->_pos);
+	if (isFlipX == true)
+	{
+		ManageSprite::createInstance()->_Sprite->drawFlipX(this->_texture, this->_rect, this->_pos);
+	}
+	else
+	{
+		ManageSprite::createInstance()->_Sprite->draw(this->_texture, this->_rect, this->_pos);
+	}
+	
 }
 
 

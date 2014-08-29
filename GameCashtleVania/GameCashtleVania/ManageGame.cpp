@@ -47,6 +47,10 @@ ManageGame::ManageGame()
 	this->currentState = TypeStateGame::MenuGame;
 	this->stateGame = new MenuState();	
 	this->delay = 0;
+
+	//this->currentState = TypeStateGame::NextMapGame;
+	//this->stateGame = new NextMapState();
+	//this->delay = 0;
 }
 
 ManageGame::~ManageGame(void)
@@ -69,6 +73,7 @@ void ManageGame::gameDraw()
 		break;
 	case TypeStateGame::NextMapGame:
 		this->stateGame->draw();
+		this->_banner->draw();
 		break;
 	case TypeStateGame::EndGame:
 		this->stateGame->draw();
@@ -115,7 +120,7 @@ void ManageGame::processInput()
 		{
 			this->currentState = TypeStateGame::IntroGame;
 			delete this->stateGame;
-			this->stateGame = new IntroState();
+			this->stateGame = new IntroState();			
 			this->stateGame->init();
 		}
 	}

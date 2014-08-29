@@ -138,6 +138,7 @@
     <ClCompile Include="MenuAnimation.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
+    <ClCompile Include="NextMapState.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjectGame.cpp" />
     <ClCompile Include="QNode.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="MenuAnimation.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="MovingPlatform.h" />
+    <ClInclude Include="NextMapState.h" />
     <ClInclude Include="ObjectFactoty.h" />
     <ClInclude Include="ObjectGame.h" />
     <ClInclude Include="QNode.h" />
