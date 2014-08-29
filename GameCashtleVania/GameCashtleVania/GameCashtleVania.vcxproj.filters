@@ -193,6 +193,21 @@
     <Filter Include="GameObject\StaticObject\GroundObj\MovingPlatform">
       <UniqueIdentifier>{c9261cb7-8583-4a39-b50f-75931e3d6865}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\State">
+      <UniqueIdentifier>{2e387d48-f52a-4a8c-80a1-a9e973b8320a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\State\MenuState">
+      <UniqueIdentifier>{cdff4580-7f6d-4ca2-821e-7798394f39a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\State\EndState">
+      <UniqueIdentifier>{71613384-e084-416b-8ce1-18b6df64affb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\State\IntroState">
+      <UniqueIdentifier>{d18fc071-15c7-4b49-8d5c-8b832b72675d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\State\MapState">
+      <UniqueIdentifier>{f91bfc32-f9e1-40e7-a0a5-cb8db70a74b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -408,6 +423,27 @@
     <ClCompile Include="MovingPlatform.cpp">
       <Filter>GameObject\StaticObject\GroundObj\MovingPlatform</Filter>
     </ClCompile>
+    <ClCompile Include="StateGame.cpp">
+      <Filter>GameObject\State</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>GameObject\State\MenuState</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuAnimation.cpp">
+      <Filter>GameObject\State\MenuState</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroState.cpp">
+      <Filter>GameObject\State\IntroState</Filter>
+    </ClCompile>
+    <ClCompile Include="Helicopter.cpp">
+      <Filter>GameObject\State\IntroState</Filter>
+    </ClCompile>
+    <ClCompile Include="BatIntroState.cpp">
+      <Filter>GameObject\State\IntroState</Filter>
+    </ClCompile>
+    <ClCompile Include="SimonIntroState.cpp">
+      <Filter>GameObject\State\IntroState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h">
@@ -622,6 +658,27 @@
     </ClInclude>
     <ClInclude Include="MovingPlatform.h">
       <Filter>GameObject\StaticObject\GroundObj\MovingPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="StateGame.h">
+      <Filter>GameObject\State</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>GameObject\State\MenuState</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuAnimation.h">
+      <Filter>GameObject\State\MenuState</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroState.h">
+      <Filter>GameObject\State\IntroState</Filter>
+    </ClInclude>
+    <ClInclude Include="Helicopter.h">
+      <Filter>GameObject\State\IntroState</Filter>
+    </ClInclude>
+    <ClInclude Include="BatIntroState.h">
+      <Filter>GameObject\State\IntroState</Filter>
+    </ClInclude>
+    <ClInclude Include="SimonIntroState.h">
+      <Filter>GameObject\State\IntroState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
