@@ -84,6 +84,7 @@
     <ClCompile Include="AxeMan.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Banner.cpp" />
+    <ClCompile Include="BatIntroState.cpp" />
     <ClCompile Include="BlackKnight.cpp" />
     <ClCompile Include="BlackLeopard.cpp" />
     <ClCompile Include="Boomerang.cpp" />
@@ -110,12 +111,14 @@
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GroundBGFac.cpp" />
     <ClCompile Include="GroundBGObj.cpp" />
+    <ClCompile Include="Helicopter.cpp" />
     <ClCompile Include="HideObject.cpp" />
     <ClCompile Include="HideObjectFactory.cpp" />
     <ClCompile Include="IAnimatedSprite.cpp" />
     <ClCompile Include="ICollision.cpp" />
     <ClCompile Include="IMove.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="IntroState.cpp" />
     <ClCompile Include="IronRod.cpp" />
     <ClCompile Include="IronRodFac.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -132,6 +135,8 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="Medusa.cpp" />
+    <ClCompile Include="MenuAnimation.cpp" />
+    <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjectGame.cpp" />
@@ -139,6 +144,8 @@
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="QuadTreeBackground.cpp" />
     <ClCompile Include="QuadTreeObject.cpp" />
+    <ClCompile Include="SimonIntroState.cpp" />
+    <ClCompile Include="StateGame.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="SimonFactory.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -157,6 +164,7 @@
     <ClInclude Include="AxeMan.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="Banner.h" />
+    <ClInclude Include="BatIntroState.h" />
     <ClInclude Include="BlackKnight.h" />
     <ClInclude Include="BlackLeopard.h" />
     <ClInclude Include="Boomerang.h" />
@@ -183,12 +191,14 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="GroundBGFac.h" />
     <ClInclude Include="GroundBGObj.h" />
+    <ClInclude Include="Helicopter.h" />
     <ClInclude Include="HideObject.h" />
     <ClInclude Include="HideObjectFactory.h" />
     <ClInclude Include="IAnimatedSprite.h" />
     <ClInclude Include="ICollision.h" />
     <ClInclude Include="IMove.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="IntroState.h" />
     <ClInclude Include="IronRod.h" />
     <ClInclude Include="IronRodFac.h" />
     <ClInclude Include="Item.h" />
@@ -204,6 +214,8 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="Medusa.h" />
+    <ClInclude Include="MenuAnimation.h" />
+    <ClInclude Include="MenuState.h" />
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="ObjectFactoty.h" />
     <ClInclude Include="ObjectGame.h" />
@@ -211,6 +223,8 @@
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="QuadTreeBackground.h" />
     <ClInclude Include="QuadTreeObject.h" />
+    <ClInclude Include="SimonIntroState.h" />
+    <ClInclude Include="StateGame.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="SimonFactory.h" />
     <ClInclude Include="Sprite.h" />

@@ -43,6 +43,10 @@ ManageGame::ManageGame()
 	this->_timeGame = 10;
 	
 	this->countLifeSimon = 5;
+
+	this->currentState = TypeStateGame::MenuGame;
+	this->stateGame = new MenuState();	
+	this->delay = 0;
 }
 
 ManageGame::~ManageGame(void)
@@ -50,6 +54,30 @@ ManageGame::~ManageGame(void)
 }
 
 void ManageGame::gameDraw()
+{
+
+	switch (this->currentState)
+	{
+	case TypeStateGame::MenuGame:
+		this->stateGame->draw();
+		break;
+	case TypeStateGame::IntroGame:
+		this->stateGame->draw();
+		break;
+	case TypeStateGame::PlayGame:
+		this->drawPlayGame();
+		break;
+	case TypeStateGame::NextMapGame:
+		this->stateGame->draw();
+		break;
+	case TypeStateGame::EndGame:
+		this->stateGame->draw();
+		break;
+	}
+	
+}
+
+void ManageGame::drawPlayGame()
 {
 	//chuyen scene vua xong thi khong ve
 	if (!recentlyChangeScene)
@@ -63,20 +91,73 @@ void ManageGame::gameDraw()
 		}
 
 		simon->draw();
-	}else
+	}
+	else
 	{
 		recentlyChangeScene = false;
 	}
 
-	//this->_banner->draw();
+	this->_banner->draw();
 }
 
 void ManageGame::processInput()
 {
-	//Simon::getInstance()->processInput();
+	if (this->currentState == TypeStateGame::MenuGame)
+	{
+		Input::CreateInstance()->ProcessKeyboard();
+
+		Input::CreateInstance()->Update();
+
+		int key = Input::CreateInstance()->GetKeyDown();
+		int key_up = Input::CreateInstance()->GetKeyUp();
+
+		if (key == DIK_RETURN)
+		{
+			this->currentState = TypeStateGame::IntroGame;
+			delete this->stateGame;
+			this->stateGame = new IntroState();
+			this->stateGame->init();
+		}
+	}
+	
+	
 }
 
 void ManageGame::gameUpdate(float deltaTime)
+{
+	switch (this->currentState)
+	{
+	case TypeStateGame::MenuGame:
+		this->stateGame->update(deltaTime);
+			break;
+	case TypeStateGame::IntroGame:
+		if (this->stateGame->isFinish() == true)
+		{
+			delay += deltaTime;
+			if (delay > 2)
+			{
+				this->currentState = TypeStateGame::PlayGame;
+				delete this->stateGame;
+			}			
+		}
+		else
+		{
+			this->stateGame->update(deltaTime);
+		}		
+		break;
+	case TypeStateGame::PlayGame:
+		this->updatePlayGame(deltaTime);
+		break;
+	case TypeStateGame::NextMapGame:
+		this->stateGame->update(deltaTime);
+		break;
+	case TypeStateGame::EndGame:
+		this->stateGame->update(deltaTime);
+		break;
+	}
+}
+
+void ManageGame::updatePlayGame(float deltaTime)
 {
 	this->_timeGame += deltaTime;
 	ManageSprite::createInstance()->update_Camera(Simon::getInstance()->_pos.x, deltaTime);
@@ -87,10 +168,10 @@ void ManageGame::gameUpdate(float deltaTime)
 	arr = quadTreeObj->getObjectInScreen(screen);
 	std::vector<ObjectGame*>::iterator it = arr.begin();
 	ObjectGame* obj = NULL;
-	while(it != arr.end())
+	while (it != arr.end())
 	{
 		obj = *it++;
-		
+
 		if (obj->className() == TagClassName::getInstance()->tagItem)
 		{
 			DynamicObject* dynamicObject = (DynamicObject*)obj;
@@ -109,20 +190,21 @@ void ManageGame::gameUpdate(float deltaTime)
 					isUseWatchItem = false;
 				}
 				enemy->pause = true;
-			}						
+			}
 			else
 			{
 				enemy->pause = simon->_collisionItemRod;
 			}
 
-			enemy->update(deltaTime, arr);							
+			enemy->update(deltaTime, arr);
 		}
 		else
 		{
 			if (obj->className() == TagClassName::getInstance()->tagGroundObject)
 			{
 				obj->update(deltaTime, arr);
-			}else
+			}
+			else
 			{
 				obj->update(deltaTime);
 			}
@@ -133,12 +215,14 @@ void ManageGame::gameUpdate(float deltaTime)
 	if (!isChangeScene)
 	{
 		simon->update(deltaTime, arr);
-	}else
+	}
+	else
 	{
 		if (_infoScene->level == 1 && !simon->_Left)
 		{
 			changeScene(deltaTime);
-		}else
+		}
+		else
 		{
 			simon->update(deltaTime, arr);
 		}
@@ -164,7 +248,7 @@ void ManageGame::gameUpdate(float deltaTime)
 	}
 	//delete obj;
 	arr.clear();
-	
+
 	this->_banner->update(deltaTime);
 }
 
@@ -393,7 +477,7 @@ void ManageGame::gameInit()
 	quadTreeObj = QuadTreeObject::getInstance();
 	
 	level = 1;
-	scene = 5;
+	scene = 1;
 	ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
 
 	this->_infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
@@ -420,6 +504,9 @@ void ManageGame::gameInit()
 
 	// banner
 	this->_banner->init();
+
+	//state game
+	this->stateGame->init();
 }
 
 bool ManageGame::pauseGame(float deltaTime)

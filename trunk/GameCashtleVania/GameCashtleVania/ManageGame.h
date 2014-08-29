@@ -9,6 +9,8 @@
 #include "Gate.h"
 #include "MapLoader.h"
 #include "Banner.h"
+#include "MenuState.h"
+#include "IntroState.h"
 
 class ManageGame : public Game
 {
@@ -28,6 +30,8 @@ private:
 	void changeSceneDown();
 	bool pauseGame(float deltaTime);
 	bool openGate;
+	float delay;
+	
 public:
 	static bool isUseWatchItem;
 	int countLifeSimon;
@@ -65,6 +69,11 @@ public:
 	void clear_Screen();
 	void processInput();
 	void delete_Memory_Game();
+
+	TypeStateGame currentState;
+	StateGame* stateGame;
+	void updatePlayGame(float deltaTime);
+	void drawPlayGame();
 public:
 	static ManageGame* getInstance();
 	ManageGame();
