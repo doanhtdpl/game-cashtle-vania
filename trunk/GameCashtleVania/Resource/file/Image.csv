@@ -51,8 +51,10 @@ ID_Image,filename
 3003,..\Resource\image\Fonttt.png
 4001,..\Resource\image\IntroGame\intro.png
 4002,..\Resource\image\MenuGame\MainMenu.png
-4003,..\Resource\image\intro.png
+4003,..\Resource\image\NextMapState\NextMap.png
 4004,..\Resource\image\intro.png
 5001,..\Resource\image\IntroGame\bat.png
 5002,..\Resource\image\MenuGame\BatAnimation.png
+5003,..\Resource\image\NextMapState\Bat.png
+5004,..\Resource\image\NextMapState\Position.png
 5005,..\Resource\image\IntroGame\helicopter.png

@@ -14,17 +14,19 @@ public:
 	void init();
 	void move(float deltaTime);
 	void setPosAndDes(D3DXVECTOR3 pos, D3DXVECTOR3 des);
+	Texture* _texture;
+	int _width;
+	int _height;
 private:	
 	D3DXVECTOR3 _pos;
 	D3DXVECTOR3 _des;
-	Texture* _texture;
+	
 	RECT* _rect;
 	int vx;
 	int vy;
 	int vxDefault;
 	int vyDefault;
-	int _width;
-	int _height;	
+		
 };
 
 
