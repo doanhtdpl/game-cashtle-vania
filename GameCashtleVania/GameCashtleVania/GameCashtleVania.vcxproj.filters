@@ -447,6 +447,15 @@
     <ClCompile Include="NextMapState.cpp">
       <Filter>GameObject\State\NextMapState</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossLevel2.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>GameObject\DynamicObject\Enemy\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h">
@@ -685,6 +694,15 @@
     </ClInclude>
     <ClInclude Include="NextMapState.h">
       <Filter>GameObject\State\NextMapState</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>GameObject\DynamicObject\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossLevel2.h">
+      <Filter>GameObject\DynamicObject\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>GameObject\DynamicObject\Enemy\Boss</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

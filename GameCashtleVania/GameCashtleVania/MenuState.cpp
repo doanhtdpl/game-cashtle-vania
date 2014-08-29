@@ -1,6 +1,5 @@
 #include "MenuState.h"
 #include "ManageTexture.h"
-
 MenuState::MenuState() 
 {
 	this->_typeState = TypeStateGame::MenuGame;

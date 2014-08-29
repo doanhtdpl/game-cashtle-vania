@@ -27,6 +27,7 @@ enum class TypeEnemy
 	WHITE_SKELETON = 209,
 	GHOST = 210,
 	FIRE_BALL = 211,
+	Bullet = 212,
 	BOSS_LEVEL1 = 401,
 	BOSS_LEVEL2 = 402
 };
@@ -49,10 +50,10 @@ public:
 	virtual std::string className();
 	virtual void move(float delta_Time);
 	virtual void animated(float deltaTime);
-	void updateMovement(float deltaTime);
+	virtual void updateMovement(float deltaTime);
 	//xu ly collision - chi xu ly va cham voi nhung doi tuong Ground. Nhung doi tuong an - Free. 
 	virtual void handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision);
-	void update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
+    virtual void update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
 	Enemy();
 	Enemy(std::vector<std::string> arr);
 	

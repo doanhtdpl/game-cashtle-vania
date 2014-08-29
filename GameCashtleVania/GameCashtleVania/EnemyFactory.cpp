@@ -11,7 +11,9 @@
 #include "WhiteSkeleton.h"
 #include "FireBall.h"
 #include "BossLevel1.h"
-
+#include "Boss.h"
+#include "BossLevel2.h"
+#include "Bullet.h"
 EnemyFactory* EnemyFactory::_instance = NULL;
 
 EnemyFactory* EnemyFactory::getInstance()
@@ -69,8 +71,15 @@ Enemy* EnemyFactory::createObj(int ID)
 	case TypeEnemy::FIRE_BALL:
 		enemy = new FireBall(arr);
 		break;
+	case TypeEnemy::Bullet:
+		enemy = new Bullet(arr);
+		break;
 	case TypeEnemy::BOSS_LEVEL1:
 		enemy = new BossLevel1(arr);
+		break;
+	case TypeEnemy::BOSS_LEVEL2:
+		enemy = new BossLevel2(arr);
+		break;
 	default:
 		break;
 	}

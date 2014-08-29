@@ -88,8 +88,11 @@
     <ClCompile Include="BlackKnight.cpp" />
     <ClCompile Include="BlackLeopard.cpp" />
     <ClCompile Include="Boomerang.cpp" />
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="BossLevel1.cpp" />
+    <ClCompile Include="BossLevel2.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Dagger.cpp" />
     <ClCompile Include="Door.cpp" />
@@ -169,8 +172,11 @@
     <ClInclude Include="BlackKnight.h" />
     <ClInclude Include="BlackLeopard.h" />
     <ClInclude Include="Boomerang.h" />
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="BossLevel1.h" />
+    <ClInclude Include="BossLevel2.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Dagger.h" />
     <ClInclude Include="Door.h" />
