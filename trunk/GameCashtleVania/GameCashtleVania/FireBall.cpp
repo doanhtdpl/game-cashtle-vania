@@ -65,12 +65,20 @@ void FireBall::appear(D3DXVECTOR2 pos, D3DXVECTOR2 posSimon)
 	int disX = abs(this->_pos.x - posSimon.x);
 	int disY = abs(this->_pos.y - posSimon.y);
 	
-	if (disX > disY && disX != 0 && disY != 0)
+	if (disX > disY)
 	{
-		this->_vy *= (disY / disX);
+		if (disX != 0)
+		{
+			this->_vy *= (disY / disX);
+		}
+		
 	}else
-	{
-		this->_vx *= (disX / disY);
+	{		
+		if (disY != 0)
+		{
+			this->_vx *= (disX / disY);
+		}
+		
 	}
 }
 
