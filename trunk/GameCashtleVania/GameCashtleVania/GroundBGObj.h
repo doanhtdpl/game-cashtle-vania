@@ -14,7 +14,8 @@ public:
 	virtual void update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
 	virtual void move(float Delta_Time);// overide IMOVE
 	virtual void handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision);
-	
+
+	D3DXVECTOR2 posDefault;
 protected:
 private:
 };

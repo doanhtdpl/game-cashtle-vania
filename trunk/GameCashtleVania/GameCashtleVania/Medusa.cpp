@@ -1,4 +1,5 @@
 #include "Medusa.h"
+#include "ManageGame.h"
 
 Medusa::Medusa()
 {
@@ -11,7 +12,12 @@ Medusa::Medusa(std::vector<std::string> arr) : Enemy(arr)
 	this->k = atoi(arr.at(13).c_str());
 
 	this->_moveMent = EnemyMovement::Moves;
-	this->_Left = false;
+	if (ManageGame::_infoScene->level == 2 && ManageGame::_infoScene->iD_Scene == 4)
+	{
+		this->_Left = true;
+	}else{
+		this->_Left = false;
+	}
 }
 
 void Medusa::handleCollisionWithFreeObject(float deltatime, HideObject* hideObj)

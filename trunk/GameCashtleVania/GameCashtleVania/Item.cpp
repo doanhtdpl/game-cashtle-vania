@@ -3,7 +3,8 @@
 #include "Simon.h"
 #include "HideObject.h"
 #include <stdlib.h>
-#include <time.h> 
+#include <time.h>
+#include "ManageGame.h"
 
 Item::Item()
 {
@@ -36,6 +37,14 @@ Item::Item(std::vector<std::string> arr)
 		this->_typeItem = (TypeItem)(this->_ID * 10 + this->_curFrame);
 		this->_isAnimatedSprite = true;
 		this->_rectRS = this->updateRectRS(this->_width, this->_height);	
+	}else
+	{
+		if (this->_typeItem == TypeItem::MoneyBag)
+		{
+			this->_curFrame = 0;
+			this->_isAnimatedSprite = true;
+			this->_rectRS = this->updateRectRS(this->_width, this->_height);	
+		}
 	}
 
 	this->_rect = this->getRect();
@@ -45,6 +54,9 @@ Item::Item(std::vector<std::string> arr)
 
 	this->canCollionSimon = false;
 	this->timeColSimon = 0.5f;
+
+	this->_elapseTimeSwitchFrame = 0.2;
+	this->_beforeTimeOld = 0.0f;
 }
 
 Box Item::getBox()
@@ -137,6 +149,16 @@ void Item::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollisio
 	}
 
 	handleCollision(delta_Time, _listObjectCollision);
+	animated(delta_Time);
+}
+
+void Item::animated(float deltaTime)
+{
+	if (this->_typeItem == TypeItem::MagicalCrystal)
+	{
+		IAnimatedSprite::animated(deltaTime);
+		this->_rectRS = this->updateRectRS(this->_width, this->_height);
+	}
 }
 
 std::string Item::className()
@@ -192,10 +214,15 @@ void Item::effectSimon()
 		Simon::getInstance()->addCoin(700);
 		break;
 	case TypeItem::PorkChop:
-		//add mau
+		Simon::getInstance()->addHP(8);
 		break;
 	case TypeItem::Cross:
 		//huy diet
+		break;
+	case TypeItem::MagicalCrystal:
+//		ManageGame::getInstance()->nextLevel();
+		Simon::getInstance()->HP = HP_DEFAULT;
+		ManageGame::_nextLevel = true;
 		break;
 	default:
 		break;

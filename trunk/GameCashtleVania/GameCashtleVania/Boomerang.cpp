@@ -12,7 +12,7 @@ Boomerang::Boomerang()
 
 Boomerang::Boomerang(std::vector<std::string> arr) :Weapon(arr)
 {
-	this->_SPACE_MAX = 200; 
+	this->_SPACE_MAX = 250;
 	this->_totalSpace = 0;
 	this->_vx = this->_Vx_default;
 	this->_vy = this->_Vy_default;

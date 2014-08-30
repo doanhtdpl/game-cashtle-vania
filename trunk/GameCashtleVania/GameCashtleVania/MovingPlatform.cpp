@@ -1,4 +1,4 @@
-
+#include "ManageGame.h"
 #include "MovingPlatform.h"
 #include "HideObject.h"
 #include "TagClassName.h"
@@ -16,6 +16,15 @@ MovingPlatform::MovingPlatform(std::vector<std::string> arr) : GroundBGObj(arr)
 	this->_rect = this->getRect();
 	this->_Left = true;
 	this->_vx = -this->_Vx_default;
+
+	if (ManageGame::_infoScene->level == 2 && ManageGame::_infoScene->iD_Scene == 4)
+	{
+		this->distanceX = 90 - 32;
+	}else
+	{
+		this->distanceX = 60 - 32;
+	}
+	
 }
 
 MovingPlatform::MovingPlatform() 
@@ -28,7 +37,7 @@ MovingPlatform::~MovingPlatform()
 
 void MovingPlatform::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision)
 {
-	handleCollision(delta_Time, _listObjectCollision);
+	//handleCollision(delta_Time, _listObjectCollision);
 	move(delta_Time);
 }
 
@@ -45,11 +54,22 @@ void MovingPlatform::move(float Delta_Time)
 	/*int dir = this->_Left ? -1 : 1;
 	this->_vx = this->_Vx_default * dir;*/
 	this->_pos.x += this->_vx * Delta_Time;
+	if (this->_pos.x >= posDefault.x + distanceX)
+	{
+		this->_pos.x = posDefault.x + distanceX;
+		this->_vx = - this->_Vx_default;
+	}else
+	{
+		if (this->_pos.x <= posDefault.x - distanceX)
+		{
+			this->_vx = this->_Vx_default;
+		}
+	}
 }
 
 void MovingPlatform::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
 {
-	for (int i = 0; i < _listObjectCollision.size(); i++)
+	for (std::vector<ObjectGame*>::iterator it = _listObjectCollision.begin(); it != _listObjectCollision.end(); it++)
 	{
 		//lay box collider khi bat dau xu ly va cham
 		this->_box = this->getBox();
@@ -57,7 +77,7 @@ void MovingPlatform::handleCollision(float deltatime, std::vector<ObjectGame*> _
 		float normalY = 0;
 		float timeCollision;
 
-		ObjectGame* obj = _listObjectCollision.at(i);
+		ObjectGame* obj = *it;
 		if (obj->className() == TagClassName::getInstance()->tagHideObject)
 		{
 			HideObject* hideObj = (HideObject*)obj;
@@ -67,15 +87,31 @@ void MovingPlatform::handleCollision(float deltatime, std::vector<ObjectGame*> _
 
 				if (timeCollision == 2.0f)
 				{
- 					this->_pos.x += normalX;
-					if (this->_vx < 0)
+					//if (normalX > 0)
 					{
-						this->_vx = this->_Vx_default;
+						
+						if (this->_vx < 0)
+						{
+							if (normalX > 0)
+							{
+								this->_pos.x += normalX;
+								this->_pos.x += 3;
+								this->_vx = this->_Vx_default;
+							}
+							
+						}
+						else
+						{
+							if (normalX < 0)
+							{
+								this->_pos.x += normalX;
+								this->_pos.x -= 3;
+								this->_vx = -this->_Vx_default;
+							}
+							
+						}
 					}
-					else
-					{
-						this->_vx = -this->_Vx_default;
-					}
+ 					
 					//this->_pos.y += normalY;
 					//this->_Left = !this->_Left;
 					/*if (normalX != 0)

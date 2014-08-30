@@ -8,6 +8,8 @@ public:
 	FireBall();
 	FireBall(std::vector<std::string> arr);
 	void appear(D3DXVECTOR2 pos, bool dir);
+	void appear(D3DXVECTOR2 pos, D3DXVECTOR2 posSimon);
+	void move(float delta_Time);
 	void update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
 	float lifeTime;
 protected:

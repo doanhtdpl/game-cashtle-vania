@@ -15,6 +15,8 @@ bool ManageGame::isUseWatchItem = false;
 bool ManageGame::isChangeScene = false;
 bool ManageGame::isChangeTop = false;
 bool ManageGame::isChangeDown = false;
+bool ManageGame::_nextLevel = false;
+int ManageGame::HP_BOSS = 16;
 InfoScene* ManageGame::_infoScene = NULL;
 ManageGame* ManageGame::_instance = NULL;
 
@@ -141,7 +143,7 @@ void ManageGame::gameUpdate(float deltaTime)
 	{
 	case TypeStateGame::MenuGame:
 		this->stateGame->update(deltaTime);
-			break;
+		break;
 	case TypeStateGame::IntroGame:
 		if (this->stateGame->isFinish() == true)
 		{
@@ -151,6 +153,7 @@ void ManageGame::gameUpdate(float deltaTime)
 				this->currentState = TypeStateGame::PlayGame;
 				ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
 				delete this->stateGame;
+				delay = 0;
 			}			
 		}
 		else
@@ -163,6 +166,20 @@ void ManageGame::gameUpdate(float deltaTime)
 		break;
 	case TypeStateGame::NextMapGame:
 		this->stateGame->update(deltaTime);
+		if (this->stateGame->isFinish())
+		{
+			delay += deltaTime;
+			if (delay > 2)
+			{
+				this->currentState = TypeStateGame::PlayGame;
+				this->countLifeSimon ++;
+				//this->restartGame();
+				ManageAudio::getInstance()->playSound(TypeAudio::Stage_04_Stalker);
+				this->nextScene(0);
+				delete this->stateGame;
+				delay = 0;
+			}
+		}
 		break;
 	case TypeStateGame::EndGame:
 		this->stateGame->update(deltaTime);
@@ -259,6 +276,11 @@ void ManageGame::updatePlayGame(float deltaTime)
 		this->changeSceneTop();
 		isChangeTop = false;
 	}
+
+	if (_nextLevel)
+	{
+		this->nextLevel();
+	}
 	//delete obj;
 	arr.clear();
 
@@ -267,6 +289,8 @@ void ManageGame::updatePlayGame(float deltaTime)
 
 void ManageGame::restartGame()
 {
+	ManageAudio::getInstance()->stopSound(TypeAudio::Boss_Battle_Poison_Mind);
+	ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
 	this->countLifeSimon --;
 	if (this->countLifeSimon > 0)
 	{
@@ -533,7 +557,14 @@ void ManageGame::nextScene(int increaseScene)
 
 void ManageGame::nextLevel()
 {
-
+	ManageAudio::getInstance()->stopSound(TypeAudio::Boss_Battle_Poison_Mind);
+	this->level ++;
+	this->scene = 1;
+	this->currentState = TypeStateGame::NextMapGame;
+	simon->_attackingBoss = false;
+	this->stateGame = new NextMapState();
+	this->stateGame->init();
+	this->_nextLevel = false;
 }
 
 void ManageGame::winGame()
@@ -566,7 +597,8 @@ void ManageGame::gameInit()
 	quadTreeObj = QuadTreeObject::getInstance();
 	
 	level = 1;
-	scene = 1;
+	scene = 5;
+
 
 	//ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
 

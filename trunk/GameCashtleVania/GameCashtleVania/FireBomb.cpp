@@ -14,7 +14,7 @@ FireBomb::FireBomb()
 
 FireBomb::FireBomb(std::vector<std::string> arr) :Weapon(arr)
 {
-	this->_ay = 1000.0f;
+	this->_ay = atof(arr.at(11).c_str());
 	this->_vx = this->_Vx_default;
 	this->_vy = this->_Vy_default;
 	this->setTypeOfWeapon(TypeWeapon::FireBomb);

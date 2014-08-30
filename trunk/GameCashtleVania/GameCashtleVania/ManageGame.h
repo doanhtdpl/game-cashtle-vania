@@ -21,9 +21,7 @@ private:
 	//int iDScene;// scene 1
 	void winGame();
 	void loseGame();
-	void restartScene();
-	void nextScene(int increaseScene);
-	void nextLevel();
+	
 	void changeScene(float deltaTime);
 	bool changeSceneWithGate(float deltaTime);
 	void changeSceneTop();
@@ -58,10 +56,15 @@ public:
 	static bool isChangeScene;
 	static bool isChangeTop;
 	static bool isChangeDown;
+	static bool _nextLevel;
+	static int HP_BOSS;
 	bool recentlyChangeScene;
 	bool acting;
 
 	void restartGame();
+	void restartScene();
+	void nextScene(int increaseScene);
+	void nextLevel();
 
 	void gameUpdate(float DeltaTime);
 	void gameDraw();
