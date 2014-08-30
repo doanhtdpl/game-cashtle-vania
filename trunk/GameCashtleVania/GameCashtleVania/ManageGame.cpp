@@ -291,6 +291,7 @@ void ManageGame::restartGame()
 {
 	ManageAudio::getInstance()->stopSound(TypeAudio::Boss_Battle_Poison_Mind);
 	ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
+	this->HP_BOSS = 16;
 	this->countLifeSimon --;
 	if (this->countLifeSimon > 0)
 	{

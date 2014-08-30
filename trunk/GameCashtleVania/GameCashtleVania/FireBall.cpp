@@ -61,6 +61,17 @@ void FireBall::appear(D3DXVECTOR2 pos, D3DXVECTOR2 posSimon)
 			this->_vy = 0;
 		}
 	}
+
+	int disX = abs(this->_pos.x - posSimon.x);
+	int disY = abs(this->_pos.y - posSimon.y);
+	
+	if (disX > disY && disX != 0 && disY != 0)
+	{
+		this->_vy *= (disY / disX);
+	}else
+	{
+		this->_vx *= (disX / disY);
+	}
 }
 
 void FireBall::move(float delta_Time)
@@ -82,5 +93,4 @@ void FireBall::update(float delta_Time, std::vector<ObjectGame*> _listObjectColl
 			this->_isALive = false;
 		}
 	}
-	
 }
