@@ -39,7 +39,7 @@ Item::Item(std::vector<std::string> arr)
 		this->_rectRS = this->updateRectRS(this->_width, this->_height);	
 	}else
 	{
-		if (this->_typeItem == TypeItem::MoneyBag)
+		if (this->_typeItem == TypeItem::MagicalCrystal)
 		{
 			this->_curFrame = 0;
 			this->_isAnimatedSprite = true;
