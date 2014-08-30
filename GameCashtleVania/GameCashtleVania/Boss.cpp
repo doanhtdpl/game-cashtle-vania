@@ -2,6 +2,8 @@
 #include "ManageGame.h"
 #include "EnemyFactory.h"
 #include "Bullet.h"
+#include "FireBall.h"
+
 Boss ::Boss ()
 {
 
@@ -58,7 +60,7 @@ void Boss::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollisio
 
 void Boss::fire()
 {
-	Bullet* fireBall = (Bullet*)EnemyFactory::getInstance()->createObj((int)TypeEnemy::Bullet);
+	FireBall* fireBall = (FireBall*)EnemyFactory::getInstance()->createObj((int)TypeEnemy::FIRE_BALL);
 	fireBall->appear(this->_pos,Simon::getInstance()->_pos);
 	QuadTreeObject::getInstance()->addObjectToQuadTree(fireBall);
 }

@@ -1,5 +1,6 @@
 #include "VampireBat.h"
 #include <algorithm>
+#include "ManageGame.h"
 
 VampireBat::VampireBat()
 {
@@ -12,6 +13,15 @@ VampireBat::VampireBat(std::vector<std::string> arr) : Enemy(arr)
 	this->k = atoi(arr.at(13).c_str());
 
 	this->_moveMent = EnemyMovement::Moves;
+
+	if (ManageGame::_infoScene->level == 1)
+	{
+		this->_Left = true;
+	}
+	else
+	{
+		this->_Left = false;
+	}
 }
 
 void VampireBat::handleCollisionWithFreeObject(float deltatime, HideObject* hideObj)

@@ -59,6 +59,7 @@ GroundBGObj* GroundBGFac::createObj(std::vector<std::string> arr)
 	int y = atoi(arr.at(3).c_str());
 	obj->_pos.x = x;
 	obj->_pos.y = y;
-
+	obj->posDefault = obj->_pos;
+	//obj->posDefault.x = obj->posDefault.x / 32 * 32;
 	return obj;
 }

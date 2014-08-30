@@ -4,6 +4,8 @@
 #include "ItemManager.h"
 #include "ManageAudio.h"
 #include "Simon.h"
+#include "ManageGame.h"
+
 Enemy::Enemy()
 {
 
@@ -232,8 +234,9 @@ void Enemy::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				//co va cham
 				if ((timeCollision > 0.0f && timeCollision < 1.0f) || timeCollision == 2.0f)
 				{
+					//(abs(this->_pos.x - hideObj->_pos.x) < 25) && 
 					//xu ly voi doi tuong hide object = Free
-					if (abs(this->getRect().bottom - hideObj->getRect().bottom) < 5)
+					if ((abs(this->getRect().bottom - hideObj->getRect().bottom) < 10))
 					{
 						handleCollisionWithFreeObject(deltatime, hideObj);
 					}
@@ -278,12 +281,25 @@ bool Enemy::isAttack()
 	{
 		ManageAudio::getInstance()->playSound(TypeAudio::Hit);		
 		this->_hp --;
+		if (this->_typeEnemy == TypeEnemy::BOSS_LEVEL1 || this->_typeEnemy == TypeEnemy::BOSS_LEVEL2)
+		{
+			ManageGame::HP_BOSS = this->_hp;
+		}
 		if (_hp <= 0)
 		{
 			//chet roi
 			this->_isALive = false;
-			Simon::getInstance()->addCoin(100);
-			Item* item = ItemManager::getInstance()->appearItemEnemyDie(this->_pos);
+			Item* item = NULL;
+			if (this->_typeEnemy == TypeEnemy::BOSS_LEVEL1 || this->_typeEnemy == TypeEnemy::BOSS_LEVEL2)
+			{
+				Simon::getInstance()->addCoin(1000);
+				item = ItemManager::getInstance()->appearItem(MagicalCrystal, this->_pos);
+			}else
+			{
+				Simon::getInstance()->addCoin(100);
+				item = ItemManager::getInstance()->appearItemEnemyDie(this->_pos);
+			}
+			
 			if (item != NULL)
 			{
 				QuadTreeObject::getInstance()->addObjectToQuadTree(item);

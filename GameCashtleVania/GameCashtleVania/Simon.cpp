@@ -140,6 +140,8 @@ Simon::Simon(std::vector<std::string> arr)
 	
 	//attacking boss
 	this->_attackingBoss = false;
+	this->_standMoving = false;
+	this->_vxMoving = 0;
 }
 
 Box Simon::getBox()
@@ -187,11 +189,16 @@ void Simon::updateMovement(float delta_Time)
 			{
 				this->_vx = this->_Vx_default;
 			}
+
+			if (this->_standMoving)
+			{
+				this->_vx += _vxMoving;
+			}
 		}
 		break;
 	case Idle:
-		/*this->_CanMoveL = true;
-		this->_CanMoveR = true;*/
+		//this->_CanMoveL = true;
+		//this->_CanMoveR = true;
 		this->_High_Jumped = 0;
 		this->_CanJum = true;
 		this->_vx = 0.0f;
@@ -385,6 +392,18 @@ void Simon::updateMovement(float delta_Time)
 
 void Simon::move(float delta_Time)
 {
+	if (this->_standMoving)
+	{
+		/*if (this->_moveMent == SimonMove::Idle )
+		{
+		this->_vx += this->_vxMoving;
+		}*/
+		if (this->_moveMent == SimonMove::Sit || (this->_moveMent == SimonMove::Idle && this->_vx == 0))
+		{
+			this->_vx = this->_vxMoving;
+		}
+	}
+
 	if ((this->_CanMoveL && this->_vx < 0) || (this->_CanMoveR && this->_vx > 0))
 	{
 		this->_pos.x += this->_vx * delta_Time;
@@ -433,6 +452,7 @@ void Simon::move(float delta_Time)
 		distanceFree = 0;
 		_canFree = false;
 	}
+
 }
 
 void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollision)
@@ -580,40 +600,6 @@ void Simon::animated(float deltatime)
 		return;
 	}
 #pragma endregion
-
-	//if(_attacking == 2)
-	//{
-	//	switch (_moveMent)
-	//	{
-	//	case None:
-	//		break;
-	//	case Moves:
-	//		this->_curFrame = 4 + ironRod->getStateRod();
-	//		break;
-	//	case Idle:
-	//		this->_curFrame = 4 + ironRod->getStateRod();
-	//		break;
-	//	case Sit:
-	//		this->_curFrame = 14 + ironRod->getStateRod();
-	//		break;
-	//	case OnStairUp:
-	//		this->_curFrame = 20 + ironRod->getStateRod();
-	//		break;
-	//	case OnStairDown:
-	//		this->_curFrame = 17 + ironRod->getStateRod();
-	//		break;
-	//	case Jump:
-	//		this->_curFrame = 4 + ironRod->getStateRod();
-	//		break;
-	//	case Free:
-	//		this->_curFrame = 4 + ironRod->getStateRod();
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//	this->_rectRS = this->updateRectRS(this->_width, this->_height);
-	//	return;
-	//}
 
 #pragma endregion
 
@@ -975,28 +961,6 @@ void Simon::processInput()
 				}
 			}
 		}
-
-		//if (this->_prepareChangeTop)
-		//{
-		//	this->_changingTop = true;
-		//	this->_moveMent = SimonMove::UpStair;
-		//	//dang dung tren cau thang
-		//	if (this->_onStair)
-		//	{
-		//		this->_Left = this->_dirMoveStair;
-		//		this->_stepOnStair = StepOnStair::Step0;
-		//		this->_start_MoveStair = true;
-		//		this->_finish_MoveStair = false;
-		//	}else
-		//	{
-		//		this->_start_MoveStair = false;
-		//		this->_finish_MoveStair = false;
-		//		this->posPrepareOnStair.x = _rectOfStair.right - (_rectOfStair.right - _rectOfStair.left) / 2 ;// + this->_width / 4;
-		//		this->posPrepareOnStair.y = _rectOfStair.bottom + this->_height / 2 - 4;
-		//		this->_stepOnStair = StepOnStair::Step0;
-		//		this->_dirMoveStair = this->_dirMoveStair;
-		//	}
-		//}
 	}
 #pragma endregion
 
@@ -1414,9 +1378,9 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 										{
 											if ((timeCollision > 0.0f && timeCollision < 1.0f)|| timeCollision == 2.0f)// 
 											{
-												if ((this->_moveMent == SimonMove::Idle || this->_moveMent == SimonMove::Moves) && !this->_onStair)
+												if ((this->_moveMent == SimonMove::Idle || this->_moveMent == SimonMove::Moves) && !this->_onStair && !this->_standMoving)
 												{
-													if ( abs(this->_pos.x - hideObj->_pos.x) < 25 && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
+													if ( (abs(this->_pos.x - hideObj->_pos.x) < 25) && abs(this->getRect().bottom - hideObj->getRect().bottom) < 10)
 													{
 														this->_canFree = true;
 														this->_moveMent = SimonMove::Free;
@@ -1488,33 +1452,37 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 													{
 														if ((timeCollision > 0.0f && timeCollision < 1.0f)|| timeCollision == 2.0f)
 														{
-															ManageSprite::createInstance()->_camera->stopScrollScreen = true;
-															this->_attackingBoss = true;
-															for (std::vector<ObjectGame*>::iterator it = _listObjectCollision.begin(); it != _listObjectCollision.end(); it++)
+															if (!_attackingBoss)
 															{
-																ObjectGame* item = *it;
+																ManageSprite::createInstance()->_camera->stopScrollScreen = true;
+																this->_attackingBoss = true;
+																for (std::vector<ObjectGame*>::iterator it = _listObjectCollision.begin(); it != _listObjectCollision.end(); it++)
+																{
+																	ObjectGame* item = *it;
 
-																if (item->_ID >= (int)TypeEnemy::BOSS_LEVEL1 &&item->_ID <= (int)TypeEnemy::BOSS_LEVEL2)
-																{
-																	Boss* boss = (Boss*)item;
-																	boss->setMovement(EnemyMovement::Moves);
-																}
-															}
-															this->_boundScene = ManageSprite::createInstance()->_camera->getScreen();
-															ManageAudio::getInstance()->stopSound(Stage_01_Vampire_Killer);
-															ManageAudio::getInstance()->playSound(Boss_Battle_Poison_Mind);
-															for (std::vector<ObjectGame*>::iterator itEnemy = _listObjectCollision.begin(); itEnemy != _listObjectCollision.end(); itEnemy++)
-															{
-																ObjectGame* objEnemy = *itEnemy;
-																if (objEnemy->className() == TagClassName::getInstance()->tagEnemy)
-																{
-																	Enemy* enemyDie = (Enemy*)objEnemy;
-																	if (enemyDie->_typeEnemy != TypeEnemy::BOSS_LEVEL1 && enemyDie->_typeEnemy != TypeEnemy::BOSS_LEVEL2)
+																	if (item->_ID >= (int)TypeEnemy::BOSS_LEVEL1 &&item->_ID <= (int)TypeEnemy::BOSS_LEVEL2)
 																	{
-																		enemyDie->_isALive = false;
+																		Boss* boss = (Boss*)item;
+																		boss->setMovement(EnemyMovement::Moves);
+																	}
+																}
+																this->_boundScene = ManageSprite::createInstance()->_camera->getScreen();
+																ManageAudio::getInstance()->stopSound(Stage_01_Vampire_Killer);
+																ManageAudio::getInstance()->playSound(Boss_Battle_Poison_Mind);
+																for (std::vector<ObjectGame*>::iterator itEnemy = _listObjectCollision.begin(); itEnemy != _listObjectCollision.end(); itEnemy++)
+																{
+																	ObjectGame* objEnemy = *itEnemy;
+																	if (objEnemy->className() == TagClassName::getInstance()->tagEnemy)
+																	{
+																		Enemy* enemyDie = (Enemy*)objEnemy;
+																		if (enemyDie->_typeEnemy != TypeEnemy::BOSS_LEVEL1 && enemyDie->_typeEnemy != TypeEnemy::BOSS_LEVEL2)
+																		{
+																			enemyDie->_isALive = false;
+																		}
 																	}
 																}
 															}
+															
 														}
 
 													}
@@ -1586,12 +1554,12 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 				if (!this->_collisionEnemy)
 				{
 					this->addHP(-2);
-
+					this->_collisionEnemy = true;
 					if (!(this->_onStair || this->_moveMent == SimonMove::Sit))
 					{
 						this->_moveMent = SimonMove::Jump;
-						this->_vy = this->_Vy_default;
-						this->_collisionEnemy = true;
+						this->_vy = this->_Vy_default / 2;
+						
 						this->_drawColEnemy = false;
 						//this->_Left = !this->_Left;
 						int dir = this->_Left ? -1 : 1;
@@ -1600,6 +1568,95 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 					
 				}
 			}
+		}
+#pragma endregion
+
+#pragma region Object Game la Moving platform
+		if (obj->_ID == 653)
+		{
+			MovingPlatform* movingPlatform = (MovingPlatform*)obj;
+			timeCollision = this->collision((DynamicObject*)obj, normalX, normalY, deltatime);
+			
+			// va cham theo chieu y
+			if (timeCollision == 2)
+			{
+				if (normalY > 0  && this->_moveMent != SimonMove::Jump)
+				{
+					if ((this->getRect().bottom - movingPlatform->getRect().bottom) > -5)
+					{
+						this->_pos.y += normalY - 1;
+						//this->_pos.y = movingPlatform->getRect().top + this->_height / 2 - 4;
+						//this->_pos.y = movingPlatform->getRect().top + this->_height / 2;
+						if (_moveMent == SimonMove::Free)
+						{
+							this->_moveMent = SimonMove::Idle;
+						}
+						
+						this->_CanMoveL = true;
+						this->_CanMoveR = true;
+						this->_standMoving = true;
+						this->_vxMoving = movingPlatform->_vx;
+					}
+					
+				}else
+				{
+					this->_standMoving = false;
+					/*if (this->_moveMent == SimonMove::Jump || this->_moveMent == SimonMove::Idle)
+					{
+						this->_moveMent = SimonMove::Free;
+					}*/
+				}
+			}else
+			{
+				if (timeCollision > 0 && timeCollision < 1)
+				{
+					if (normalY == 1  && this->_moveMent != SimonMove::Jump)
+					{
+						if ((this->getRect().bottom - movingPlatform->getRect().bottom) > -5)
+						{
+							//this->_pos.y += this->_vy * deltatime * timeCollision;
+							this->_pos.y = movingPlatform->getRect().top + this->_height / 2 - 4;
+							this->_pos.x += this->_vx * deltatime * timeCollision;
+							this->_standMoving = true;
+							this->_vxMoving = movingPlatform->_vx;
+							if (_moveMent == SimonMove::Free)
+							{
+								this->_moveMent = SimonMove::Idle;
+							}
+
+							this->_CanMoveL = true;
+							this->_CanMoveR = true;
+						}
+						
+					}else
+					{
+						this->_standMoving = false;
+						/*if (this->_moveMent == SimonMove::Jump || this->_moveMent == SimonMove::Idle)
+						{
+							this->_moveMent = SimonMove::Free;
+						}*/
+					}
+				}else
+				{
+					if (abs(this->_pos.x - movingPlatform->_pos.x) < 50)
+					{
+						this->_standMoving = false;
+					}/*else
+					 {
+					 if (_standMoving)
+					 {
+					
+					 }
+					 }*/
+					
+					/*if (this->_moveMent == SimonMove::Jump || this->_moveMent == SimonMove::Idle)
+					{
+						this->_moveMent = SimonMove::Free;
+					}*/
+				}
+			}
+
+			
 		}
 #pragma endregion
 
@@ -1663,6 +1720,11 @@ void Simon::addHP(int _HP)
 		//this->_pos.y -= this->_height / 4;
 		//DIe
 	}
+
+	if (HP > HP_DEFAULT)
+	{
+		HP = HP_DEFAULT;
+	}
 }
 
 void Simon::reset()
@@ -1685,6 +1747,8 @@ void Simon::reset()
 	this->_CanMoveL = true;
 	this->_CanMoveR = true;
 	this->_canDie = false;
+	this->_height = this->HeightDefault;
+	this->_attackingBoss = false;
 }
 
 void Simon::die()

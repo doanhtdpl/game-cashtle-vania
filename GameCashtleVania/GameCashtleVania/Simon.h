@@ -101,6 +101,9 @@ public:
 	int coin;
 	int numberSimon;
 
+	//va cham voi Moving Platform
+	bool _standMoving;
+	float _vxMoving;
 protected:
 	float HeightDefault;
 	float HeightSit;

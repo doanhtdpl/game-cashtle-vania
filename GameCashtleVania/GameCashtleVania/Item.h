@@ -40,6 +40,7 @@ public:
 	std::string className();
 	void handleCollision(float deltatime, std::vector<ObjectGame*> _listObjectCollision);
 	void update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
+	void animated(float deltaTime);
 	Box getBox();
 
 	//di chuyen theo hinh zich zac

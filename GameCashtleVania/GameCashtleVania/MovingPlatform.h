@@ -9,6 +9,7 @@ public:
 	MovingPlatform();
 	MovingPlatform(std::vector<std::string> arr);
 	~MovingPlatform();
+	int distanceX;
 
 	virtual void update(float delta_Time, std::vector<ObjectGame*> _listObjectCollision);
 	virtual void move(float Delta_Time);// overide IMOVE

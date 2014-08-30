@@ -37,7 +37,7 @@ void BANNER::init()
 	//this->_typeWeapon = Simon::getInstance()->weaponCurr->_ID_Image;
 	this->_score = Simon::getInstance()->coin;
 	//this->_hpEnemy = ManageGame::getInstance()->boss->HP;
-	this->_hpEnemy = 10;
+	this->_hpEnemy = ManageGame::HP_BOSS;
 	this->_scene = ManageGame::_infoScene->iD_Scene;
 	
 }
@@ -45,7 +45,7 @@ void BANNER::init()
 void BANNER::update(float deltaTime)
 {			
 	this->_hpSimon = Simon::getInstance()->HP;
-	this->_hpEnemy = this->_hpSimon;
+	this->_hpEnemy = ManageGame::HP_BOSS;
 	this->_countHeartSimon = Simon::getInstance()->count_Heart;
 	this->_numberSimon = ManageGame::getInstance()->countLifeSimon;
 	this->_typeWeapon = Simon::getInstance()->_typeOfWeaponCurr;
@@ -109,4 +109,3 @@ void BANNER::draw()
 BANNER::~BANNER()
 {
 }
-
