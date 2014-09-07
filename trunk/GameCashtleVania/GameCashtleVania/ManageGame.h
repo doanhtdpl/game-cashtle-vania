@@ -12,6 +12,7 @@
 #include "MenuState.h"
 #include "IntroState.h"
 #include "NextMapState.h"
+#include "EndState.h"
 class ManageGame : public Game
 {
 private:
