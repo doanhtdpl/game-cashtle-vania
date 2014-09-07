@@ -456,6 +456,9 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>GameObject\DynamicObject\Enemy\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="EndState.cpp">
+      <Filter>GameObject\State\EndState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h">
@@ -703,6 +706,9 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>GameObject\DynamicObject\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="EndState.h">
+      <Filter>GameObject\State\EndState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

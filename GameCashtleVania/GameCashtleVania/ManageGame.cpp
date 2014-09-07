@@ -47,17 +47,14 @@ ManageGame::ManageGame()
 	
 	this->countLifeSimon = 5;
 
-	/*this->currentState = TypeStateGame::PlayGame;
-	this->stateGame = new MenuState();
-	this->delay = 0;*/
-	
-	this->currentState = TypeStateGame::MenuGame;
-	this->stateGame = new MenuState();	
-	this->delay = 0;
 
-	//this->currentState = TypeStateGame::NextMapGame;
-	//this->stateGame = new NextMapState();
+	//this->currentState = TypeStateGame::MenuGame;
+	//this->stateGame = new MenuState();	
 	//this->delay = 0;
+
+	this->currentState = TypeStateGame::EndGame;
+	this->stateGame = new EndState();
+	this->delay = 0;
 }
 
 ManageGame::~ManageGame(void)
@@ -597,8 +594,8 @@ void ManageGame::gameInit()
 	quadTreeBG = QuadTreeBackground::getInstance();
 	quadTreeObj = QuadTreeObject::getInstance();
 	
-	level = 1;
-	scene = 5;
+	level = 2;
+	scene = 1;
 
 
 	//ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
