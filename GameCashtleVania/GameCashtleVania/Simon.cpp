@@ -1583,11 +1583,12 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 			// va cham theo chieu y
 			if (timeCollision == 2)
 			{
-				if (normalY > 0  && this->_moveMent != SimonMove::Jump)
+				//normalY > 0  && 
+				if (this->_moveMent != SimonMove::Jump)
 				{
 					if ((this->getRect().bottom - movingPlatform->getRect().bottom) > -5)
 					{
-						this->_pos.y += normalY - 1;
+						this->_pos.y += normalY;
 						//this->_pos.y = movingPlatform->getRect().top + this->_height / 2 - 4;
 						//this->_pos.y = movingPlatform->getRect().top + this->_height / 2;
 						if (_moveMent == SimonMove::Free)
@@ -1598,12 +1599,14 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 						this->_CanMoveL = true;
 						this->_CanMoveR = true;
 						this->_standMoving = true;
+						movingPlatform->isStanding = true;
 						this->_vxMoving = movingPlatform->_vx;
 					}
 					
 				}else
 				{
 					this->_standMoving = false;
+					movingPlatform->isStanding = false;
 					/*if (this->_moveMent == SimonMove::Jump || this->_moveMent == SimonMove::Idle)
 					{
 						this->_moveMent = SimonMove::Free;
@@ -1617,10 +1620,11 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 					{
 						if ((this->getRect().bottom - movingPlatform->getRect().bottom) > -5)
 						{
-							//this->_pos.y += this->_vy * deltatime * timeCollision;
-							this->_pos.y = movingPlatform->getRect().top + this->_height / 2 - 4;
+							this->_pos.y += this->_vy * deltatime * timeCollision + 2;
+							//this->_pos.y = movingPlatform->getRect().top + this->_height / 2 - 4;
 							this->_pos.x += this->_vx * deltatime * timeCollision;
 							this->_standMoving = true;
+							movingPlatform->isStanding = true;
 							this->_vxMoving = movingPlatform->_vx;
 							if (_moveMent == SimonMove::Free)
 							{
@@ -1634,6 +1638,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 					}else
 					{
 						this->_standMoving = false;
+						movingPlatform->isStanding = false;
 						/*if (this->_moveMent == SimonMove::Jump || this->_moveMent == SimonMove::Idle)
 						{
 							this->_moveMent = SimonMove::Free;
@@ -1641,9 +1646,15 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 					}
 				}else
 				{
-					if (abs(this->_pos.x - movingPlatform->_pos.x) < 50)
+					if (abs(this->_pos.x - movingPlatform->_pos.x) > 40)
 					{
-						this->_standMoving = false;
+						if (this->_standMoving && movingPlatform->isStanding)
+						{
+							this->_standMoving = false;
+							this->_moveMent = SimonMove::Free;
+							this->_vx = 0;
+						}
+						
 					}/*else
 					 {
 					 if (_standMoving)
@@ -1752,6 +1763,7 @@ void Simon::reset()
 	this->_canDie = false;
 	this->_height = this->HeightDefault;
 	this->_attackingBoss = false;
+	this->_standMoving = false;
 }
 
 void Simon::die()

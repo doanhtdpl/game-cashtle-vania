@@ -55,7 +55,6 @@ void Boss::update(float delta_Time, std::vector<ObjectGame*> _listObjectCollisio
 			}
 		}
 	}
-	
 }
 
 void Boss::fire()

@@ -5,6 +5,7 @@
 
 MovingPlatform::MovingPlatform(std::vector<std::string> arr) : GroundBGObj(arr)
 { 
+	this->isStanding = false;
 	this->_ID = atoi(arr.at(0).c_str());
 	this->_ID_Image = atoi(arr.at(1).c_str());
 	this->_width = atoi(arr.at(3).c_str());

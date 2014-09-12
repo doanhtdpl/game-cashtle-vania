@@ -10,9 +10,7 @@
 #include "MapLoader.h"
 #include "Banner.h"
 #include "MenuState.h"
-#include "IntroState.h"
-#include "NextMapState.h"
-#include "EndState.h"
+
 #include "EndState.h"
 
 #define MAX_LEVEL_GAME 3
