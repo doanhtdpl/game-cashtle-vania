@@ -462,11 +462,13 @@ void Simon::update(float deltatime, std::vector<ObjectGame*> _listObjectCollisio
 	//sau do processInput
 	if (this->_canDie)
 	{
+		ManageAudio::getInstance()->playSound(TypeAudio::Life_Lost);
 		this->_timeDie -= deltatime;
 		if (_timeDie <= 0)
 		{
 			this->_simonDie = true;
 			this->_canDie = false;
+			this->ironRod->_isALive = false;			
 			//this->die();
 		}
 		return;
@@ -1011,6 +1013,7 @@ void Simon::processInput()
 			}
 		}else
 		{
+			
 			//chua su dung roi
 			if (!this->_attacking && this->_moveMent != SimonMove::DownStair && this->_moveMent != SimonMove::UpStair)
 			{

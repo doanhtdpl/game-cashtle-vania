@@ -48,9 +48,9 @@ ManageGame::ManageGame()
 	this->countLifeSimon = 5;
 
 
-	//this->currentState = TypeStateGame::MenuGame;
-	//this->stateGame = new MenuState();	
-	//this->delay = 0;
+	/*this->currentState = TypeStateGame::MenuGame;
+	this->stateGame = new MenuState();	
+	this->delay = 0;*/
 
 	this->currentState = TypeStateGame::EndGame;
 	this->stateGame = new EndState();
@@ -168,6 +168,8 @@ void ManageGame::gameUpdate(float deltaTime)
 			delay += deltaTime;
 			if (delay > 2)
 			{
+				this->HP_BOSS = 16;
+				this->_banner->_hpEnemy = this->HP_BOSS;
 				this->currentState = TypeStateGame::PlayGame;
 				this->countLifeSimon ++;
 				//this->restartGame();
@@ -178,7 +180,7 @@ void ManageGame::gameUpdate(float deltaTime)
 			}
 		}
 		break;
-	case TypeStateGame::EndGame:
+	case TypeStateGame::EndGame:		
 		this->stateGame->update(deltaTime);
 		break;
 	}
@@ -375,6 +377,7 @@ bool ManageGame::changeSceneWithGate(float deltaTime)
 
 	if (!openGate)
 	{
+		
 		bool dirCameraMove = false;
 		int vxCamera = 0;
 		if (_infoScene->level == 1)
@@ -388,6 +391,7 @@ bool ManageGame::changeSceneWithGate(float deltaTime)
 		}
 		if (ManageSprite::createInstance()->_camera->move(vxCamera, simon->_pos.x, deltaTime, dirCameraMove))
 		{
+			ManageAudio::getInstance()->playSound(TypeAudio::Open_Door);
 			openGate = true;
 			int ID_Gate = 650 + level;
 			gate = (Gate*)GroundBGFac::getInstance()->createObj(ID_Gate);
@@ -557,12 +561,22 @@ void ManageGame::nextLevel()
 {
 	ManageAudio::getInstance()->stopSound(TypeAudio::Boss_Battle_Poison_Mind);
 	this->level ++;
-	this->scene = 1;
-	this->currentState = TypeStateGame::NextMapGame;
-	simon->_attackingBoss = false;
-	this->stateGame = new NextMapState();
-	this->stateGame->init();
-	this->_nextLevel = false;
+	if (this->level < MAX_LEVEL_GAME)
+	{
+		this->scene = 1;
+		this->currentState = TypeStateGame::NextMapGame;
+		simon->_attackingBoss = false;
+		this->stateGame = new NextMapState();
+		this->stateGame->init();
+		this->_nextLevel = false;
+	}
+	else
+	{
+		this->currentState = TypeStateGame::EndGame;
+		this->stateGame = new EndState();
+		this->stateGame->init();
+	}
+	
 }
 
 void ManageGame::winGame()
@@ -595,7 +609,7 @@ void ManageGame::gameInit()
 	quadTreeObj = QuadTreeObject::getInstance();
 	
 	level = 2;
-	scene = 1;
+	scene = 6;
 
 
 	//ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
