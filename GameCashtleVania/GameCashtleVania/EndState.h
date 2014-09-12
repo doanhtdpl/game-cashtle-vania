@@ -28,6 +28,7 @@ public:
 	int currentText;
 
 	float delay;
+	float maxTimeDelay;
 private:
 
 };
