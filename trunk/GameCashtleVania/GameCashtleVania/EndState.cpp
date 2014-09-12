@@ -20,19 +20,22 @@ void EndState::initStateGame()
 	this->posText = D3DXVECTOR3(35, 80, 0);
 	this->currentText = -1;
 	this->delay = 0;
+	this->maxTimeDelay = 0.5;
 }
 void EndState::updateStateGame(float deltaTime)
 {
 	delay += deltaTime;	
-	if (delay > 0.5)
+	if (this->delay > this->maxTimeDelay)
 	{
 		if (this->posCastle.y < 200)
 		{
 			ManageAudio::getInstance()->playSound(TypeAudio::Falling);
 			this->posCastle.y += 3;
+			
 		}
 		else
 		{
+			this->maxTimeDelay = 3;
 			ManageAudio::getInstance()->playSound(TypeAudio::Title_Theme_Prelude);
 			this->currentText++;
 			if (this->currentText > 11)
