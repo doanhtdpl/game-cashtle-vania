@@ -13,6 +13,9 @@
 #include "IntroState.h"
 #include "NextMapState.h"
 #include "EndState.h"
+#include "EndState.h"
+
+#define MAX_LEVEL_GAME 3
 class ManageGame : public Game
 {
 private:

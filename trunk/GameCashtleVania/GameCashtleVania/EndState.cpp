@@ -1,6 +1,7 @@
 #include "EndState.h"
 #include "ManageTexture.h"
 #include "ManageSprite.h"
+#include "ManageAudio.h"
 void EndState::initStateGame()
 {
 	this->_posBackground = D3DXVECTOR3(0, 0, 0);
@@ -22,15 +23,17 @@ void EndState::initStateGame()
 }
 void EndState::updateStateGame(float deltaTime)
 {
-	delay += deltaTime;
-	if (delay > 1)
+	delay += deltaTime;	
+	if (delay > 0.5)
 	{
 		if (this->posCastle.y < 200)
 		{
+			ManageAudio::getInstance()->playSound(TypeAudio::Falling);
 			this->posCastle.y += 3;
 		}
 		else
 		{
+			ManageAudio::getInstance()->playSound(TypeAudio::Title_Theme_Prelude);
 			this->currentText++;
 			if (this->currentText > 11)
 			{
