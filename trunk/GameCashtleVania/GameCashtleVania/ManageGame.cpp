@@ -8,6 +8,8 @@
 #include "Itween.h"
 #include "ManageAudio.h"
 #include "GroundBGFac.h"
+#include "IntroState.h"
+#include "NextMapState.h"
 #include "utils.h"
 
 int ManageGame::_score = 0;
@@ -52,8 +54,8 @@ ManageGame::ManageGame()
 	this->stateGame = new MenuState();	
 	this->delay = 0;*/
 
-	this->currentState = TypeStateGame::EndGame;
-	this->stateGame = new EndState();
+	this->currentState = TypeStateGame::MenuGame;
+	this->stateGame = new MenuState();
 	this->delay = 0;
 }
 
@@ -250,6 +252,7 @@ void ManageGame::updatePlayGame(float deltaTime)
 	{
 		if ((_infoScene->level == 1 && !simon->_Left) || (_infoScene->level == 2 && simon->_Left))
 		{
+			simon->_standMoving = false;
 			changeScene(deltaTime);
 		}
 		else
@@ -266,12 +269,14 @@ void ManageGame::updatePlayGame(float deltaTime)
 
 	if (isChangeDown)
 	{
+		simon->_standMoving = false;
 		this->changeSceneDown();
 		isChangeDown = false;
 	}
 
 	if (isChangeTop)
 	{
+		simon->_standMoving = false;
 		this->changeSceneTop();
 		isChangeTop = false;
 	}
@@ -288,8 +293,18 @@ void ManageGame::updatePlayGame(float deltaTime)
 
 void ManageGame::restartGame()
 {
+	ManageAudio::getInstance()->stopSound(TypeAudio::Stage_01_Vampire_Killer);
+	ManageAudio::getInstance()->stopSound(TypeAudio::Stage_04_Stalker);
 	ManageAudio::getInstance()->stopSound(TypeAudio::Boss_Battle_Poison_Mind);
-	ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
+	if (level == 1)
+	{
+		ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
+	}
+	else
+	{
+		ManageAudio::getInstance()->playSound(TypeAudio::Stage_04_Stalker);
+	}
+	quadTreeObj->mapObject.listObjectInMap.clear();
 	this->HP_BOSS = 16;
 	this->countLifeSimon --;
 	if (this->countLifeSimon > 0)
@@ -314,6 +329,7 @@ void ManageGame::restartGame()
 
 void ManageGame::changeScene(float deltaTime)
 {
+	quadTreeObj->mapObject.listObjectInMap.clear();
 	int Id_scene = this->level * 10 + this->scene;
 	int posXSimonTarget;
 	int posXCamera;
@@ -475,6 +491,7 @@ bool ManageGame::changeSceneWithGate(float deltaTime)
 
 void ManageGame::changeSceneDown()
 {
+	quadTreeObj->mapObject.listObjectInMap.clear();
 	if (this->_infoScene->level == 1)
 	{
 		//lay vi tri simon truoc khi chuyen scene
@@ -498,6 +515,7 @@ void ManageGame::changeSceneDown()
 
 void ManageGame::changeSceneTop()
 {
+	quadTreeObj->mapObject.listObjectInMap.clear();
 	if (level == 1)
 	{
 		D3DXVECTOR2 posSimonTop = D3DXVECTOR2(simon->_pos.x, 45);
@@ -523,6 +541,7 @@ void ManageGame::changeSceneTop()
 
 void ManageGame::nextScene(int increaseScene)
 {
+	quadTreeObj->mapObject.listObjectInMap.clear();
 	this->_infoScene = MapLoader::getInstance()->getInfoSceneByKey(level * 10 + scene);
 	//if (this->_infoScene->finalScene)
 	//{
@@ -559,6 +578,7 @@ void ManageGame::nextScene(int increaseScene)
 
 void ManageGame::nextLevel()
 {
+	quadTreeObj->mapObject.listObjectInMap.clear();
 	ManageAudio::getInstance()->stopSound(TypeAudio::Boss_Battle_Poison_Mind);
 	this->level ++;
 	if (this->level < MAX_LEVEL_GAME)
@@ -609,7 +629,7 @@ void ManageGame::gameInit()
 	quadTreeObj = QuadTreeObject::getInstance();
 	
 	level = 2;
-	scene = 6;
+	scene = 3;
 
 
 	//ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);
