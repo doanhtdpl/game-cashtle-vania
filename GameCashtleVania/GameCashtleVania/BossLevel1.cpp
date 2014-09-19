@@ -1,5 +1,8 @@
 #include "BossLevel1.h"
 #include "ManageGame.h"
+#include "FireBall.h"
+#include "EnemyFactory.h"
+
 BossLevel1::BossLevel1()
 {
 }
@@ -22,4 +25,11 @@ BossLevel1::BossLevel1(std::vector<std::string> arr) : Boss(arr)
 	this->dectPos = 0;
 	this->timeChange = 0;
 	this->isAtackSimon = false;
+}
+
+void BossLevel1::fire()
+{
+	FireBall* fireBall = (FireBall*)EnemyFactory::getInstance()->createObj((int)TypeEnemy::FIRE_BALL);
+	fireBall->appear(this->_pos,Simon::getInstance()->_pos);
+	QuadTreeObject::getInstance()->addObjectToQuadTree(fireBall);
 }

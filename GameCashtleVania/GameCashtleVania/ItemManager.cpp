@@ -20,7 +20,7 @@ ItemManager::ItemManager()
 {
 #pragma region List Item Normal
 
-	this->_listItemNormal.push_back(TypeItem::Dagger);
+	//this->_listItemNormal.push_back(TypeItem::Dagger);
 	this->_listItemNormal.push_back(TypeItem::DoubleShot);
 	this->_listItemNormal.push_back(TypeItem::FireBomb);
 	this->_listItemNormal.push_back(TypeItem::LargeHeart);
