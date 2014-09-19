@@ -39,6 +39,8 @@ public:
  	float currentNumberSecondEffect;
 	//bien quan ly banner
 	BANNER* _banner;
+	//Texture* halfCastle;
+	D3DXVECTOR3 posHalfCastle;
 
 	static int _score;
 	float _timeGame;

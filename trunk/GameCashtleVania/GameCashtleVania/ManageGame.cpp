@@ -49,7 +49,8 @@ ManageGame::ManageGame()
 	
 	this->countLifeSimon = 5;
 
-
+	posHalfCastle = D3DXVECTOR3(1408, 320, 0);
+	//halfCastle = ManageTexture::getInstance()->getTetureByKey(2003);
 	/*this->currentState = TypeStateGame::MenuGame;
 	this->stateGame = new MenuState();	
 	this->delay = 0;*/
@@ -103,6 +104,16 @@ void ManageGame::drawPlayGame()
 		}
 
 		simon->draw();
+		
+		if (level == 1 && scene == 1)
+		{
+			if (isChangeScene)
+			{
+				posHalfCastle.z = 1;
+			}
+			ManageSprite::createInstance()->draw(2003, NULL, posHalfCastle);
+		}
+		
 	}
 	else
 	{
@@ -331,6 +342,7 @@ void ManageGame::changeScene(float deltaTime)
 {
 	quadTreeObj->mapObject.listObjectInMap.clear();
 	int Id_scene = this->level * 10 + this->scene;
+	simon->_standMoving = false;
 	int posXSimonTarget;
 	int posXCamera;
 	D3DXVECTOR2 posGate;
@@ -578,7 +590,8 @@ void ManageGame::nextScene(int increaseScene)
 
 void ManageGame::nextLevel()
 {
-	quadTreeObj->mapObject.listObjectInMap.clear();
+	//quadTreeBG->clearDataQuadtree();
+	//quadTreeObj->clearDataQuadtree();
 	ManageAudio::getInstance()->stopSound(TypeAudio::Boss_Battle_Poison_Mind);
 	this->level ++;
 	if (this->level < MAX_LEVEL_GAME)
@@ -628,8 +641,8 @@ void ManageGame::gameInit()
 	quadTreeBG = QuadTreeBackground::getInstance();
 	quadTreeObj = QuadTreeObject::getInstance();
 	
-	level = 2;
-	scene = 3;
+	level = 1;
+	scene = 1;
 
 
 	//ManageAudio::getInstance()->playSound(TypeAudio::Stage_01_Vampire_Killer);

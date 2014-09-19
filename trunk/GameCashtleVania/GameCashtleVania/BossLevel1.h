@@ -12,7 +12,7 @@ public:
 	BossLevel1(std::vector<std::string> arr);
 	BossLevel1();
 	~BossLevel1();
-
+	void fire();
 private:
 	
 

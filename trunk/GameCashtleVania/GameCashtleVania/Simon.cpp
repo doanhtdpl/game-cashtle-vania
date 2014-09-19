@@ -916,7 +916,7 @@ void Simon::processInput()
 	{
 		//dang o trang thai chuan bi di xuong
 		//if (this->_moveMent == SimonMove::PrepareDownTheStairLeft)
-		if (this->_prepareUpStairLeft && !this->_onStair && !this->_collisionEnemy)
+		if (this->_prepareUpStairLeft && !this->_onStair)// && !this->_collisionEnemy
 		{
 			//chuyen sang trang thai xuong cau thang va quay mat ve ben trai
 			this->_moveMent = SimonMove::UpStair;
@@ -934,7 +934,7 @@ void Simon::processInput()
 		}else
 		{
 			//if (this->_moveMent == SimonMove::PrepareDownTheStairRight)
-			if (this->_prepareUpStairRight && !this->_onStair && !this->_collisionEnemy)
+			if (this->_prepareUpStairRight && !this->_onStair)// && !this->_collisionEnemy
 			{
 				this->_moveMent = SimonMove::UpStair;
 				this->_finish_MoveStair = false;
@@ -1655,18 +1655,7 @@ void Simon::handleCollision(float deltatime, std::vector<ObjectGame*> _listObjec
 							this->_vx = 0;
 						}
 						
-					}/*else
-					 {
-					 if (_standMoving)
-					 {
-					
-					 }
-					 }*/
-					
-					/*if (this->_moveMent == SimonMove::Jump || this->_moveMent == SimonMove::Idle)
-					{
-						this->_moveMent = SimonMove::Free;
-					}*/
+					}
 				}
 			}
 
